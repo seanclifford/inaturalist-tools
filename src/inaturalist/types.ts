@@ -9,5 +9,5 @@ interface Site {
     id: number;
     name: string;
     site_name_short: string;
-    icon_url: URL
+    icon_url: string;
 }

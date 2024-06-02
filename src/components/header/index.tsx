@@ -1,4 +1,5 @@
 import { Link } from "wouter";
+import SiteHeader from "./SiteHeader";
 
 function Header() {
     return (
@@ -6,6 +7,7 @@ function Header() {
             HEADER
             <Link href="/">Home</Link>
             <Link href="/test">Test</Link>
+            <SiteHeader/>
         </header>
     );
 }

@@ -1,13 +1,13 @@
 import { Link } from "wouter";
 import SiteHeader from "./SiteHeader";
 
-function Header() {
+function Header(props: {site: Site}) {
     return (
         <header>
             HEADER
             <Link href="/">Home</Link>
             <Link href="/test">Test</Link>
-            <SiteHeader/>
+            <SiteHeader site={props.site}/>
         </header>
     );
 }

@@ -1,20 +1,20 @@
 import { useQuery } from "@tanstack/react-query";
 import { sitesQueryOptions } from "../../inaturalist/queryOptions";
 
-function SitesList(props : {sites : Site[]|undefined, currentSite: Site, setCurrentSite: React.Dispatch<React.SetStateAction<number>>})
+function SitesList(props : {sites : Site[]|undefined, currentSite: Site, setCurrentSite: React.Dispatch<React.SetStateAction<Site>>})
 {
     const listItems = props.sites?.map(site => 
         <li 
             key={site.id}
             style={site.id === props.currentSite.id ? {fontWeight:"bold"} : undefined}
-            onClick={() => props.setCurrentSite(site.id)}
+            onClick={() => props.setCurrentSite(site)}
             >
             {site.name}
         </li>);
     return (<ul>{listItems}</ul>);
 }
 
-function TestPage(props: {site: Site, setSite: React.Dispatch<React.SetStateAction<number>>}) {
+function TestPage(props: {site: Site, setSite: React.Dispatch<React.SetStateAction<Site>>}) {
     const  { isPending, isError, isFetched, data: sites, error } = useQuery(sitesQueryOptions());
 
     return (

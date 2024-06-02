@@ -1,10 +1,20 @@
-function loadSite(): Site {
+import { useEffect, useState } from "react";
+
+function useSite() : [Site, React.Dispatch<React.SetStateAction<Site>>] {
+    const [site, saveSite] = useState(loadSiteFromStore());
+
+    useEffect(() => { saveSiteToStore(site) }, [site])
+
+    return [site, saveSite]
+}
+
+function loadSiteFromStore(): Site {
     const localStorageSiteJson = localStorage.getItem("current-site");
     
     return localStorageSiteJson == null ? defaultSite() : JSON.parse(localStorageSiteJson);
 }
 
-function saveSite(site: Site)
+function saveSiteToStore(site: Site)
 {
     localStorage.setItem("current-site", JSON.stringify(site))
 }
@@ -19,4 +29,4 @@ function defaultSite() : Site {
     };
 }
 
-export {loadSite, saveSite}
+export default useSite

@@ -7,8 +7,9 @@ function SiteHeader(props: {site: Site}) {
         return (
             <span className="affiliation">
                 <img className="site_img" src={props.site.icon_url}></img>
-                <span className="site_title">{props.site.site_name_short}</span>
-                (<Link href="/test">change</Link>) 
+                <div className="site_title">
+                    {props.site.site_name_short} (<Link href="/test">change</Link>)
+                </div>
             </span>
         );
     }

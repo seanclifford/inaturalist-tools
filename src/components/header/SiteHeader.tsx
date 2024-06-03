@@ -1,18 +1,19 @@
 import "./SiteHeader.css"
 import { Link } from "wouter";
 
-function SiteHeader(props: {site: Site}) {
+interface SiteHeaderProps {
+    site: Site
+}
 
-    if (props.site) {
-        return (
+function SiteHeader({site}: SiteHeaderProps) {
+    return (
+        <Link href="/site-selection">
             <span className="affiliation">
-                <img className="site_img" src={props.site.icon_url}></img>
-                <div className="site_title">
-                    {props.site.site_name_short} (<Link href="/test">change</Link>)
-                </div>
+                <img className="site_img" src={site.icon_url}></img>
+                <div className="site_title">{site.site_name_short}</div>
             </span>
-        );
-    }
+        </Link>
+    );
 }
 
 export default SiteHeader;

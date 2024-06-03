@@ -1,7 +1,7 @@
 import './App.css'
 import { QueryClientProvider, QueryClient } from '@tanstack/react-query'
 import Home from './pages/home'
-import TestPage from './pages/test-page'
+import SiteSelectionPage from './pages/site-selection'
 import Header from './components/header'
 import { Route } from 'wouter'
 import useSite from './hooks/useSite'
@@ -14,7 +14,7 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <Header site={site}/>
       <Route path='/'><Home/></Route>
-      <Route path='/test'><TestPage site={site} setSite={setSite}/></Route>
+      <Route path='/site-selection'><SiteSelectionPage site={site} setSite={setSite}/></Route>
     </QueryClientProvider>
   )
 }

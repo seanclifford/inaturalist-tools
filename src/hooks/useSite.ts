@@ -3,20 +3,20 @@ import { useEffect, useState } from "react";
 function useSite() : [Site, React.Dispatch<React.SetStateAction<Site>>] {
     const [site, saveSite] = useState(loadSiteFromStore());
 
-    useEffect(() => { saveSiteToStore(site) }, [site])
+    useEffect(() => { saveSiteToStore(site) }, [site]);
 
-    return [site, saveSite]
+    return [site, saveSite];
 }
 
 function loadSiteFromStore(): Site {
     const localStorageSiteJson = localStorage.getItem("current-site");
     
-    return localStorageSiteJson == null ? defaultSite() : JSON.parse(localStorageSiteJson);
+    return localStorageSiteJson ? JSON.parse(localStorageSiteJson) : defaultSite();
 }
 
 function saveSiteToStore(site: Site)
 {
-    localStorage.setItem("current-site", JSON.stringify(site))
+    localStorage.setItem("current-site", JSON.stringify(site));
 }
 
 function defaultSite() : Site {
@@ -29,4 +29,4 @@ function defaultSite() : Site {
     };
 }
 
-export default useSite
+export default useSite;

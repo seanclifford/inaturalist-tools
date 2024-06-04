@@ -1,6 +1,6 @@
 import { Link } from "wouter";
 import "./index.css"
-import SiteHeader from "./SiteHeader";
+import INatSite from "../inat-site";
 
 interface HeaderProps {
     site: Site
@@ -12,7 +12,9 @@ function Header({site}: HeaderProps) {
             <nav className="links">
                 <Link href="/">Home</Link>
             </nav>
-            <SiteHeader site={site}/>
+            <Link href="/site-selection">
+                <INatSite site={site} isShort />
+            </Link>
         </header>
     );
 }

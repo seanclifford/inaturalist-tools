@@ -1,3 +1,5 @@
+/* eslint-disable  @typescript-eslint/no-explicit-any */
+
 const USER_AGENT = 'iNaturalist Tools (by agoranomos)';
 
 export const getFetchOptions = () => {

@@ -16,7 +16,7 @@ function SiteSelectionPage({site, setSite}: SiteSelectionPageProps) {
         <main>
             <h1>Select a site</h1>
             {isPending? "Loading...": null}
-            {isError? "ERROR:" + error : null }
+            {isError? `ERROR: ${error.name} ${error.message}` : null }
             {isFetched && sites ? <SitesList sites={sites} currentSite={site} setCurrentSite={setSite}/> : null}
         </main>
     );

@@ -12,7 +12,7 @@ export async function getSites() {
         throw new Error('Could not load sites');
     }
     else {
-        const body: ApiResult<Site> = await response.json();
+        const body = await response.json() as ApiResult<Site>;
         return body.results;
     }
 }

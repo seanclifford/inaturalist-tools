@@ -11,7 +11,7 @@ function useSite() : [Site, React.Dispatch<React.SetStateAction<Site>>] {
 function loadSiteFromStore(): Site {
     const localStorageSiteJson = localStorage.getItem("current-site");
     
-    return localStorageSiteJson ? JSON.parse(localStorageSiteJson) : defaultSite();
+    return localStorageSiteJson ? JSON.parse(localStorageSiteJson) as Site : defaultSite();
 }
 
 function saveSiteToStore(site: Site)

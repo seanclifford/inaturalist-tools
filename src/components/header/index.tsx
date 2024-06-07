@@ -11,6 +11,7 @@ function Header({site}: HeaderProps) {
         <header>
             <nav className="links">
                 <Link href="/">Home</Link>
+                <Link href="/annotator">Annotator</Link>
             </nav>
             <Link href="/site-selection">
                 <INatSite site={site} isShort />

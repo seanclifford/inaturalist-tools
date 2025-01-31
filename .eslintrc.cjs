@@ -36,7 +36,7 @@ module.exports = {
     linkComponents: [
       // Components used as alternatives to <a> for linking, eg. <Link to={ url } />
       "Hyperlink",
-      {"name": "Link", "linkAttribute": ["to", "href"]},
+      {name: "Link", linkAttribute: ["to", "href"]},
     ]
   }
 }

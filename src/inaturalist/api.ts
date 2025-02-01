@@ -17,3 +17,44 @@ export async function getSites() {
     }
 }
 
+export async function getObservations() {
+    const response = await get('observations/');
+    if (!response.ok) {
+        throw new Error('Could not load observations');
+    }
+    else {
+        const body = await response.json() as ApiResult<Observation>;
+        return body.results;
+    }
+}
+
+export async function getTaxa() {
+    const response = await get('taxa/');
+    if (!response.ok) {
+        throw new Error('Could not load taxa');
+    } else {
+        const body = await response.json() as ApiResult<Taxon>;
+        return body.results;
+    }
+}
+
+export async function getUsers() {
+    const response = await get('users/');
+    if (!response.ok) {
+        throw new Error('Could not load users');
+    } else {
+        const body = await response.json() as ApiResult<User>;
+        return body.results;
+    }
+}
+
+/*
+export async function getProjects() {
+    const response = await get('projects/');
+    if (!response.ok) {
+        throw new Error('Could not load projects');
+    } else {
+        const body = await response.json() as ApiResult<Project>;
+        return body.results;
+    }
+}*/

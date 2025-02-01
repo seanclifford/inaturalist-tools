@@ -22,18 +22,20 @@ interface User {
 
 interface Observation {
     id: number,
-    taxon: Taxon
-    description: string,
-    observed_on: Date
-    user: User
-    photos: Photo[]
-    sounds: Sound[]
+    taxon: Taxon;
+    description: string;
+    observed_on: Date;
+    user: User;
+    photos: Photo[];
+    sounds: Sound[];
+    indent_ancestor_ids: number[];
 }
 
 interface Taxon {
     id: number,
     name: string,
     default_photo: TaxonPhoto,
+    ancestor_ids: number[];
 }
 
 interface TaxonPhoto {
@@ -96,11 +98,23 @@ interface Identification {
 
 interface Annotation {
     id: number;
-    resource_type: string;
-    resource_id: number;
     controlled_attribute_id: number;
     controlled_value_id: number;
     vote_score: number;
-    created_at: Date;
-    updated_at: Date;
+}
+
+interface ControlledTermBase {
+    id: number;
+    label: string;
+    taxon_ids: number[];
+    excepted_taxon_ids: number[];
+}
+
+interface ControlledTerm extends ControlledTermBase {
+    multivalued: boolean;
+    values: ControlledTermValue[];
+}
+
+interface ControlledTermValue extends ControlledTermBase {
+    blocking: boolean;
 }

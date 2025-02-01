@@ -1,10 +1,13 @@
 import React from 'react';
 
 interface ObservationHeroProps {
-  observation: Observation;
+  observation?: Observation;
 }
 
 const ObservationHero: React.FC<ObservationHeroProps> = ({ observation }) => {
+    if (!observation) {
+        return <span>loading</span>;
+    }
   const { photos, description, observed_on, user } = observation;
   const firstPhoto = photos[0];
 

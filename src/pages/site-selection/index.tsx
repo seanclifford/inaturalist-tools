@@ -1,13 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
 import SitesList from "./SiteList";
 import { getSites } from "../../inaturalist/api";
+import { oneDay } from "../../constants/values";
 
 interface SiteSelectionPageProps {
     site: Site, 
     setSite: React.Dispatch<React.SetStateAction<Site>>
 }
-
-const oneDay = 24*60*60*1000;
 
 function SiteSelectionPage({site, setSite}: SiteSelectionPageProps) {
     const  { isPending, isError, isFetched, data: sites, error } = useQuery({queryKey: ["sites"], queryFn: getSites, staleTime: oneDay});

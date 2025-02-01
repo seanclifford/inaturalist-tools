@@ -28,6 +28,17 @@ export async function getObservations() {
     }
 }
 
+export async function getObservation(id: number) {
+    const response = await get(`observations/${id}`);
+    if (!response.ok) {
+        throw new Error('Could not load observation');
+    }
+    else {
+        const body = await response.json() as ApiResult<Observation>;
+        return body.results[0];
+    }
+}
+
 export async function getTaxa() {
     const response = await get('taxa/');
     if (!response.ok) {
@@ -44,6 +55,16 @@ export async function getUsers() {
         throw new Error('Could not load users');
     } else {
         const body = await response.json() as ApiResult<User>;
+        return body.results;
+    }
+}
+
+export async function getControlledTerms() {
+    const response = await get('controlled_terms/');
+    if (!response.ok) {
+        throw new Error('Could not load controlled terms');
+    } else {
+        const body = await response.json() as ApiResult<ControlledTerm>;
         return body.results;
     }
 }

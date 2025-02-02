@@ -1,6 +1,6 @@
 type PhotoSize = "square" | "small" | "medium" | "large" | "original";
 
-function getUrl(photo: Photo, size: PhotoSize): string {
+function getPhotoUrl(photo: Photo, size: PhotoSize): string {
     switch(size) {
         case "square":
             return photo.url;
@@ -13,4 +13,4 @@ function convertSquareUrlToSize(url: string, size: PhotoSize): string {
     return url.replace("/square.", `/${size}.`);
 }
 
-export default getUrl;
+export default getPhotoUrl;

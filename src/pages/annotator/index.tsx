@@ -3,6 +3,7 @@ import { getObservations } from "../../inaturalist/api";
 import { useState } from "react"
 import ObservationHero from "../../components/observation-hero/ObservationHero";
 import { AnnotationSelector } from "../../components/annotation-selector/AnnotationSelector";
+import { getPageQueryString, setPageQueryString } from "./queryStrings";
 
 interface AnnotatorProps {
     site: Site,
@@ -15,11 +16,14 @@ function generateQueryString(query: string) : URLSearchParams {
 
 function Annotator(props: AnnotatorProps) {
 
-    const [ queryString, setQueryString ] = useState("");
-    const [ submitedQueryString, setSubmitedQueryString ] = useState("");
+    const [ queryString, setQueryString ] = useState(getPageQueryString());
+    const [ submitedQueryString, setSubmitedQueryString ] = useState(queryString);
     const { isPending, isError, data: observations, error } = useQuery({queryKey: ["observations", submitedQueryString], queryFn: () => getObservations(generateQueryString(submitedQueryString))});
 
-    const runQuery = () => setSubmitedQueryString(queryString);
+    const runQuery = () => {
+        setPageQueryString(queryString);
+        setSubmitedQueryString(queryString);
+    };
 
     if (isPending) {
         return (<div>Loading...</div>);

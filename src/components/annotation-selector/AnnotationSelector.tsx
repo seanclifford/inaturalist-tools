@@ -20,8 +20,8 @@ export function AnnotationSelector(props: AnnotationSelectorProps) {
                 <ul>
                     {controlledTerm.values.map(controlledTermValue => {
                         return(<li key={controlledTermValue.id}>
-                            <label htmlFor={controlledTermValue.label}>{controlledTermValue.label}</label>
-                            <input type="checkbox" id={controlledTermValue.label} name={controlledTermValue.label} />
+                            <label htmlFor={controlledTermValue.id.toString()}>{controlledTermValue.label}</label>
+                            <input type="checkbox" id={controlledTermValue.id.toString()} name={controlledTermValue.label} />
                         </li>);
                     })}
                 </ul>

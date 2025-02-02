@@ -29,10 +29,10 @@ export function useObservationControlledTerms(observation: Observation) : Observ
 }
 
 function controlledTermAppliesToObservation(observation: Observation, controlledTerm: ControlledTermBase) {
-    const included = !controlledTerm.taxon_ids || controlledTerm.taxon_ids.some(x => observation.taxon.ancestor_ids.includes(x));
+    const included = !controlledTerm.taxon_ids || controlledTerm.taxon_ids.some(x => observation.taxon?.ancestor_ids?.includes(x));
     if (!included) {
         return false;
     }
-    const excepted = controlledTerm.excepted_taxon_ids?.some(x => observation.taxon.ancestor_ids.includes(x));
+    const excepted = controlledTerm.excepted_taxon_ids?.some(x => observation.taxon?.ancestor_ids?.includes(x));
     return !excepted;
 }

@@ -1,19 +1,23 @@
 import { useQuery } from "@tanstack/react-query";
-import { getObservation } from "../../inaturalist/api";
-import {} from "react"
+import { getObservations } from "../../inaturalist/api";
+import { useState } from "react"
 import ObservationHero from "../../components/observation-hero/ObservationHero";
 import { AnnotationSelector } from "../../components/annotation-selector/AnnotationSelector";
 
-function runQuery() {
-    //const  { isPending, isError, isFetched, data: observations, error } = useQuery({queryKey: ["sites"], queryFn: getObservations});
-    
-    return "";
+interface AnnotatorProps {
+    site: Site,
 }
 
+function generateQueryString(query: string) : URLSearchParams {
+    const searchParams = new URLSearchParams(query);
+    return searchParams;
+}
 
-function Annotator() {
+function Annotator(props: AnnotatorProps) {
 
-    const { isPending, isError, data: observation, error } = useQuery({queryKey: ["observation"], queryFn: () => getObservation(260215007)});
+    const [ queryString, setQueryString ] = useState("");
+    const [ submitedQueryString, setSubmitedQueryString ] = useState("");
+    const { isPending, isError, data: observations, error } = useQuery({queryKey: ["observations", submitedQueryString], queryFn: () => getObservations(generateQueryString(submitedQueryString))});
 
     if (isPending) {
         return (<div>Loading...</div>);
@@ -27,8 +31,8 @@ function Annotator() {
             <h1>Annotator</h1>
             <div>
                 <label htmlFor="query">Observation query options:</label>
-                <input type="text" id="query" name="query" size={100}/>
-                <button type="button" id="queryButton" name="queryButton" onClick={runQuery}>Run Query</button>
+                <input type="text" id="query" name="query" size={100} value={queryString} onChange={e => setQueryString(e.target.value)}/>
+                <button type="button" id="queryButton" name="queryButton" onClick={_ => setSubmitedQueryString(queryString)}>Run Query</button>
             </div>
             TODO
             <ul>
@@ -37,8 +41,14 @@ function Annotator() {
                 <li>Load the first x obs and display them in small row based? UI</li>
                 <li>allow select annotation - requires AUTH</li>
             </ul>
-            <ObservationHero observation={observation} />
-            {observation ? <AnnotationSelector observation={observation} /> : null}
+            <div style={{display: "flex", flexWrap: "wrap", flexDirection: "row"}}>
+                {observations?.map(observation => 
+                <div key={observation.id}>
+                    <ObservationHero observation={observation} site={props.site} />
+                    {observation ? <AnnotationSelector observation={observation} /> : null}
+                </div>
+                )}
+            </div>
         </main>
     );
 }

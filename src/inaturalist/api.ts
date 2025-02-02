@@ -17,8 +17,9 @@ export async function getSites() {
     }
 }
 
-export async function getObservations() {
-    const response = await get('observations/');
+export async function getObservations(query: URLSearchParams) {
+    query.set('per_page', '10');
+    const response = await get(`observations?${query.toString()}`);
     if (!response.ok) {
         throw new Error('Could not load observations');
     }

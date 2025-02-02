@@ -13,7 +13,7 @@ function AppContent() {
       <Header site={site}/>
       <Route path='/'><Home/></Route>
       <Route path='/site-selection'><SiteSelectionPage site={site} setSite={setSite}/></Route>
-      <Route path='/annotator'><Annotator/></Route>
+      <Route path='/annotator'><Annotator site={site}/></Route>
     </>
   )
 }

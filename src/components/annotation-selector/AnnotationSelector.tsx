@@ -1,6 +1,6 @@
 import { useObservationControlledTerms } from "../../hooks/useObservationControlledTerms";
 
-type AnnotationSelectorProps = {
+interface AnnotationSelectorProps {
     observation: Observation
 }
 

@@ -1,9 +1,9 @@
 import { useControlledTerms } from "./useControlledTerms"
 
-type ObservationControlledTerms = {
-    data: ControlledTerm[];
-    status: "success" | "error" | "pending";
-    error: Error | null;
+interface ObservationControlledTerms {
+    data: ControlledTerm[],
+    status: "success" | "error" | "pending",
+    error: Error | null
 }
 
 export function useObservationControlledTerms(observation: Observation) : ObservationControlledTerms {
@@ -33,6 +33,6 @@ function controlledTermAppliesToObservation(observation: Observation, controlled
     if (!included) {
         return false;
     }
-    const excepted = controlledTerm.excepted_taxon_ids && controlledTerm.excepted_taxon_ids.some(x => observation.taxon.ancestor_ids.includes(x));
+    const excepted = controlledTerm.excepted_taxon_ids?.some(x => observation.taxon.ancestor_ids.includes(x));
     return !excepted;
 }

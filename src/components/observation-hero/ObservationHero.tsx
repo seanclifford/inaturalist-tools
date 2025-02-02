@@ -10,7 +10,7 @@ const ObservationHero: React.FC<ObservationHeroProps> = ({ observation, site }) 
         return <span>loading</span>;
     }
   const { id, photos, description, observed_on, user, taxon,  } = observation;
-  const firstPhoto = photos[0];
+  const firstPhoto = photos.length > 0 ? photos[0] : { url: '' };
 
   const url = new URL(site.url);
   url.pathname = `/observations/${id}`;

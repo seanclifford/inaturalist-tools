@@ -19,6 +19,8 @@ function Annotator(props: AnnotatorProps) {
     const [ submitedQueryString, setSubmitedQueryString ] = useState("");
     const { isPending, isError, data: observations, error } = useQuery({queryKey: ["observations", submitedQueryString], queryFn: () => getObservations(generateQueryString(submitedQueryString))});
 
+    const runQuery = () => setSubmitedQueryString(queryString);
+
     if (isPending) {
         return (<div>Loading...</div>);
     }
@@ -32,11 +34,10 @@ function Annotator(props: AnnotatorProps) {
             <div>
                 <label htmlFor="query">Observation query options:</label>
                 <input type="text" id="query" name="query" size={100} value={queryString} onChange={e => setQueryString(e.target.value)}/>
-                <button type="button" id="queryButton" name="queryButton" onClick={_ => setSubmitedQueryString(queryString)}>Run Query</button>
+                <button type="button" id="queryButton" name="queryButton" onClick={runQuery}>Run Query</button>
             </div>
             TODO
             <ul>
-                <li>Enter filter query string to start with (no ui yet to select all filters)</li>
                 <li>Select &quot;without annotation&quot; fields - ensure resulting query string includes this</li>
                 <li>Load the first x obs and display them in small row based? UI</li>
                 <li>allow select annotation - requires AUTH</li>

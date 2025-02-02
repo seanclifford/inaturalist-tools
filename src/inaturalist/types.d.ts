@@ -29,6 +29,7 @@ interface Observation {
     photos: Photo[];
     sounds: Sound[];
     indent_ancestor_ids: number[];
+    annotations: Annotation[];
 }
 
 interface Taxon {

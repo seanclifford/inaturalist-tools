@@ -4,7 +4,7 @@ interface AnnotationSelectorProps {
     observation: Observation
 }
 
-export function AnnotationSelector(props: AnnotationSelectorProps) {
+export function AnnotationSelector(props: AnnotationSelectorProps ) {
     const { status, error, data: observationControlledTerms } = useObservationControlledTerms(props.observation);
     if (status === "pending") {
         return(<div>Loading...</div>);
@@ -12,6 +12,8 @@ export function AnnotationSelector(props: AnnotationSelectorProps) {
     if (status === "error") {
         return(<div>Error: {error?.name ?? "unknown"} {error?.message}</div>);
     }
+
+    const observationSelectedAnnotationIds = props.observation.annotations.map(annotation => annotation.controlled_value_id);
 
     return(<>
         {observationControlledTerms.map(controlledTerm => {
@@ -21,7 +23,11 @@ export function AnnotationSelector(props: AnnotationSelectorProps) {
                     {controlledTerm.values.map(controlledTermValue => {
                         return(<li key={controlledTermValue.id}>
                             <label htmlFor={controlledTermValue.id.toString()}>{controlledTermValue.label}</label>
-                            <input type="checkbox" id={controlledTermValue.id.toString()} name={controlledTermValue.label} />
+                            <input 
+                                type="checkbox" 
+                                id={controlledTermValue.id.toString()} 
+                                name={controlledTermValue.label} 
+                                checked={observationSelectedAnnotationIds.some(id => id === controlledTermValue.id)}/>
                         </li>);
                     })}
                 </ul>

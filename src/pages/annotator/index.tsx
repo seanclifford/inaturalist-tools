@@ -42,7 +42,7 @@ function Annotator(props: AnnotatorProps) {
             </div>
             TODO
             <ul>
-                <li>Select &quot;without annotation&quot; fields - ensure resulting query string includes this</li>
+                <li>Select &quot;without annotation&quot; fields - ensure resulting query string includes it</li>
                 <li>Load the first x obs and display them in small row based? UI</li>
                 <li>allow select annotation - requires AUTH</li>
             </ul>

@@ -1,4 +1,5 @@
 import React from 'react';
+import getPhotoUrl from '../../inaturalist/photo-urls';
 
 interface ObservationHeroProps {
   observation?: Observation;
@@ -10,14 +11,14 @@ const ObservationHero: React.FC<ObservationHeroProps> = ({ observation, site }) 
         return <span>loading</span>;
     }
   const { id, photos, description, observed_on, user, taxon,  } = observation;
-  const firstPhoto = photos.length > 0 ? photos[0] : { url: '' };
+  const firstPhotoUrl = photos.length > 0 ? getPhotoUrl(photos[0], "small") : '';
 
   const url = new URL(site.url);
   url.pathname = `/observations/${id}`;
 
   return (
     <div style={{ position: 'relative', textAlign: 'center', color: 'white', width: '20vw' }}>
-      <img src={firstPhoto.url} alt="Observation" style={{ width: '100%' }} />
+      <img src={firstPhotoUrl} alt="Observation" style={{ width: '100%' }} />
       <div style={{ position: 'absolute', top: '10px', left: '10px' }}>
         <h2>{taxon?.name ?? description}</h2>
         <p>{new Date(observed_on).toLocaleDateString()}</p>

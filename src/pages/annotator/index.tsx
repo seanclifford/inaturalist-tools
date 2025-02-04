@@ -1,37 +1,21 @@
-import { useQuery } from "@tanstack/react-query";
-import { getObservations } from "../../inaturalist/api";
 import { useState } from "react"
-import ObservationHero from "../../components/observation-hero/ObservationHero";
-import { AnnotationSelector } from "../../components/annotation-selector/AnnotationSelector";
 import { getPageQueryString, setPageQueryString } from "./queryStrings";
+import AnnotatorGallery from "./AnnotatorGallery";
 
 interface AnnotatorProps {
     site: Site,
 }
 
-function generateQueryString(query: string) : URLSearchParams {
-    const searchParams = new URLSearchParams(query);
-    return searchParams;
-}
-
-function Annotator(props: AnnotatorProps) {
+function Annotator({site}: AnnotatorProps) {
 
     const [ queryString, setQueryString ] = useState(getPageQueryString());
     const [ submitedQueryString, setSubmitedQueryString ] = useState(queryString);
-    const { isPending, isError, data: observations, error } = useQuery({queryKey: ["observations", submitedQueryString], queryFn: () => getObservations(generateQueryString(submitedQueryString))});
-
+    
     const runQuery = () => {
         setPageQueryString(queryString);
         setSubmitedQueryString(queryString);
     };
-
-    if (isPending) {
-        return (<div>Loading...</div>);
-    }
-    if (isError) {
-        return (<div>Error: {error?.name ?? "unknown"} {error?.message}</div>);
-    }
-
+   
     return (
         <main>
             <h1>Annotator</h1>
@@ -46,14 +30,7 @@ function Annotator(props: AnnotatorProps) {
                 <li>Load the first x obs and display them in small row based? UI</li>
                 <li>allow select annotation - requires AUTH</li>
             </ul>
-            <div style={{display: "flex", flexWrap: "wrap", flexDirection: "row"}}>
-                {observations?.map(observation => 
-                <div key={observation.id}>
-                    <ObservationHero observation={observation} site={props.site} />
-                    {observation ? <AnnotationSelector observation={observation} /> : null}
-                </div>
-                )}
-            </div>
+            <AnnotatorGallery submitedQueryString={submitedQueryString} site={site} />
         </main>
     );
 }

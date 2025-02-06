@@ -17,7 +17,7 @@ const compat = new FlatCompat({
 });
 
 export default [{
-    ignores: ["**/dist", "**/eslint.config.mjs"],
+    ignores: ["**/dist", "**/eslint.config.mjs", "**/postcss.config.cjs"],
 }, ...fixupConfigRules(compat.extends(
     "eslint:recommended",
     "plugin:react/recommended",

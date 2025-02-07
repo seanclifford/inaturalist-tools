@@ -3,6 +3,7 @@ import { getObservations } from "../../inaturalist/api";
 
 import ObservationHero from "../../components/observation-hero/ObservationHero";
 import { AnnotationSelector } from "../../components/annotation-selector/AnnotationSelector";
+import { Group } from "@mantine/core";
 
 interface AnnotatorGalleryProps {
     submitedQueryString: string;
@@ -26,12 +27,12 @@ export default function AnnotatorGallery( {submitedQueryString, site}: Annotator
     }
 
     return (
-        <div style={{display: "flex", flexWrap: "wrap", flexDirection: "row"}}>
+        <Group align="flex-start">
             {observations?.map(observation => 
             <div key={observation.id}>
                 <ObservationHero observation={observation} site={site} />
                 {observation ? <AnnotationSelector observation={observation} /> : null}
             </div>
             )}
-        </div>);
+        </Group>);
 }

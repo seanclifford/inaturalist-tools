@@ -35,6 +35,7 @@ interface Observation {
 interface Taxon {
     id: number,
     name: string,
+    preferred_common_name:string,
     default_photo: TaxonPhoto,
     ancestor_ids: number[];
 }

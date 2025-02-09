@@ -22,7 +22,8 @@ export function useObservationControlledTerms(observation: Observation) : Observ
             if (controlledTermAppliesToObservation(observation, controlledTermValue))
                 controlledTermValues.push(controlledTermValue);
         }
-        observationControlledTerms.push({...controlledTerm, values: controlledTermValues});
+        if (controlledTermValues.length > 0)
+            observationControlledTerms.push({...controlledTerm, values: controlledTermValues});
     }
 
     return { status: "success", error, data: observationControlledTerms };

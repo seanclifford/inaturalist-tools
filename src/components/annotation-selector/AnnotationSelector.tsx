@@ -1,3 +1,4 @@
+import { Chip, Group, Stack, Title } from "@mantine/core";
 import { useObservationControlledTerms } from "../../hooks/useObservationControlledTerms";
 
 interface AnnotationSelectorProps {
@@ -15,23 +16,26 @@ export function AnnotationSelector(props: AnnotationSelectorProps ) {
 
     const observationSelectedAnnotationIds = props.observation.annotations.map(annotation => annotation.controlled_value_id);
 
-    return(<>
+    return(<Stack gap="md">
         {observationControlledTerms.map(controlledTerm => {
-            return(<div key={controlledTerm.id}>
-                <h2>{controlledTerm.label}</h2>
-                <ul>
-                    {controlledTerm.values.map(controlledTermValue => {
-                        return(<li key={controlledTermValue.id}>
-                            <label htmlFor={controlledTermValue.id.toString()}>{controlledTermValue.label}</label>
-                            <input 
-                                type="checkbox" 
-                                id={controlledTermValue.id.toString()} 
-                                name={controlledTermValue.label} 
-                                checked={observationSelectedAnnotationIds.some(id => id === controlledTermValue.id)}/>
-                        </li>);
-                    })}
-                </ul>
-            </div>);
+            return(
+                <Stack gap="xs" key={controlledTerm.id}>
+                    <Title size="md">{controlledTerm.label}</Title>
+                    <Chip.Group multiple={controlledTerm.multivalued}>
+                        <Group gap="xs">
+                        {controlledTerm.values.map(controlledTermValue => {
+                            return(
+                                <Chip 
+                                    value={controlledTermValue.id} 
+                                    checked={observationSelectedAnnotationIds.some(id => id === controlledTermValue.id)}>
+                                    {controlledTermValue.label}
+                                </Chip>
+                            );
+                        })}
+                        </Group>
+                    </Chip.Group>
+                </Stack>
+            );
         })}
-    </>);
+    </Stack>);
 }

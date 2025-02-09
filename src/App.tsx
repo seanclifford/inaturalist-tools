@@ -3,6 +3,7 @@ import { QueryClientProvider, QueryClient } from '@tanstack/react-query'
 import AppContent from './AppContent'
 import { MantineProvider } from '@mantine/core'
 import '@mantine/core/styles.css';
+import '@mantine/carousel/styles.css';
 
 function App() {
   const queryClient = new QueryClient()

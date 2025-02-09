@@ -4,6 +4,7 @@ import { getObservations } from "../../inaturalist/api";
 import ObservationHero from "../../components/observation-hero/ObservationHero";
 import { AnnotationSelector } from "../../components/annotation-selector/AnnotationSelector";
 import { Group } from "@mantine/core";
+import { Carousel } from "@mantine/carousel";
 
 interface AnnotatorGalleryProps {
     submitedQueryString: string;
@@ -27,12 +28,14 @@ export default function AnnotatorGallery( {submitedQueryString, site}: Annotator
     }
 
     return (
-        <Group align="flex-start">
+       
+        <Carousel slideGap="md" slideSize="33.33%" initialSlide={0}>
             {observations?.map(observation => 
-            <div key={observation.id}>
+            <Carousel.Slide key={observation.id}>
                 <ObservationHero observation={observation} site={site} />
                 {observation ? <AnnotationSelector observation={observation} /> : null}
-            </div>
+            </Carousel.Slide>
             )}
-        </Group>);
+        </Carousel>
+        );
 }

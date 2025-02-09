@@ -18,7 +18,7 @@ function Annotator({site}: AnnotatorProps) {
    
     return (
         <main>
-            <h1>Annotator</h1>
+            <b>Annotator</b>
             <div>
                 <label htmlFor="query">Observation query options:</label>
                 <input type="text" id="query" name="query" size={100} value={queryString} onChange={e => setQueryString(e.target.value)}/>
@@ -27,7 +27,6 @@ function Annotator({site}: AnnotatorProps) {
             TODO
             <ul>
                 <li>Select &quot;without annotation&quot; fields - ensure resulting query string includes it</li>
-                <li>Load the first x obs and display them in small row based? UI</li>
                 <li>allow select annotation - requires AUTH</li>
             </ul>
             <AnnotatorGallery submitedQueryString={submitedQueryString} site={site} />

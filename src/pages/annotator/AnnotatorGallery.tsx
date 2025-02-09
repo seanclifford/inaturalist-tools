@@ -29,7 +29,7 @@ export default function AnnotatorGallery( {submitedQueryString, site}: Annotator
 
     return (
        
-        <Carousel slideGap="md" slideSize="33.33%" initialSlide={0}>
+        <Carousel slideGap="md" slideSize="50vh" initialSlide={0}>
             {observations?.map(observation => 
             <Carousel.Slide key={observation.id}>
                 <ObservationHero observation={observation} site={site} />

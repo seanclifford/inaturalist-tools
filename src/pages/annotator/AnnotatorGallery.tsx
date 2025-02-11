@@ -3,7 +3,6 @@ import { getObservations } from "../../inaturalist/api";
 
 import ObservationHero from "../../components/observation-hero/ObservationHero";
 import { AnnotationSelector } from "../../components/annotation-selector/AnnotationSelector";
-import { Group } from "@mantine/core";
 import { Carousel } from "@mantine/carousel";
 
 interface AnnotatorGalleryProps {

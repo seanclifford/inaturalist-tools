@@ -26,6 +26,7 @@ export function AnnotationSelector(props: AnnotationSelectorProps ) {
                         {controlledTerm.values.map(controlledTermValue => {
                             return(
                                 <Chip 
+                                    key={controlledTermValue.id}
                                     value={controlledTermValue.id} 
                                     checked={observationSelectedAnnotationIds.some(id => id === controlledTermValue.id)}>
                                     {controlledTermValue.label}

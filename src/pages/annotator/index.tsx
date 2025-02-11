@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { getPageQueryString, setPageQueryString } from "./queryStrings";
 import AnnotatorGallery from "./AnnotatorGallery";
+import { Button, Group, TextInput, Title } from "@mantine/core";
 
 interface AnnotatorProps {
     site: Site,
@@ -18,12 +19,15 @@ function Annotator({site}: AnnotatorProps) {
    
     return (
         <main>
-            <b>Annotator</b>
-            <div>
-                <label htmlFor="query">Observation query options:</label>
-                <input type="text" id="query" name="query" size={100} value={queryString} onChange={e => setQueryString(e.target.value)}/>
-                <button type="button" id="queryButton" name="queryButton" onClick={runQuery}>Run Query</button>
-            </div>
+            <Title size="sm">Annotator</Title>
+            <Group>
+                <TextInput 
+                    label='Observation query options' 
+                    value={queryString} 
+                    inputSize="100"
+                    onChange={e => setQueryString(e.currentTarget.value)}/>
+                <Button onClick={runQuery}>Run Query</Button>
+            </Group>
             TODO
             <ul>
                 <li>Select &quot;without annotation&quot; fields - ensure resulting query string includes it</li>

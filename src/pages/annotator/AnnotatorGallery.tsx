@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { getObservations } from "../../inaturalist/api";
 
 import ObservationHero from "../../components/observation-hero/ObservationHero";
-import { AnnotationSelector } from "../../components/annotation-selector/AnnotationSelector";
+import { AnnotationSelector } from "./AnnotationSelector";
 import { Carousel } from "@mantine/carousel";
 
 interface AnnotatorGalleryProps {

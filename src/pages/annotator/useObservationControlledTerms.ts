@@ -1,10 +1,4 @@
-import { useControlledTerms } from "./useControlledTerms"
-
-interface ObservationControlledTerms {
-    data: ControlledTerm[],
-    status: "success" | "error" | "pending",
-    error: Error | null
-}
+import { useControlledTerms } from "../../hooks/useControlledTerms"
 
 export function useObservationControlledTerms(observation: Observation) : ObservationControlledTerms {
     const observationControlledTerms : ControlledTerm[] = [];

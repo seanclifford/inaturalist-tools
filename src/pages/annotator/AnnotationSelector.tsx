@@ -1,5 +1,5 @@
 import { Chip, Group, Stack, Title } from "@mantine/core";
-import { useObservationControlledTerms } from "../../hooks/useObservationControlledTerms";
+import { useObservationControlledTerms } from "./useObservationControlledTerms";
 
 interface AnnotationSelectorProps {
     observation: Observation

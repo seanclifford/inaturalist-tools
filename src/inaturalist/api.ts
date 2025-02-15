@@ -18,7 +18,7 @@ export async function getSites() {
 }
 
 export async function getObservations(query: URLSearchParams) {
-    query.set('per_page', '10');
+    query.set('per_page', '24');
     const response = await get(`observations?${query.toString()}`);
     if (!response.ok) {
         throw new Error('Could not load observations');

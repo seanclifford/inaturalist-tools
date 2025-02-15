@@ -8,10 +8,13 @@ interface AnnotatorObservationResult {
     error?: Error
 }
 
-export function useAnnotatorObservations(submitedQueryString: string) : AnnotatorObservationResult {
+export function useAnnotatorObservations(submitedQueryString: string, site: Site) : AnnotatorObservationResult {
     
     const generateQueryString = (query: string) : URLSearchParams =>{
         const searchParams = new URLSearchParams(query);
+        searchParams.append('locale', site.locale ?? navigator.language);
+        if (site.place_id)
+            searchParams.append('preferred_place_id', site.place_id.toString())
         return searchParams;
     };
 

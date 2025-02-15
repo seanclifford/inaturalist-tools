@@ -2,6 +2,7 @@ import React from 'react';
 import getPhotoUrl from '../../inaturalist/photo-urls';
 import { Anchor, Avatar, Center, Group, Image, Paper, Stack, Text, Box } from '@mantine/core';
 import { SquareArrowOutUpRight } from 'lucide-react';
+import { Carousel } from '@mantine/carousel';
 
 interface ObservationHeroProps {
   observation?: Observation;
@@ -13,7 +14,6 @@ const ObservationHero: React.FC<ObservationHeroProps> = ({ observation, site }) 
         return <span>loading</span>;
     }
   const { id, photos, user, taxon,  } = observation;
-  const firstPhotoUrl = photos.length > 0 ? getPhotoUrl(photos[0], "medium") : null;
 
   const url = new URL(site.url);
   url.pathname = `/observations/${id}`;
@@ -21,8 +21,17 @@ const ObservationHero: React.FC<ObservationHeroProps> = ({ observation, site }) 
   return (
     <Paper w='50vh' radius='md' shadow='sm' withBorder>
       <Box style={{position: 'relative'}} >
-        <Center h='50vh'>
-          <Image src={firstPhotoUrl} w='auto' maw='50vh' mah='50vh'/>
+        <Center h='50vh' style={{overflow: 'hidden'}}>
+          <Carousel h='50vh' orientation='vertical' align='start' withIndicators={photos.length>1} withControls={photos.length>1}>
+            {photos.map(photo => (
+              <Carousel.Slide key={photo.id}>
+                <Center h='50vh'>
+                  <Image src={getPhotoUrl(photo, "medium")}/>
+                </Center>
+              </Carousel.Slide>
+            ))}
+          </Carousel>
+          
         </Center>
         <Box style={{position: 'absolute', left:'0', top:'0', height:'100%', width:'100%', background: 'linear-gradient(0deg, rgba(0,0,0,0.3), rgba(0,0,0,0))'}}/>
         <Box style={{position: 'absolute', left:'10px', bottom:'10px', color:'white'}}>

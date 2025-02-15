@@ -26,7 +26,7 @@ const ObservationHero: React.FC<ObservationHeroProps> = ({ observation, site }) 
             {photos.map(photo => (
               <Carousel.Slide key={photo.id}>
                 <Center h='50vh'>
-                  <Image src={getPhotoUrl(photo, "medium")}/>
+                  <Image src={getPhotoUrl(photo, "medium")} style={{height: '50vh', width:'50vh'}}/>
                 </Center>
               </Carousel.Slide>
             ))}

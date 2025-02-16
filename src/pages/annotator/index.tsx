@@ -5,10 +5,11 @@ import { Button, Group, TextInput, Title } from "@mantine/core";
 import { useAnnotatorObservations } from "./useAnnotatorObservations";
 
 interface AnnotatorProps {
-    site: Site,
+    site: Site
+    currentUser?: User
 }
 
-function Annotator({site}: AnnotatorProps) {
+function Annotator({site, currentUser}: AnnotatorProps) {
 
     const [ queryString, setQueryString ] = useState(getPageQueryString());
     const [ submitedQueryString, setSubmitedQueryString ] = useState(queryString);
@@ -37,7 +38,12 @@ function Annotator({site}: AnnotatorProps) {
             </ul>
             {status === "pending" ? <div key='loading'>Loading...</div> : null}
             {status === "error" ? <div key='loading'>Error: {error?.name ?? "unknown"} {error?.message}</div> : null}
-            {status === "sucess" && annotatorObservations ? <AnnotatorGallery annotatorObservations={annotatorObservations} site={site} /> : null }
+            {status === "sucess" && annotatorObservations ? 
+                <AnnotatorGallery 
+                    annotatorObservations={annotatorObservations} 
+                    site={site}
+                    currentUser={currentUser}/> 
+                : null }
         </main>
     );
 }

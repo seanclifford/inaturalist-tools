@@ -105,6 +105,8 @@ interface Annotation {
     controlled_attribute_id: number;
     controlled_value_id: number;
     vote_score: number;
+    user_id: number;
+    user: User;
 }
 
 interface ControlledTermBase {

@@ -1,8 +1,8 @@
 import { useState } from "react"
-import { getPageQueryString, setPageQueryString } from "./queryStrings";
 import AnnotatorGallery from "./AnnotatorGallery";
 import { Button, Group, TextInput, Title } from "@mantine/core";
 import { useAnnotatorObservations } from "./useAnnotatorObservations";
+import { usePageQueryString } from "../../hooks/usePageQueryString";
 
 interface AnnotatorProps {
     site: Site
@@ -11,12 +11,12 @@ interface AnnotatorProps {
 
 function Annotator({site, currentUser}: AnnotatorProps) {
 
-    const [ queryString, setQueryString ] = useState(getPageQueryString());
+    const [ queryString, setQueryString ] = usePageQueryString();
     const [ submitedQueryString, setSubmitedQueryString ] = useState(queryString);
     const {annotatorObservations, status, error} = useAnnotatorObservations(submitedQueryString, site);
 
     const runQuery = () => {
-        setPageQueryString(queryString);
+        setQueryString(queryString);
         setSubmitedQueryString(queryString);
     };
    

@@ -1,4 +1,5 @@
-import { Avatar, Chip, Group, Stack, Title } from "@mantine/core";
+import { Chip, Group, Stack, Title } from "@mantine/core";
+import UserAccount from "../../components/user-account/UserAccount";
 
 interface AnnotationSelectorProps {
     observation: Observation
@@ -16,7 +17,7 @@ export function AnnotationSelector({observation, observationControlledTerms, cur
                     {annotation && annotation.user_id !== currentUser?.id ?
                         <Group gap="xs">
                             <Chip checked={true} variant="light">{controlledTerm.values.find(t => t.id == annotation.controlled_value_id)?.label}</Chip>
-                            <Avatar size="sm" src={annotation.user?.icon} radius="xl" />
+                            <UserAccount size="sm" user={annotation.user} />
                         </Group>
                     : 
                         <Chip.Group multiple={controlledTerm.multivalued}>

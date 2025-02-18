@@ -1,8 +1,9 @@
 import React from 'react';
 import getPhotoUrl from '../../inaturalist/photo-urls';
-import { Anchor, Avatar, Center, Group, Image, Paper, Stack, Text, Box } from '@mantine/core';
+import { Anchor, Center, Group, Image, Paper, Stack, Text, Box } from '@mantine/core';
 import { SquareArrowOutUpRight } from 'lucide-react';
 import { Carousel } from '@mantine/carousel';
+import UserAccount from '../user-account/UserAccount';
 
 interface ObservationHeroProps {
   observation?: Observation;
@@ -48,9 +49,8 @@ const ObservationHero: React.FC<ObservationHeroProps> = ({ observation, site }) 
       </Box>
       <Stack p="xs">
         
-        <Group gap='xs'>
-          <Avatar src={user.icon} alt={user.login} bd='darkgrey solid thin'/>
-          <Text>{user.login}</Text>
+        <Group>
+          <UserAccount user={user} />
           <Anchor ml='auto' href={url.toString()} target='_blank' rel='noreferrer' aria-label={`See it on ${site.name}`}>
             <SquareArrowOutUpRight/>
           </Anchor>

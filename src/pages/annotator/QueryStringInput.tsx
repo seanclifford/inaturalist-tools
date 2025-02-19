@@ -12,12 +12,12 @@ export default function QueryStringInput({pageQueryString, runQuery} : QueryStri
 
     return (
         <Group>
-                        <TextInput 
-                            label='Observation query options' 
-                            value={queryString} 
-                            inputSize="100"
-                            onChange={e => setQueryString(e.currentTarget.value)}/>
-                        <Button onClick={() => runQuery(queryString)}>Run Query</Button>
-                    </Group>
+            <TextInput 
+                label='Observation query options' 
+                value={queryString} 
+                inputSize="100"
+                onChange={e => setQueryString(e.currentTarget.value)}/>
+            <Button onClick={() => runQuery(queryString)}>Run Query</Button>
+        </Group>
     )
 }

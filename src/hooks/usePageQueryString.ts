@@ -7,17 +7,21 @@ export function usePageQueryString() : [string, (_: string) => void] {
     let pageQueryString = pageUrl.search.substring(1);
     if (pageQueryString === "") {
         pageQueryString = savedQueryString
-        applyToWindowHistory(savedQueryString);
+        applyToWindowHistory(savedQueryString, true);
     }
 
     return [pageQueryString, (val: string) => {
-        applyToWindowHistory(val);
+        applyToWindowHistory(val, false);
         saveQueryString(val);
     }];
 }
 
-function applyToWindowHistory(pageQueryString: string) {
+function applyToWindowHistory(pageQueryString: string, replace: boolean) {
     const pageUrl = new URL(window.location.href);
     pageUrl.search = '?' + pageQueryString;
-    window.history.pushState({}, '', pageUrl.toString());
+    if(replace) {
+        window.history.replaceState({}, '', pageUrl.toString())
+    } else {
+        window.history.pushState({}, '', pageUrl.toString());
+    }
 }

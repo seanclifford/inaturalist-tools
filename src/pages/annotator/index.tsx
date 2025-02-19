@@ -1,8 +1,9 @@
 import { useState } from "react"
 import AnnotatorGallery from "./AnnotatorGallery";
-import { Button, Group, TextInput, Title } from "@mantine/core";
+import { Title } from "@mantine/core";
 import { useAnnotatorObservations } from "./useAnnotatorObservations";
 import { usePageQueryString } from "../../hooks/usePageQueryString";
+import QueryStringInput from "./QueryStringInput";
 
 interface AnnotatorProps {
     site: Site
@@ -11,26 +12,19 @@ interface AnnotatorProps {
 
 function Annotator({site, currentUser}: AnnotatorProps) {
 
-    const [ queryString, setQueryString ] = usePageQueryString();
-    const [ submitedQueryString, setSubmitedQueryString ] = useState(queryString);
+    const [ pageQueryString, setPageQueryString ] = usePageQueryString();
+    const [ submitedQueryString, setSubmitedQueryString ] = useState(pageQueryString);
     const {annotatorObservations, status, error} = useAnnotatorObservations(submitedQueryString, site);
 
-    const runQuery = () => {
-        setQueryString(queryString);
+    const runQuery = (queryString: string) => {
+        setPageQueryString(queryString);
         setSubmitedQueryString(queryString);
     };
    
     return (
         <main>
             <Title size="sm">Annotator</Title>
-            <Group>
-                <TextInput 
-                    label='Observation query options' 
-                    value={queryString} 
-                    inputSize="100"
-                    onChange={e => setQueryString(e.currentTarget.value)}/>
-                <Button onClick={runQuery}>Run Query</Button>
-            </Group>
+            <QueryStringInput pageQueryString={pageQueryString} runQuery={runQuery} />
             TODO
             <ul>
                 <li>Select &quot;without annotation&quot; fields - ensure resulting query string includes it</li>

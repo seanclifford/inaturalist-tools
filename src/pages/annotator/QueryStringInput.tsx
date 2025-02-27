@@ -1,5 +1,5 @@
 import { Button, Group, TextInput } from "@mantine/core";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 interface QueryStringInputProps {
     pageQueryString: string
@@ -9,6 +9,11 @@ interface QueryStringInputProps {
 export default function QueryStringInput({pageQueryString, runQuery} : QueryStringInputProps)
 {
     const [ queryString, setQueryString ] = useState(pageQueryString);
+
+    useEffect(() =>
+    {
+        setQueryString(pageQueryString);
+    }, [pageQueryString]);
 
     return (
         <Group>

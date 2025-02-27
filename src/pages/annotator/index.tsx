@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import AnnotatorGallery from "./AnnotatorGallery";
 import { Title } from "@mantine/core";
 import { useAnnotatorObservations } from "./useAnnotatorObservations";
@@ -15,11 +15,10 @@ function Annotator({site, currentUser}: AnnotatorProps) {
     const [ pageQueryString, setPageQueryString ] = usePageQueryString();
     const [ submitedQueryString, setSubmitedQueryString ] = useState(pageQueryString);
     const {annotatorObservations, status, error} = useAnnotatorObservations(submitedQueryString, site);
-
     const runQuery = (queryString: string) => {
         setPageQueryString(queryString);
-        setSubmitedQueryString(queryString);
     };
+    useEffect(() => setSubmitedQueryString(pageQueryString), [pageQueryString]);
    
     return (
         <main>

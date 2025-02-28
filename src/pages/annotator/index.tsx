@@ -24,11 +24,6 @@ function Annotator({site, currentUser}: AnnotatorProps) {
         <main>
             <Title size="sm">Annotator</Title>
             <QueryStringInput pageQueryString={pageQueryString} runQuery={runQuery} />
-            TODO
-            <ul>
-                <li>Select &quot;without annotation&quot; fields - ensure resulting query string includes it</li>
-                <li>allow select annotation - requires AUTH</li>
-            </ul>
             {status === "pending" ? <div key='loading'>Loading...</div> : null}
             {status === "error" ? <div key='loading'>Error: {error?.name ?? "unknown"} {error?.message}</div> : null}
             {status === "sucess" && annotatorObservations ? 

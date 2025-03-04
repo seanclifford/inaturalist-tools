@@ -6,9 +6,10 @@ interface AnnotatorGalleryProps {
     annotatorObservations: AnnotatorObservation[]
     site: Site
     currentUser?: User
+    annotationFunctions?: AnnotationFunctions
 }
 
-export default function AnnotatorGallery( {annotatorObservations, site, currentUser}: AnnotatorGalleryProps ) {
+export default function AnnotatorGallery( {annotatorObservations, site, currentUser, annotationFunctions}: AnnotatorGalleryProps ) {
     return (
         <Carousel slideGap="md" slideSize="50vh" initialSlide={0}>
             {annotatorObservations?.map(annotatorObservation => {
@@ -20,9 +21,11 @@ export default function AnnotatorGallery( {annotatorObservations, site, currentU
                     site={site} />
                 {observation && controlledTerms ? 
                     <AnnotationSelector 
-                        observationControlledTerms={controlledTerms} 
-                        observation={observation} 
-                        currentUser={currentUser} /> 
+                        observationControlledTerms={controlledTerms}
+                        observation={observation}
+                        currentUser={currentUser}
+                        annotationFunctions={annotationFunctions}
+                        /> 
                     : null}
             </Carousel.Slide>)
             })}

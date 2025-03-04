@@ -1,9 +1,19 @@
-import { getFetchOptions } from "./fetch-options.js";
+import { getFetchOptions, postAuthFetchOptions,  deleteAuthFetchOptions } from "./fetch-options.js";
 import { limit } from "./api-limiter.js";
 
-async function get(path: string) : Promise<Response>
+function get(path: string) : Promise<Response>
 {
-    return await limit(async () => {return await fetch(import.meta.env.VITE_INATURALIST_API_URL + path, getFetchOptions());});
+    return limit(async () => {return await fetch(import.meta.env.VITE_INATURALIST_API_URL + path, getFetchOptions());});
+}
+
+function post(path: string, bodyObj: any, authToken: string) : Promise<Response>
+{
+    return limit(async () => { return await fetch(import.meta.env.VITE_INATURALIST_API_URL + path, postAuthFetchOptions(bodyObj, authToken));});
+}
+
+function remove(path: string, authToken: string) : Promise<Response>
+{
+    return limit(async () => { return await fetch(import.meta.env.VITE_INATURALIST_API_URL + path, deleteAuthFetchOptions(authToken));});
 }
 
 export async function getSites() {
@@ -67,6 +77,23 @@ export async function getControlledTerms() {
     } else {
         const body = await response.json() as ApiResult<ControlledTerm>;
         return body.results;
+    }
+}
+
+export async function addAnnotation(annotation: any) : Promise<Annotation> {
+    const response = await post('annotations/', annotation, import.meta.env.VITE_AUTH_TOKEN);
+    if (!response.ok) {
+        throw new Error('Could not save annotation');
+    }
+    else {
+        return await response.json();
+    }
+}
+
+export async function deleteAnnotation(uuid: string) {
+    const response = await remove(`annotations/${uuid}`, import.meta.env.VITE_AUTH_TOKEN);
+    if (!response.ok) {
+        throw new Error('Could not delete annotation');
     }
 }
 

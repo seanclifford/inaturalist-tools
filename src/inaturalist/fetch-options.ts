@@ -33,6 +33,16 @@ export const getAuthFetchOptions = (authToken : string) => {
     };
 };
 
+export const deleteAuthFetchOptions = (authToken : string) => {
+    return {
+        method: 'DELETE',
+        headers: {
+            'X-Via': USER_AGENT,
+            'Authorization': authToken
+        }
+    };
+};
+
 export const postFetchOptions = (bodyObj : any) => {
     return {
         method: 'POST',

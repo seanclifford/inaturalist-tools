@@ -102,6 +102,7 @@ interface Identification {
 
 interface Annotation {
     id: number;
+    uuid: string;
     controlled_attribute_id: number;
     controlled_value_id: number;
     vote_score: number;

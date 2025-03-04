@@ -1,14 +1,16 @@
-import { useQuery } from "@tanstack/react-query"
-import { getObservations } from "../../inaturalist/api";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
+import { addAnnotation, deleteAnnotation, getObservations } from "../../inaturalist/api";
 import { useControlledTerms } from "../../hooks/useControlledTerms";
 
 interface AnnotatorObservationResult {
     annotatorObservations?: AnnotatorObservation[]
     status: "sucess" | "error" | "pending"
     error?: Error
+    annotationFunctions?: AnnotationFunctions
 }
 
 export function useAnnotatorObservations(submitedQueryString: string, site: Site) : AnnotatorObservationResult {
+    
     
     const generateQueryString = (query: string) : URLSearchParams =>{
         const searchParams = new URLSearchParams(query);
@@ -21,6 +23,44 @@ export function useAnnotatorObservations(submitedQueryString: string, site: Site
     const { status: observationStatus, data: observations, error: observationError } = useQuery({queryKey: ["observations", submitedQueryString], queryFn: () => getObservations(generateQueryString(submitedQueryString))});
     const { status: controlledTermStatus, error:controlledTermsError, data: controlledTerms } = useControlledTerms();
 
+    const queryClient = useQueryClient();
+    const addAnnotationMutation = useMutation({
+        mutationFn: (params: SaveAnnotationParams) => {
+            return addAnnotation({
+                controlled_attribute_id: params.controlledTermId,
+                controlled_value_id: params.controlledValueId,
+                resource_id: params.observationId,
+                resource_type: 'Observation'
+            });
+        },
+        onSuccess: (annotation: any) => {
+            const observationsRefreshed = observations?.map(obs => {
+                const observationCopy = {... obs};
+                if (annotation.resource_id === obs.id)
+                    observationCopy.annotations.push(annotation);
+                return observationCopy;
+            });
+            queryClient.setQueryData(['observations', submitedQueryString], observationsRefreshed)
+        },
+    });
+
+    const deleteAnnotationMutation = useMutation({
+        mutationFn: (params: DeleteAnnotationParams) => {
+            return deleteAnnotation(params.annotationId);
+        },
+        onSuccess: (_, params: DeleteAnnotationParams) => {
+            const observationsRefreshed = observations?.map(obs => {
+                const observationCopy = {... obs};
+                if (params.observationId === obs.id)
+                {
+                    observationCopy.annotations = observationCopy.annotations.filter(a => a.uuid !== params.annotationId);
+                }
+                return observationCopy;
+            });
+            queryClient.setQueryData(['observations', submitedQueryString], observationsRefreshed)
+        },
+    });
+
     if (observationStatus === "pending" || controlledTermStatus === "pending")
         return {status:"pending"};
     if (observationStatus === "error")
@@ -31,8 +71,9 @@ export function useAnnotatorObservations(submitedQueryString: string, site: Site
     const annotatorObservations = observations
         .map(observation => { return {observation:observation, controlledTerms: getTaxonControlledTerms(observation.taxon, controlledTerms), status: "success" } as AnnotatorObservation})
         .filter(annotatorObservation => annotatorObservation.controlledTerms.length > 0);
+
     
-    return {annotatorObservations, status:"sucess"};
+    return {annotatorObservations, status:"sucess", annotationFunctions: {saveAnnotation: addAnnotationMutation.mutateAsync, deleteAnnotation: deleteAnnotationMutation.mutateAsync}};
 }
 
 function getTaxonControlledTerms(taxon: Taxon, controlledTerms: ControlledTerm[]) : ControlledTerm[] {

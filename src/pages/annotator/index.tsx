@@ -14,7 +14,7 @@ function Annotator({site, currentUser}: AnnotatorProps) {
 
     const [ pageQueryString, setPageQueryString ] = usePageQueryString();
     const [ submitedQueryString, setSubmitedQueryString ] = useState(pageQueryString);
-    const {annotatorObservations, status, error} = useAnnotatorObservations(submitedQueryString, site);
+    const {annotatorObservations, status, error, annotationFunctions} = useAnnotatorObservations(submitedQueryString, site);
     const runQuery = (queryString: string) => {
         setPageQueryString(queryString);
     };
@@ -28,9 +28,10 @@ function Annotator({site, currentUser}: AnnotatorProps) {
             {status === "error" ? <div key='loading'>Error: {error?.name ?? "unknown"} {error?.message}</div> : null}
             {status === "sucess" && annotatorObservations ? 
                 <AnnotatorGallery 
-                    annotatorObservations={annotatorObservations} 
+                    annotatorObservations={annotatorObservations}
                     site={site}
-                    currentUser={currentUser}/> 
+                    currentUser={currentUser}
+                    annotationFunctions={annotationFunctions}/> 
                 : null }
         </main>
     );

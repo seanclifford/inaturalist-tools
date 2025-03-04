@@ -31,7 +31,7 @@ function defaultAuthentication() : Authentication {
     };*/
     return { //temp user before full implementation
         isAuthenticated: true,
-        authToken: "fake-auth-token",
+        authToken: import.meta.env.VITE_AUTH_TOKEN,
         currentUser: {
             id: 2259721,
             login: "agoranomos",

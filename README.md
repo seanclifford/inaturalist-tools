@@ -14,8 +14,8 @@ If you have an iNaturalist instance running locally for testing you can create a
 This tool is made to allow for fast annotations, targeting mobile devices mainly, but with full keyboard support for laptops and desktops
 
 ## TODO List
-- Temporary Authentication (copy JWT over)
-- Allow annotations to actually be submitted 
+- Prevent multi-select on non multi select controlled terms
+- Loading indication on Chips when adding/removing annotation
 - Display correctly on mobile where aspect ratio is thinner than 1:2
 - Remove title bar and vertical scrolling
 - Zoom images functionality (how to do this?) - maybe click and hold = zoomed, then drag to move image around somehow

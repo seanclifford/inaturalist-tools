@@ -12,12 +12,14 @@ export default function SelectableChip({observation, controlledTerm, controlledV
 
     const {saveAnnotation, deleteAnnotation} = annotationFunctions || {};
     
+    const checked = yourAnnotations.some(annotation => annotation?.controlled_value_id === controlledValue.id);
+
     return (
         <Chip 
             value={controlledValue.id} 
-            checked={yourAnnotations.some(annotation => annotation?.controlled_value_id === controlledValue.id)}
-            onChange={async (checked) => {
-                if (checked && saveAnnotation) {
+            checked={checked}
+            onChange={async () => {
+                if (!checked && saveAnnotation) {
                     await saveAnnotation({observationId: observation.id, controlledTermId:controlledTerm.id, controlledValueId:controlledValue.id});
                 } else {
                     const annotation = yourAnnotations.find(a => a.controlled_value_id === controlledValue.id);

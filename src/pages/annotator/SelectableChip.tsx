@@ -1,4 +1,5 @@
 import { Chip } from "@mantine/core";
+import { useState } from "react";
 
 interface SelectableChipProps {
     observation: Observation,
@@ -10,7 +11,9 @@ interface SelectableChipProps {
 
 export default function SelectableChip({observation, controlledTerm, controlledValue, yourAnnotations, annotationFunctions}: SelectableChipProps) {
 
-    const {saveAnnotation, deleteAnnotation} = annotationFunctions || {};
+    const [processing, setProcessing] = useState(false);
+
+    const {saveAnnotation, deleteAnnotation} = annotationFunctions ?? {};
     
     const checked = yourAnnotations.some(annotation => annotation?.controlled_value_id === controlledValue.id);
 
@@ -18,16 +21,19 @@ export default function SelectableChip({observation, controlledTerm, controlledV
         <Chip 
             value={controlledValue.id} 
             checked={checked}
-            onChange={async () => {
+            onChange={() => {
                 if (!checked && saveAnnotation) {
-                    await saveAnnotation({observationId: observation.id, controlledTermId:controlledTerm.id, controlledValueId:controlledValue.id});
+                    setProcessing(true);
+                    saveAnnotation({observationId: observation.id, controlledTermId:controlledTerm.id, controlledValueId:controlledValue.id}).finally(() => setProcessing(false)).catch(console.error);
                 } else {
                     const annotation = yourAnnotations.find(a => a.controlled_value_id === controlledValue.id);
                     if (annotation && deleteAnnotation) {
-                        await deleteAnnotation({observationId: observation.id, annotationId: annotation.uuid});
+                        setProcessing(true);
+                        deleteAnnotation({observationId: observation.id, annotationId: annotation.uuid}).finally(() => setProcessing(false)).catch(console.error);
                     }
                 }
             }}>
+            {processing ? "..." : ""}
             {controlledValue.label}
         </Chip>
     );

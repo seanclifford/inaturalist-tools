@@ -24,14 +24,14 @@ interface User {
 
 interface Observation {
     id: number,
-    taxon: Taxon;
-    description: string;
-    observed_on: Date;
-    user: User;
-    photos: Photo[];
-    sounds: Sound[];
-    indent_ancestor_ids: number[];
-    annotations: Annotation[];
+    taxon: Taxon
+    description: string
+    observed_on: Date
+    user: User
+    photos: Photo[]
+    sounds: Sound[]
+    indent_ancestor_ids: number[]
+    annotations: Annotation[]
 }
 
 interface Taxon {
@@ -100,14 +100,12 @@ interface Identification {
     body: string;
 }
 
-interface Annotation {
-    id: number;
-    uuid: string;
-    controlled_attribute_id: number;
-    controlled_value_id: number;
-    vote_score: number;
-    user_id: number;
-    user: User;
+interface Annotation extends AnnotationBase {
+    id: number
+    uuid: string
+    vote_score: number
+    user_id: number
+    user: User
 }
 
 interface ControlledTermBase {

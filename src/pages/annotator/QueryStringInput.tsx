@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 
 interface QueryStringInputProps {
     pageQueryString: string
-    runQuery: (queryString: string) => void
+    runQuery: (_: string) => void
 }
 
 export default function QueryStringInput({pageQueryString, runQuery} : QueryStringInputProps)

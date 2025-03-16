@@ -6,7 +6,7 @@ function get(path: string) : Promise<Response>
     return limit(async () => {return await fetch(import.meta.env.VITE_INATURALIST_API_URL + path, getFetchOptions());});
 }
 
-function post(path: string, bodyObj: any, authToken: string) : Promise<Response>
+function post<T>(path: string, bodyObj: T, authToken: string) : Promise<Response>
 {
     return limit(async () => { return await fetch(import.meta.env.VITE_INATURALIST_API_URL + path, postAuthFetchOptions(bodyObj, authToken));});
 }
@@ -80,18 +80,18 @@ export async function getControlledTerms() {
     }
 }
 
-export async function addAnnotation(annotation: any) : Promise<Annotation> {
-    const response = await post('annotations/', annotation, import.meta.env.VITE_AUTH_TOKEN);
+export async function addAnnotation(annotation: AddAnnotationParams) : Promise<NewAnnotation> {
+    const response = await post('annotations/', annotation, import.meta.env.VITE_AUTH_TOKEN as string);
     if (!response.ok) {
         throw new Error('Could not save annotation');
     }
     else {
-        return await response.json();
+        return await response.json() as NewAnnotation;
     }
 }
 
 export async function deleteAnnotation(uuid: string) {
-    const response = await remove(`annotations/${uuid}`, import.meta.env.VITE_AUTH_TOKEN);
+    const response = await remove(`annotations/${uuid}`, import.meta.env.VITE_AUTH_TOKEN as string);
     if (!response.ok) {
         throw new Error('Could not delete annotation');
     }

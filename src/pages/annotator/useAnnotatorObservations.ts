@@ -9,8 +9,7 @@ interface AnnotatorObservationResult {
     annotationFunctions?: AnnotationFunctions
 }
 
-export function useAnnotatorObservations(submitedQueryString: string, site: Site) : AnnotatorObservationResult {
-    
+export function useAnnotatorObservations(submitedQueryString: string, site: Site, currentUser?: User) : AnnotatorObservationResult {
     
     const generateQueryString = (query: string) : URLSearchParams =>{
         const searchParams = new URLSearchParams(query);
@@ -33,11 +32,14 @@ export function useAnnotatorObservations(submitedQueryString: string, site: Site
                 resource_type: 'Observation'
             });
         },
-        onSuccess: (annotation: any) => {
+        onError(error) {
+            console.error(error);
+        },
+        onSuccess: (annotation: NewAnnotation) => {
             const observationsRefreshed = observations?.map(obs => {
                 const observationCopy = {... obs};
                 if (annotation.resource_id === obs.id)
-                    observationCopy.annotations.push(annotation);
+                    observationCopy.annotations.push({... annotation, vote_score: 0, user: currentUser!});
                 return observationCopy;
             });
             queryClient.setQueryData(['observations', submitedQueryString], observationsRefreshed)
@@ -47,6 +49,9 @@ export function useAnnotatorObservations(submitedQueryString: string, site: Site
     const deleteAnnotationMutation = useMutation({
         mutationFn: (params: DeleteAnnotationParams) => {
             return deleteAnnotation(params.annotationId);
+        },
+        onError(error) {
+            console.error(error);
         },
         onSuccess: (_, params: DeleteAnnotationParams) => {
             const observationsRefreshed = observations?.map(obs => {

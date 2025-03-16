@@ -14,7 +14,7 @@ function Annotator({site, currentUser}: AnnotatorProps) {
 
     const [ pageQueryString, setPageQueryString ] = usePageQueryString();
     const [ submitedQueryString, setSubmitedQueryString ] = useState(pageQueryString);
-    const {annotatorObservations, status, error, annotationFunctions} = useAnnotatorObservations(submitedQueryString, site);
+    const {annotatorObservations, status, error, annotationFunctions} = useAnnotatorObservations(submitedQueryString, site, currentUser);
     const runQuery = (queryString: string) => {
         setPageQueryString(queryString);
     };

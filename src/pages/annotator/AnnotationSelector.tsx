@@ -1,6 +1,6 @@
 import { Chip, Group, Stack, Title } from "@mantine/core";
 import UserAccount from "../../components/user-account/UserAccount";
-import SelectableChip from "./SelectableChip";
+import { EditableChipGroup } from "./EditableChipGroup";
 
 interface AnnotationSelectorProps {
     observation: Observation
@@ -27,21 +27,14 @@ export function AnnotationSelector({observation, observationControlledTerms, cur
                         </Group>
                     )}
                     {othersAnnotations.length == 0 || (controlledTerm.multivalued && controlledTerm.values.length > othersAnnotations.length) ? 
-                        <Chip.Group multiple={controlledTerm.multivalued}>
-                            <Group gap="xs">
-                            {controlledTerm.values.filter(x => othersAnnotations.every(y => y.controlled_value_id != x.id)).map(controlledTermValue => {
-                                return(
-                                    <SelectableChip 
-                                        observation={observation}
-                                        controlledTerm={controlledTerm}
-                                        controlledValue={controlledTermValue}
-                                        yourAnnotations={yourAnnotations} 
-                                        annotationFunctions={annotationFunctions}
-                                        key={controlledTermValue.id} />
-                                );
-                            })}
-                            </Group>
-                        </Chip.Group>
+                        <EditableChipGroup
+                            observation={observation}
+                            controlledTerm={controlledTerm}
+                            yourAnnotations={yourAnnotations}
+                            othersAnnotations={othersAnnotations}
+                            annotationFunctions={annotationFunctions}
+                            />
+                        
                     : null}
                     </Group>
                 </Stack>

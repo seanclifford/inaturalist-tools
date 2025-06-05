@@ -2,6 +2,7 @@ import { Chip } from "@mantine/core";
 import { useState } from "react";
 
 interface SelectableChipProps {
+    disabled: boolean
     observation: Observation,
     controlledTerm: ControlledTerm,
     controlledValue: ControlledTermValue,
@@ -9,7 +10,7 @@ interface SelectableChipProps {
     annotationFunctions?: AnnotationFunctions
 }
 
-export default function SelectableChip({observation, controlledTerm, controlledValue, yourAnnotations, annotationFunctions}: SelectableChipProps) {
+export default function SelectableChip({disabled, observation, controlledTerm, controlledValue, yourAnnotations, annotationFunctions}: SelectableChipProps) {
 
     const [processing, setProcessing] = useState(false);
 
@@ -21,6 +22,7 @@ export default function SelectableChip({observation, controlledTerm, controlledV
         <Chip 
             value={controlledValue.id} 
             checked={checked}
+            disabled={disabled}
             onChange={() => {
                 if (!checked && saveAnnotation) {
                     setProcessing(true);

@@ -1,5 +1,6 @@
 import { Chip, Group } from "@mantine/core";
 import SelectableChip from "./SelectableChip";
+import { useState } from "react";
 
 interface EditableChipGroupProps {
     observation: Observation
@@ -10,6 +11,8 @@ interface EditableChipGroupProps {
 }
 
 export function EditableChipGroup({observation, controlledTerm, yourAnnotations, othersAnnotations, annotationFunctions}:EditableChipGroupProps) {
+    const [processing, setProcessing] = useState(false);
+    
     const yourSelectedIds = yourAnnotations
                                 .filter(x => x.controlled_attribute_id === controlledTerm.id)
                                 .map(annotation => annotation.controlled_value_id.toString());
@@ -24,27 +27,45 @@ export function EditableChipGroup({observation, controlledTerm, yourAnnotations,
         const smartSaveAnnotation = async (params : SaveAnnotationParams) => {
             const existingAnnotation = yourAnnotations.find(a => a.controlled_attribute_id === controlledTerm.id && a.controlled_value_id !== params.controlledValueId);
             
-            if (existingAnnotation){
-                console.log(`Deleting existing annotation ${existingAnnotation.uuid}`)
-                await deleteAnnotation({observationId: observation.id, annotationId: existingAnnotation.uuid});
+            setProcessing(true);
+            try {
+                if (existingAnnotation){
+                    console.log(`Deleting existing annotation ${existingAnnotation.uuid}`)
+                    await deleteAnnotation({observationId: observation.id, annotationId: existingAnnotation.uuid});
+                }
+                else {
+                    console.log('No existing annotation found to delete')
+                }
+                const result = await saveAnnotation(params);
+                return result;
             }
-            else {
-                console.log('No existing annotation found to delete')
+            finally {
+                setProcessing(false);
             }
-            return await saveAnnotation(params);
         };
 
-        customAnnotationFunctions = {saveAnnotation:smartSaveAnnotation, deleteAnnotation};
+        const smartDeleteAnnotation = async (params: DeleteAnnotationParams) => {
+            setProcessing(true);
+            try {
+                await deleteAnnotation(params);
+            }
+            finally {
+                setProcessing(false);
+            }
+        };
+
+        customAnnotationFunctions = {saveAnnotation:smartSaveAnnotation, deleteAnnotation:smartDeleteAnnotation};
     }
 
     
     return (
-        <Chip.Group multiple={controlledTerm.multivalued} 
+        <Chip.Group multiple={controlledTerm.multivalued}
                     value={yourSelectedIds}>
             <Group gap="xs">
             {availableControlledTermValues.map(controlledTermValue => {
                 return(
                     <SelectableChip 
+                        disabled={processing}
                         observation={observation}
                         controlledTerm={controlledTerm}
                         controlledValue={controlledTermValue}

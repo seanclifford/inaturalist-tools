@@ -1,13 +1,13 @@
 header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0.5rem 1rem;
-    background-color: #eee;
-    border-bottom: 1px solid #ddd;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 0.5rem 1rem;
+	background-color: #eee;
+	border-bottom: 1px solid #ddd;
 }
 
 .links {
-    display: flex;
-    gap: 1rem;
+	display: flex;
+	gap: 1rem;
 }

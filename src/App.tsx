@@ -1,20 +1,20 @@
-import './App.css'
-import { QueryClientProvider, QueryClient } from '@tanstack/react-query'
-import AppContent from './AppContent'
-import { MantineProvider } from '@mantine/core'
-import '@mantine/core/styles.css';
-import '@mantine/carousel/styles.css';
+import "./App.css";
+import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
+import AppContent from "./AppContent";
+import { MantineProvider } from "@mantine/core";
+import "@mantine/core/styles.css";
+import "@mantine/carousel/styles.css";
 
 function App() {
-  const queryClient = new QueryClient()
+	const queryClient = new QueryClient();
 
-  return (
-    <QueryClientProvider client={queryClient}>
-      <MantineProvider>
-        <AppContent/>
-      </MantineProvider>
-    </QueryClientProvider>
-  )
+	return (
+		<QueryClientProvider client={queryClient}>
+			<MantineProvider>
+				<AppContent />
+			</MantineProvider>
+		</QueryClientProvider>
+	);
 }
 
-export default App
+export default App;

@@ -16,7 +16,6 @@ This tool is made to allow for fast annotations, targeting mobile devices mainly
 ## TODO List
 - Infinite scroll loading
 - Display correctly on mobile where aspect ratio is thinner than 1:2
-- Remove title bar and vertical scrolling
 - Zoom images functionality (how to do this?) - maybe click and hold = zoomed, then drag to move image around somehow
 - Improve method for changing images?
 - Welcome page for first time with some suggested filters

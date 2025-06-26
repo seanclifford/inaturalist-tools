@@ -11,9 +11,12 @@ function AppContent() {
   const [authentication] = useAuthentication()
   return (
     <>
+      <Route path='/'>
       <Header site={site}/>
-      <Route path='/'><Home/></Route>
-      <Route path='/site-selection'><SiteSelectionPage site={site} setSite={setSite}/></Route>
+      <Home/></Route>
+      <Route path='/site-selection'>
+      <Header site={site}/>
+      <SiteSelectionPage site={site} setSite={setSite}/></Route>
       <Route path='/annotator'><Annotator site={site} currentUser={authentication.currentUser}/></Route>
     </>
   )

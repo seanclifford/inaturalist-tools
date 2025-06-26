@@ -26,7 +26,7 @@ function Annotator({site, currentUser}: AnnotatorProps) {
     return (
         <main>
             <ObservationFilter opened={settingsOpened} close={closeSettings} pageQueryString={pageQueryString} runQuery={runQuery} />
-            <SettingsIcon onClick={openSettings}/>
+            <SettingsIcon fill="white" size={40} onClick={openSettings} style={{position:"fixed", right:"16px", top: "16px", zIndex: "1"}}/>
             {status === "pending" ? <div key='loading'>Loading...</div> : null}
             {status === "error" ? <div key='loading'>Error: {error?.name ?? "unknown"} {error?.message}</div> : null}
             {status === "sucess" && annotatorObservations ? 

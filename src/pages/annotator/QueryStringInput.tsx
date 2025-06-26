@@ -17,12 +17,13 @@ export default function QueryStringInput({pageQueryString, runQuery} : QueryStri
 
     return (
         <Group>
-            <TextInput 
-                label='Observation query options' 
+            <TextInput
+                label='Observation query options'
                 value={queryString} 
                 inputSize="100"
-                onChange={e => setQueryString(e.currentTarget.value)}/>
-            <Button onClick={() => runQuery(queryString)}>Run Query</Button>
+                onChange={e => setQueryString(e.currentTarget.value)}
+                onKeyDown={e => e.key == "Enter" && runQuery(queryString)}/>
+            <Button onClick={() => runQuery(queryString)}>Go</Button>
         </Group>
     )
 }

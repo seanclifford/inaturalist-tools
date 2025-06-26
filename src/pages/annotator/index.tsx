@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react"
 import AnnotatorGallery from "./AnnotatorGallery";
-import { Title } from "@mantine/core";
 import { useAnnotatorObservations } from "./useAnnotatorObservations";
 import { usePageQueryString } from "../../hooks/usePageQueryString";
-import QueryStringInput from "./QueryStringInput";
+import { useDisclosure } from "@mantine/hooks";
+import { SettingsIcon } from "lucide-react";
+import ObservationFilter from "../../components/observation-filter/ObservationFilter";
 
 interface AnnotatorProps {
     site: Site
@@ -14,16 +15,18 @@ function Annotator({site, currentUser}: AnnotatorProps) {
 
     const [ pageQueryString, setPageQueryString ] = usePageQueryString();
     const [ submitedQueryString, setSubmitedQueryString ] = useState(pageQueryString);
+    const [settingsOpened, {open: openSettings, close: closeSettings}] = useDisclosure(false);
     const {annotatorObservations, status, error, annotationFunctions} = useAnnotatorObservations(submitedQueryString, site, currentUser);
     const runQuery = (queryString: string) => {
         setPageQueryString(queryString);
+        closeSettings();
     };
     useEffect(() => setSubmitedQueryString(pageQueryString), [pageQueryString]);
    
     return (
         <main>
-            <Title size="sm">Annotator</Title>
-            <QueryStringInput pageQueryString={pageQueryString} runQuery={runQuery} />
+            <ObservationFilter opened={settingsOpened} close={closeSettings} pageQueryString={pageQueryString} runQuery={runQuery} />
+            <SettingsIcon onClick={openSettings}/>
             {status === "pending" ? <div key='loading'>Loading...</div> : null}
             {status === "error" ? <div key='loading'>Error: {error?.name ?? "unknown"} {error?.message}</div> : null}
             {status === "sucess" && annotatorObservations ? 

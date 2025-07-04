@@ -56,11 +56,11 @@ export function useAnnotatorObservations(
 		onSuccess: (annotation: NewAnnotation) => {
 			const observationsRefreshed = observations?.map((obs) => {
 				const observationCopy = { ...obs };
-				if (annotation.resource_id === obs.id)
+				if (annotation.resource_id === obs.id && currentUser)
 					observationCopy.annotations.push({
 						...annotation,
 						vote_score: 0,
-						user: currentUser!,
+						user: currentUser,
 					});
 				return observationCopy;
 			});

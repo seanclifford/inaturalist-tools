@@ -8,7 +8,7 @@ interface INatSiteProps {
 function INatSite({ site, isShort = false }: INatSiteProps) {
 	return (
 		<div className="inat_site">
-			<img className="site_img" src={site.icon_url} />
+			<img className="site_img" src={site.icon_url} alt={site.name} />
 			<span className="site_title">
 				<div>
 					{isShort && site.site_name_short ? site.site_name_short : site.name}

@@ -11,7 +11,7 @@ export const getFetchOptions = () => {
 	};
 };
 
-export const postAuthFetchOptions = (bodyObj: any, authToken: string) => {
+export const postAuthFetchOptions = (bodyObj: unknown, authToken: string) => {
 	return {
 		method: "POST",
 		headers: {
@@ -43,7 +43,7 @@ export const deleteAuthFetchOptions = (authToken: string) => {
 	};
 };
 
-export const postFetchOptions = (bodyObj: any) => {
+export const postFetchOptions = (bodyObj: unknown) => {
 	return {
 		method: "POST",
 		headers: {

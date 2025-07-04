@@ -15,6 +15,7 @@ function SitesList({ sites, currentSite, setCurrentSite }: SitesListProps) {
 				`list-item${site.id === currentSite.id ? " selected-item" : ""}`
 			}
 			onClick={() => setCurrentSite(site)}
+			onKeyDown={e => e.key === "Enter" && setCurrentSite(site)}
 		>
 			<INatSite site={site} />
 		</div>

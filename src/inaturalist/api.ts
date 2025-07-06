@@ -93,11 +93,16 @@ export async function getControlledTerms() {
 
 export async function addAnnotation(
 	annotation: AddAnnotationParams,
+	authentication: Authentication,
 ): Promise<NewAnnotation> {
+	if (!authentication.isAuthenticated || !authentication.authToken) {
+		throw new Error("Authentication is required to add an annotation");
+	}
+
 	const response = await post(
 		"annotations/",
 		annotation,
-		import.meta.env.VITE_AUTH_TOKEN as string,
+		authentication.authToken,
 	);
 	if (!response.ok) {
 		throw new Error("Could not save annotation");
@@ -105,10 +110,16 @@ export async function addAnnotation(
 	return (await response.json()) as NewAnnotation;
 }
 
-export async function deleteAnnotation(uuid: string) {
+export async function deleteAnnotation(
+	uuid: string,
+	authentication: Authentication,
+) {
+	if (!authentication.isAuthenticated || !authentication.authToken) {
+		throw new Error("Authentication is required to add an annotation");
+	}
 	const response = await remove(
 		`annotations/${uuid}`,
-		import.meta.env.VITE_AUTH_TOKEN as string,
+		authentication.authToken,
 	);
 	if (!response.ok) {
 		throw new Error("Could not delete annotation");

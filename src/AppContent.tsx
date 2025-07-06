@@ -20,7 +20,7 @@ function AppContent() {
 				<SiteSelectionPage site={site} setSite={setSite} />
 			</Route>
 			<Route path="/annotator">
-				<Annotator site={site} currentUser={authentication.currentUser} />
+				<Annotator site={site} authentication={authentication} />
 			</Route>
 		</>
 	);

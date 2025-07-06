@@ -1,11 +1,5 @@
 import { useEffect, useState } from "react";
 
-interface Authentication {
-	isAuthenticated: boolean;
-	authToken?: string;
-	currentUser?: User;
-}
-
 export default function useAuthentication(): [
 	Authentication,
 	React.Dispatch<React.SetStateAction<Authentication>>,

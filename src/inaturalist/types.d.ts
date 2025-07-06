@@ -5,14 +5,20 @@ interface ApiResult<T> {
 	results: T[];
 }
 
+interface Authentication {
+	isAuthenticated: boolean;
+	authToken?: string;
+	currentUser?: User;
+}
+
 interface Site {
 	id: number;
 	name: string;
 	site_name_short: string;
 	url: string;
 	icon_url: string;
-	place_id: number;
-	locale: string;
+	place_id?: number;
+	locale?: string;
 }
 
 interface User {

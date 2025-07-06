@@ -8,17 +8,17 @@ import ObservationFilter from "../../components/observation-filter/ObservationFi
 
 interface AnnotatorProps {
 	site: Site;
-	currentUser?: User;
+	authentication: Authentication;
 }
 
-function Annotator({ site, currentUser }: AnnotatorProps) {
+function Annotator({ site, authentication }: AnnotatorProps) {
 	const [pageQueryString, setPageQueryString] = usePageQueryString();
 	const [submitedQueryString, setSubmitedQueryString] =
 		useState(pageQueryString);
 	const [settingsOpened, { open: openSettings, close: closeSettings }] =
 		useDisclosure(false);
 	const { annotatorObservations, status, error, annotationFunctions } =
-		useAnnotatorObservations(submitedQueryString, site, currentUser);
+		useAnnotatorObservations(submitedQueryString, site, authentication);
 	const runQuery = (queryString: string) => {
 		setPageQueryString(queryString);
 		closeSettings();
@@ -49,7 +49,7 @@ function Annotator({ site, currentUser }: AnnotatorProps) {
 				<AnnotatorGallery
 					annotatorObservations={annotatorObservations}
 					site={site}
-					currentUser={currentUser}
+					currentUser={authentication.currentUser}
 					annotationFunctions={annotationFunctions}
 				/>
 			) : null}

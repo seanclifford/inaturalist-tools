@@ -16,7 +16,7 @@ interface AnnotatorObservationResult {
 export function useAnnotatorObservations(
 	submitedQueryString: string,
 	site: Site,
-	currentUser?: User,
+	authentication: Authentication,
 ): AnnotatorObservationResult {
 	const generateQueryString = (query: string): URLSearchParams => {
 		const searchParams = new URLSearchParams(query);
@@ -43,12 +43,15 @@ export function useAnnotatorObservations(
 	const queryClient = useQueryClient();
 	const addAnnotationMutation = useMutation({
 		mutationFn: (params: SaveAnnotationParams) => {
-			return addAnnotation({
-				controlled_attribute_id: params.controlledTermId,
-				controlled_value_id: params.controlledValueId,
-				resource_id: params.observationId,
-				resource_type: "Observation",
-			});
+			return addAnnotation(
+				{
+					controlled_attribute_id: params.controlledTermId,
+					controlled_value_id: params.controlledValueId,
+					resource_id: params.observationId,
+					resource_type: "Observation",
+				},
+				authentication,
+			);
 		},
 		onError(error) {
 			console.error(error);
@@ -56,11 +59,11 @@ export function useAnnotatorObservations(
 		onSuccess: (annotation: NewAnnotation) => {
 			const observationsRefreshed = observations?.map((obs) => {
 				const observationCopy = { ...obs };
-				if (annotation.resource_id === obs.id && currentUser)
+				if (annotation.resource_id === obs.id && authentication.currentUser)
 					observationCopy.annotations.push({
 						...annotation,
 						vote_score: 0,
-						user: currentUser,
+						user: authentication.currentUser,
 					});
 				return observationCopy;
 			});
@@ -73,7 +76,7 @@ export function useAnnotatorObservations(
 
 	const deleteAnnotationMutation = useMutation({
 		mutationFn: (params: DeleteAnnotationParams) => {
-			return deleteAnnotation(params.annotationId);
+			return deleteAnnotation(params.annotationId, authentication);
 		},
 		onError(error) {
 			console.error(error);

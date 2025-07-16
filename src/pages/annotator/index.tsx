@@ -5,6 +5,7 @@ import { usePageQueryString } from "../../hooks/usePageQueryString";
 import { useDisclosure } from "@mantine/hooks";
 import { SettingsIcon } from "lucide-react";
 import ObservationFilter from "../../components/observation-filter/ObservationFilter";
+import QueryStringInput from "./QueryStringInput";
 
 interface AnnotatorProps {
 	site: Site;
@@ -27,32 +28,46 @@ function Annotator({ site, authentication }: AnnotatorProps) {
 
 	return (
 		<main>
-			<ObservationFilter
-				opened={settingsOpened}
-				close={closeSettings}
-				pageQueryString={pageQueryString}
-				runQuery={runQuery}
-			/>
-			<SettingsIcon
-				fill="white"
-				size={40}
-				onClick={openSettings}
-				style={{ position: "fixed", right: "16px", top: "16px", zIndex: "1" }}
-			/>
-			{status === "pending" ? <div key="loading">Loading...</div> : null}
-			{status === "error" ? (
-				<div key="loading">
-					Error: {error?.name ?? "unknown"} {error?.message}
-				</div>
-			) : null}
-			{status === "sucess" && annotatorObservations ? (
-				<AnnotatorGallery
-					annotatorObservations={annotatorObservations}
-					site={site}
-					currentUser={authentication.currentUser}
-					annotationFunctions={annotationFunctions}
+			{pageQueryString ? (
+				<>
+					<ObservationFilter
+						opened={settingsOpened}
+						close={closeSettings}
+						pageQueryString={pageQueryString}
+						runQuery={runQuery}
+					/>
+					<SettingsIcon
+						fill="white"
+						size={40}
+						onClick={openSettings}
+						style={{
+							position: "fixed",
+							right: "16px",
+							top: "16px",
+							zIndex: "1",
+						}}
+					/>
+					{status === "pending" ? <div key="loading">Loading...</div> : null}
+					{status === "error" ? (
+						<div key="loading">
+							Error: {error?.name ?? "unknown"} {error?.message}
+						</div>
+					) : null}
+					{status === "sucess" && annotatorObservations ? (
+						<AnnotatorGallery
+							annotatorObservations={annotatorObservations}
+							site={site}
+							currentUser={authentication.currentUser}
+							annotationFunctions={annotationFunctions}
+						/>
+					) : null}
+				</>
+			) : (
+				<QueryStringInput
+					pageQueryString={pageQueryString}
+					runQuery={runQuery}
 				/>
-			) : null}
+			)}
 		</main>
 	);
 }

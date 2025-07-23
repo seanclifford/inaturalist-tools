@@ -4,7 +4,7 @@ import { useAnnotatorObservations } from "./useAnnotatorObservations";
 import { usePageQueryString } from "../../hooks/usePageQueryString";
 import { useDisclosure } from "@mantine/hooks";
 import { SettingsIcon } from "lucide-react";
-import ObservationFilter from "../../components/observation-filter/ObservationFilter";
+import ObservationFilterModal from "../../components/observation-filter/ObservationFilterModal";
 import QueryStringInput from "./QueryStringInput";
 
 interface AnnotatorProps {
@@ -30,7 +30,7 @@ function Annotator({ site, authentication }: AnnotatorProps) {
 		<main>
 			{pageQueryString ? (
 				<>
-					<ObservationFilter
+					<ObservationFilterModal
 						opened={settingsOpened}
 						close={closeSettings}
 						pageQueryString={pageQueryString}

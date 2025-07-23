@@ -1,19 +1,19 @@
 import { Modal, Stack } from "@mantine/core";
 import QueryStringInput from "../../pages/annotator/QueryStringInput";
 
-interface ObservationFilterProps {
+interface ObservationFilterModalProps {
 	opened: boolean;
 	close: () => void;
 	pageQueryString: string;
 	runQuery: (_: string) => void;
 }
 
-export default function ObservationFilter({
+export default function ObservationFilterModal({
 	opened,
 	close,
 	pageQueryString,
 	runQuery,
-}: ObservationFilterProps) {
+}: ObservationFilterModalProps) {
 	return (
 		<Modal
 			opened={opened}

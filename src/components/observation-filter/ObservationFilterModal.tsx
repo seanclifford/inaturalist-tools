@@ -1,5 +1,5 @@
-import { Modal, Stack } from "@mantine/core";
-import QueryStringInput from "../../pages/annotator/QueryStringInput";
+import { Modal } from "@mantine/core";
+import ObservationFilter from "./ObservationFilter";
 
 interface ObservationFilterModalProps {
 	opened: boolean;
@@ -22,12 +22,10 @@ export default function ObservationFilterModal({
 			centered
 			size="lg"
 		>
-			<Stack gap="xs">
-				<QueryStringInput
-					pageQueryString={pageQueryString}
-					runQuery={runQuery}
-				/>
-			</Stack>
+			<ObservationFilter
+				pageQueryString={pageQueryString}
+				runQuery={runQuery}
+			/>
 		</Modal>
 	);
 }

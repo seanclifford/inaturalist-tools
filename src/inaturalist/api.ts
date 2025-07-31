@@ -73,6 +73,15 @@ export async function getTaxa() {
 	return body.results;
 }
 
+export async function getTaxaAutocomplete(query: URLSearchParams) {
+	const response = await get(`taxa/autocomplete?${query.toString()}`);
+	if (!response.ok) {
+		throw new Error("Could not load taxa");
+	}
+	const body = (await response.json()) as ApiResult<Taxon>;
+	return body.results;
+}
+
 export async function getUsers() {
 	const response = await get("users/");
 	if (!response.ok) {

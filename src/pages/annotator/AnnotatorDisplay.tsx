@@ -33,6 +33,7 @@ export default function AnnotatorDisplay({
 	return (
 		<>
 			<ObservationFilterModal
+				site={site}
 				opened={settingsOpened}
 				close={closeSettings}
 				pageQueryString={pageQueryString}

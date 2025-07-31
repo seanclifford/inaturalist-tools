@@ -2,6 +2,7 @@ import { Modal } from "@mantine/core";
 import ObservationFilter from "./ObservationFilter";
 
 interface ObservationFilterModalProps {
+	site: Site;
 	opened: boolean;
 	close: () => void;
 	pageQueryString: string;
@@ -9,6 +10,7 @@ interface ObservationFilterModalProps {
 }
 
 export default function ObservationFilterModal({
+	site,
 	opened,
 	close,
 	pageQueryString,
@@ -23,6 +25,7 @@ export default function ObservationFilterModal({
 			size="lg"
 		>
 			<ObservationFilter
+				site={site}
 				pageQueryString={pageQueryString}
 				runQuery={runQuery}
 			/>

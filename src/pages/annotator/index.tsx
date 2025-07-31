@@ -21,6 +21,7 @@ function Annotator({ site, authentication }: AnnotatorProps) {
 				/>
 			) : (
 				<ObservationFilter
+					site={site}
 					pageQueryString={pageQueryString}
 					runQuery={setPageQueryString}
 				/>

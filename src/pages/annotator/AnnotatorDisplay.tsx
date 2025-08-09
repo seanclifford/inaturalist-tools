@@ -4,6 +4,7 @@ import { useAnnotatorObservations } from "./useAnnotatorObservations";
 import { useDisclosure } from "@mantine/hooks";
 import { SettingsIcon } from "lucide-react";
 import ObservationFilterModal from "../../components/observation-filter/ObservationFilterModal";
+import { useCurrentUser } from "../../hooks/useCurrentUser";
 
 interface AnnotatorDisplayProps {
 	site: Site;
@@ -18,12 +19,13 @@ export default function AnnotatorDisplay({
 	pageQueryString,
 	setPageQueryString,
 }: AnnotatorDisplayProps) {
+	const currentUser = useCurrentUser(authentication);
 	const [submitedQueryString, setSubmitedQueryString] =
 		useState(pageQueryString);
 	const [settingsOpened, { open: openSettings, close: closeSettings }] =
 		useDisclosure(false);
 	const { annotatorObservations, status, error, annotationFunctions } =
-		useAnnotatorObservations(submitedQueryString, site, authentication);
+		useAnnotatorObservations(submitedQueryString, site, currentUser);
 	const runQuery = (queryString: string) => {
 		setPageQueryString(queryString);
 		closeSettings();
@@ -56,11 +58,11 @@ export default function AnnotatorDisplay({
 					Error: {error?.name ?? "unknown"} {error?.message}
 				</div>
 			) : null}
-			{status === "sucess" && annotatorObservations ? (
+			{status === "success" && annotatorObservations ? (
 				<AnnotatorGallery
 					annotatorObservations={annotatorObservations}
 					site={site}
-					currentUser={authentication.currentUser}
+					currentUser={currentUser}
 					annotationFunctions={annotationFunctions}
 				/>
 			) : null}

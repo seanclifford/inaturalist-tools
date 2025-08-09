@@ -5,7 +5,7 @@ import { EditableChipGroup } from "./EditableChipGroup";
 interface AnnotationSelectorProps {
 	observation: Observation;
 	observationControlledTerms: ControlledTerm[];
-	currentUser?: User;
+	currentUser: User | null;
 	annotationFunctions?: AnnotationFunctions;
 }
 

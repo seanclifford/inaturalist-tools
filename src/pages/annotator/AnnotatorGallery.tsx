@@ -5,7 +5,7 @@ import { Carousel } from "@mantine/carousel";
 interface AnnotatorGalleryProps {
 	annotatorObservations: AnnotatorObservation[];
 	site: Site;
-	currentUser?: User;
+	currentUser: User | null;
 	annotationFunctions?: AnnotationFunctions;
 }
 

@@ -5,12 +5,13 @@ import { Route } from "wouter";
 import useSite from "./hooks/useSite";
 import useAuthentication from "./hooks/useAuthentication";
 import Annotator from "./pages/annotator";
+import { AuthContext } from "./Contexts";
 
 function AppContent() {
 	const [site, setSite] = useSite();
-	const [authentication] = useAuthentication();
+	const [authentication] = useAuthentication(site);
 	return (
-		<>
+		<AuthContext value={authentication}>
 			<Route path="/">
 				<Header site={site} />
 				<Home />
@@ -22,7 +23,9 @@ function AppContent() {
 			<Route path="/annotator">
 				<Annotator site={site} authentication={authentication} />
 			</Route>
-		</>
+			<Route path="/oauth-redirect">
+			</Route>
+		</AuthContext>
 	);
 }
 

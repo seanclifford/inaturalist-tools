@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 function useSite(): [Site, React.Dispatch<React.SetStateAction<Site>>] {
-	const [site, saveSite] = useState(loadSiteFromStore());
+	const [site, saveSite] = useState(() => loadSiteFromStore());
 
 	useEffect(() => {
 		saveSiteToStore(site);

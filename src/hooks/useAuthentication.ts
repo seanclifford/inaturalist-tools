@@ -1,45 +1,82 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import {
+	authenticate,
+	getApiToken,
+	requestApiToken,
+	isAuthenticated,
+	getApiTokenExpiry,
+} from "../inaturalist/auth";
 
-export default function useAuthentication(): [
-	Authentication,
-	React.Dispatch<React.SetStateAction<Authentication>>,
-] {
-	const [authentication, saveAuthentication] = useState(
+export default function useAuthentication(
+	currentSite: Site,
+): [Authentication, () => void] {
+	const [authentication, saveAuthentication] = useState(() =>
 		loadAuthenticationFromStore(),
 	);
+	const refreshAuthTimeoutId = useRef(0);
 
 	useEffect(() => {
-		saveAuthenticationToStore(authentication);
-	}, [authentication]);
+		if (authentication.isAuthenticated) {
+			const tokenExpiresIn = authentication.authToken
+				? getApiTokenExpiry(authentication.authToken) - Date.now() - 60000 // Subtract 1 minute for safety
+				: 0;
 
-	return [authentication, saveAuthentication];
+			if (tokenExpiresIn <= 0) {
+				refreshAuthToken(currentSite, authentication, saveAuthentication);
+			} else {
+				refreshAuthTimeoutId.current = setTimeout(
+					() =>
+						refreshAuthToken(currentSite, authentication, saveAuthentication),
+					tokenExpiresIn,
+				);
+			}
+		} else {
+			clearTimeout(refreshAuthTimeoutId.current);
+		}
+		return () => {
+			clearTimeout(refreshAuthTimeoutId.current);
+		};
+	}, [authentication, currentSite]);
+
+	function logout() {
+		saveAuthentication(unauthenticated());
+	}
+
+	return [authentication, logout];
+}
+
+function refreshAuthToken(
+	currentSite: Site,
+	authentication: Authentication,
+	saveAuthentication: (auth: Authentication) => void,
+) {
+	requestApiToken(currentSite).then((apiToken) => {
+		if (apiToken) {
+			saveAuthentication({
+				...authentication,
+				authToken: apiToken,
+			});
+		}
+	});
 }
 
 function loadAuthenticationFromStore(): Authentication {
-	const localStorageSiteJson = localStorage.getItem("authentication");
+	if (!isAuthenticated()) {
+		return unauthenticated();
+	}
 
-	return localStorageSiteJson
-		? (JSON.parse(localStorageSiteJson) as Authentication)
-		: defaultAuthentication();
-}
+	const authToken = getApiToken();
 
-function saveAuthenticationToStore(site: Authentication) {
-	localStorage.setItem("authentication", JSON.stringify(site));
-}
-
-function defaultAuthentication(): Authentication {
-	/*return {
-        isAuthenticated: false,
-    };*/
 	return {
-		//temp user before full implementation
 		isAuthenticated: true,
-		authToken: import.meta.env.VITE_AUTH_TOKEN as string | undefined,
-		currentUser: {
-			id: 2259721,
-			login: "agoranomos",
-			name: "Sean Clifford",
-			icon: "https://static.inaturalist.org/attachments/users/icons/2259721/thumb.jpg?1608018428",
-		},
+		authToken: authToken,
+		login: authenticate,
+	};
+}
+
+function unauthenticated(): Authentication {
+	return {
+		isAuthenticated: false,
+		login: authenticate,
 	};
 }

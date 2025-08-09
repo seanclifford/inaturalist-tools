@@ -5,10 +5,12 @@ import {
 	getObservations,
 } from "../../inaturalist/api";
 import { useControlledTerms } from "../../hooks/useControlledTerms";
+import { useContext } from "react";
+import { AuthContext } from "../../Contexts";
 
 interface AnnotatorObservationResult {
 	annotatorObservations?: AnnotatorObservation[];
-	status: "sucess" | "error" | "pending";
+	status: LoadingStatus;
 	error?: Error;
 	annotationFunctions?: AnnotationFunctions;
 }
@@ -16,8 +18,9 @@ interface AnnotatorObservationResult {
 export function useAnnotatorObservations(
 	submitedQueryString: string,
 	site: Site,
-	authentication: Authentication,
+	currentUser: User | null,
 ): AnnotatorObservationResult {
+	const authentication = useContext(AuthContext);
 	const generateQueryString = (query: string): URLSearchParams => {
 		const searchParams = new URLSearchParams(query);
 		searchParams.append("locale", site.locale ?? navigator.language);
@@ -59,11 +62,11 @@ export function useAnnotatorObservations(
 		onSuccess: (annotation: NewAnnotation) => {
 			const observationsRefreshed = observations?.map((obs) => {
 				const observationCopy = { ...obs };
-				if (annotation.resource_id === obs.id && authentication.currentUser)
+				if (annotation.resource_id === obs.id && currentUser)
 					observationCopy.annotations.push({
 						...annotation,
 						vote_score: 0,
-						user: authentication.currentUser,
+						user: currentUser,
 					});
 				return observationCopy;
 			});
@@ -122,7 +125,7 @@ export function useAnnotatorObservations(
 
 	return {
 		annotatorObservations,
-		status: "sucess",
+		status: "success",
 		annotationFunctions: {
 			saveAnnotation: addAnnotationMutation.mutateAsync,
 			deleteAnnotation: deleteAnnotationMutation.mutateAsync,

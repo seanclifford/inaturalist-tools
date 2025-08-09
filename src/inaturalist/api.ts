@@ -2,6 +2,7 @@ import {
 	getFetchOptions,
 	postAuthFetchOptions,
 	deleteAuthFetchOptions,
+	getAuthFetchOptions,
 } from "./fetch-options.js";
 import { limit } from "./api-limiter.js";
 
@@ -10,6 +11,15 @@ function get(path: string): Promise<Response> {
 		return await fetch(
 			import.meta.env.VITE_INATURALIST_API_URL + path,
 			getFetchOptions(),
+		);
+	});
+}
+
+function getAuth(path: string, authToken: string): Promise<Response> {
+	return limit(async () => {
+		return await fetch(
+			import.meta.env.VITE_INATURALIST_API_URL + path,
+			getAuthFetchOptions(authToken),
 		);
 	});
 }
@@ -34,6 +44,19 @@ function remove(path: string, authToken: string): Promise<Response> {
 			deleteAuthFetchOptions(authToken),
 		);
 	});
+}
+
+export async function getCurrentUser(authentication: Authentication) {
+	if (!authentication.isAuthenticated || !authentication.authToken) {
+		throw new Error("Authentication is required to get current user");
+	}
+
+	const response = await getAuth("users/me", authentication.authToken);
+	if (!response.ok) {
+		throw new Error("Could not load current user");
+	}
+	const body = (await response.json()) as ApiResult<User>;
+	return body.results[0];
 }
 
 export async function getSites() {

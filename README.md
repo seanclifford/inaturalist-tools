@@ -14,13 +14,21 @@ If you have an iNaturalist instance running locally for testing you can create a
 This tool is made to allow for fast annotations, targeting mobile devices mainly, but with full keyboard support for laptops and desktops
 
 ## TODO List
+- Deploy to public site
 - Infinite scroll loading
 - Display correctly on mobile where aspect ratio is thinner than 1:2
 - Zoom images functionality (how to do this?) - maybe click and hold = zoomed, then drag to move image around somehow
 - Improve method for changing images?
 - Welcome page for first time with some suggested filters
 - Settings to choose filters
+    - Taxa
+    - Place
+    - Without Annotation
+    - User
+    - Project
+    - Unreviewed
 - Settings to choose site
+- Allow marking observation as reviewed
 - Annotation voting for others annotations
 - Full Authentication
 - Audio observation support

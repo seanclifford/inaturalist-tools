@@ -1,3 +1,4 @@
+import "./Annotator.css";
 import { usePageQueryString } from "../../hooks/usePageQueryString";
 import ObservationFilter from "../../components/observation-filter/ObservationFilter";
 import AnnotatorDisplay from "./AnnotatorDisplay";

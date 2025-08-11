@@ -6,3 +6,7 @@
 main {
 	padding: 0 2rem;
 }
+
+main.annotator {
+	padding: 0;
+}

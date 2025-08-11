@@ -1,4 +1,3 @@
-import "./Annotator.css";
 import { usePageQueryString } from "../../hooks/usePageQueryString";
 import ObservationFilter from "../../components/observation-filter/ObservationFilter";
 import AnnotatorDisplay from "./AnnotatorDisplay";
@@ -12,7 +11,7 @@ function Annotator({ site, authentication }: AnnotatorProps) {
 	const [pageQueryString, setPageQueryString] = usePageQueryString();
 
 	return (
-		<main>
+		<main className="annotator">
 			{pageQueryString ? (
 				<AnnotatorDisplay
 					site={site}
@@ -21,11 +20,13 @@ function Annotator({ site, authentication }: AnnotatorProps) {
 					setPageQueryString={setPageQueryString}
 				/>
 			) : (
+				<Stack p="md" gap="xs">
 				<ObservationFilter
 					site={site}
 					pageQueryString={pageQueryString}
 					runQuery={setPageQueryString}
 				/>
+				</Stack>
 			)}
 		</main>
 	);

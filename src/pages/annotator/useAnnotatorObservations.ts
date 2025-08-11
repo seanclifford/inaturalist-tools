@@ -6,7 +6,7 @@ import {
 } from "../../inaturalist/api";
 import { useControlledTerms } from "../../hooks/useControlledTerms";
 import { useContext } from "react";
-import { AuthContext } from "../../Contexts";
+import { AuthContext, CurrentUserContext, SiteContext } from "../../Contexts";
 
 interface AnnotatorObservationResult {
 	annotatorObservations?: AnnotatorObservation[];
@@ -17,10 +17,10 @@ interface AnnotatorObservationResult {
 
 export function useAnnotatorObservations(
 	submitedQueryString: string,
-	site: Site,
-	currentUser: User | null,
 ): AnnotatorObservationResult {
 	const authentication = useContext(AuthContext);
+	const currentUser = useContext(CurrentUserContext);
+	const [site] = useContext(SiteContext);
 	const generateQueryString = (query: string): URLSearchParams => {
 		const searchParams = new URLSearchParams(query);
 		searchParams.append("locale", site.locale ?? navigator.language);

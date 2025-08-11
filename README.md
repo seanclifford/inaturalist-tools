@@ -19,7 +19,6 @@ This tool is made to allow for fast annotations, targeting mobile devices mainly
 
 ## TODO List
 #### General
-- Deploy to public site
 - Full Authentication
 - Settings to choose site
 - Welcome page for first time with some suggested filters

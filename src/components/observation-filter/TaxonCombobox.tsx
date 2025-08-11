@@ -1,12 +1,10 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { SearchCombobox } from "./SearchCombobox";
 import { useTaxaAutocomplete } from "../../hooks/useTaxaAutocomplete";
+import { SiteContext } from "../../Contexts";
 
-interface TaxonComboboxProps {
-	site: Site;
-}
-
-export function TaxonCombobox({ site }: TaxonComboboxProps) {
+export function TaxonCombobox() {
+	const [site] = useContext(SiteContext);
 	const [value, setValue] = useState<string | null>(null);
 	const [search, setSearch] = useState("");
 	const taxa = useTaxaAutocomplete(search, site);

@@ -22,7 +22,7 @@ function saveSiteToStore(site: Site) {
 	localStorage.setItem("current-site", JSON.stringify(site));
 }
 
-function defaultSite(): Site {
+export function defaultSite(): Site {
 	return {
 		id: 1,
 		name: "iNaturalist",

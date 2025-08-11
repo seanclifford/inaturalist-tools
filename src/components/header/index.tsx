@@ -1,12 +1,11 @@
 import { Link } from "wouter";
 import "./index.css";
 import INatSite from "../inat-site";
+import { useContext } from "react";
+import { SiteContext } from "../../Contexts";
 
-interface HeaderProps {
-	site: Site;
-}
-
-function Header({ site }: HeaderProps) {
+function Header() {
+	const [site] = useContext(SiteContext);
 	return (
 		<header>
 			<nav className="links">

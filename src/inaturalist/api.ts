@@ -47,7 +47,7 @@ function remove(path: string, authToken: string): Promise<Response> {
 }
 
 export async function getCurrentUser(authentication: Authentication) {
-	if (!authentication.isAuthenticated || !authentication.authToken) {
+	if (!authentication.authToken) {
 		throw new Error("Authentication is required to get current user");
 	}
 
@@ -127,7 +127,7 @@ export async function addAnnotation(
 	annotation: AddAnnotationParams,
 	authentication: Authentication,
 ): Promise<NewAnnotation> {
-	if (!authentication.isAuthenticated || !authentication.authToken) {
+	if (!authentication.authToken) {
 		throw new Error("Authentication is required to add an annotation");
 	}
 
@@ -146,7 +146,7 @@ export async function deleteAnnotation(
 	uuid: string,
 	authentication: Authentication,
 ) {
-	if (!authentication.isAuthenticated || !authentication.authToken) {
+	if (!authentication.authToken) {
 		throw new Error("Authentication is required to add an annotation");
 	}
 	const response = await remove(

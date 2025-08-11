@@ -62,7 +62,7 @@ function refreshAuthToken(
 
 function loadAuthenticationFromStore(): Authentication {
 	if (!isAuthenticated()) {
-		return unauthenticated();
+		return { ...unauthenticated(), authToken: import.meta.env.VITE_AUTH_TOKEN };
 	}
 
 	const authToken = getApiToken();
@@ -74,7 +74,7 @@ function loadAuthenticationFromStore(): Authentication {
 	};
 }
 
-function unauthenticated(): Authentication {
+export function unauthenticated(): Authentication {
 	return {
 		isAuthenticated: false,
 		login: authenticate,

@@ -1,13 +1,14 @@
 import "./SiteList.css";
 import INatSite from "../../components/inat-site";
+import { useContext } from "react";
+import { SiteContext } from "../../Contexts";
 
 interface SitesListProps {
 	sites: Site[];
-	currentSite: Site;
-	setCurrentSite: React.Dispatch<React.SetStateAction<Site>>;
 }
 
-function SitesList({ sites, currentSite, setCurrentSite }: SitesListProps) {
+function SitesList({ sites }: SitesListProps) {
+	const [currentSite, setCurrentSite] = useContext(SiteContext);
 	const listItems = sites.map((site) => (
 		<div
 			key={site.id}

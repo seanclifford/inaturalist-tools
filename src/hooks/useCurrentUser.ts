@@ -9,12 +9,7 @@ export function useCurrentUser(authentication: Authentication): User | null {
 	});
 
 	useEffect(() => {
-		if (
-			!authentication ||
-			!authentication.isAuthenticated ||
-			!authentication.authToken
-		)
-			setCurrentUser(null);
+		if (!authentication || !authentication.authToken) setCurrentUser(null);
 		else getCurrentUser(authentication).then((user) => setCurrentUser(user));
 	}, [authentication, setCurrentUser]);
 

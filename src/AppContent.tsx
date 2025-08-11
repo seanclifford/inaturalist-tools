@@ -5,31 +5,37 @@ import { Route, Router } from "wouter";
 import useSite from "./hooks/useSite";
 import useAuthentication from "./hooks/useAuthentication";
 import Annotator from "./pages/annotator";
-import { AuthContext } from "./Contexts";
+import { AuthContext, CurrentUserContext, SiteContext } from "./Contexts";
 import OauthRedirect from "./pages/oauth-redirect";
+import { useCurrentUser } from "./hooks/useCurrentUser";
 
 function AppContent() {
 	const [site, setSite] = useSite();
 	const [authentication] = useAuthentication(site);
+	const currentUser = useCurrentUser(authentication);
 	return (
-		<AuthContext value={authentication}>
-			<Router base={import.meta.env.BASE_URL}>
-				<Route path="/">
-					<Header site={site} />
-					<Home />
-				</Route>
-				<Route path="/site-selection">
-					<Header site={site} />
-					<SiteSelectionPage site={site} setSite={setSite} />
-				</Route>
-				<Route path="/annotator">
-					<Annotator site={site} authentication={authentication} />
-				</Route>
-				<Route path="/oauth-redirect">
-					<OauthRedirect/>
-				</Route>
-			</Router>
-		</AuthContext>
+		<SiteContext value={[site, setSite]}>
+			<AuthContext value={authentication}>
+				<CurrentUserContext value={currentUser}>
+					<Router base={import.meta.env.VITE_BASE_PATH}>
+						<Route path="/">
+							<Header />
+							<Home />
+						</Route>
+						<Route path="/site-selection">
+							<Header />
+							<SiteSelectionPage />
+						</Route>
+						<Route path="/annotator">
+							<Annotator />
+						</Route>
+						<Route path="/oauth-redirect">
+							<OauthRedirect />
+						</Route>
+					</Router>
+				</CurrentUserContext>
+			</AuthContext>
+		</SiteContext>
 	);
 }
 

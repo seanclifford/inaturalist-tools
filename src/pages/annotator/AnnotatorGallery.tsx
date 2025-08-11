@@ -4,15 +4,11 @@ import { Carousel } from "@mantine/carousel";
 
 interface AnnotatorGalleryProps {
 	annotatorObservations: AnnotatorObservation[];
-	site: Site;
-	currentUser: User | null;
 	annotationFunctions?: AnnotationFunctions;
 }
 
 export default function AnnotatorGallery({
 	annotatorObservations,
-	site,
-	currentUser,
 	annotationFunctions,
 }: AnnotatorGalleryProps) {
 	return (
@@ -22,12 +18,11 @@ export default function AnnotatorGallery({
 
 				return (
 					<Carousel.Slide key={observation.id}>
-						<ObservationHero observation={observation} site={site} />
+						<ObservationHero observation={observation} />
 						{observation && controlledTerms ? (
 							<AnnotationSelector
 								observationControlledTerms={controlledTerms}
 								observation={observation}
-								currentUser={currentUser}
 								annotationFunctions={annotationFunctions}
 							/>
 						) : null}

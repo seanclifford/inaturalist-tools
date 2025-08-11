@@ -1,31 +1,24 @@
 import { usePageQueryString } from "../../hooks/usePageQueryString";
 import ObservationFilter from "../../components/observation-filter/ObservationFilter";
 import AnnotatorDisplay from "./AnnotatorDisplay";
+import { Stack } from "@mantine/core";
 
-interface AnnotatorProps {
-	site: Site;
-	authentication: Authentication;
-}
-
-function Annotator({ site, authentication }: AnnotatorProps) {
+function Annotator() {
 	const [pageQueryString, setPageQueryString] = usePageQueryString();
 
 	return (
 		<main className="annotator">
 			{pageQueryString ? (
 				<AnnotatorDisplay
-					site={site}
-					authentication={authentication}
 					pageQueryString={pageQueryString}
 					setPageQueryString={setPageQueryString}
 				/>
 			) : (
 				<Stack p="md" gap="xs">
-				<ObservationFilter
-					site={site}
-					pageQueryString={pageQueryString}
-					runQuery={setPageQueryString}
-				/>
+					<ObservationFilter
+						pageQueryString={pageQueryString}
+						runQuery={setPageQueryString}
+					/>
 				</Stack>
 			)}
 		</main>

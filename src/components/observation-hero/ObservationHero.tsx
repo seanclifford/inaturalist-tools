@@ -13,16 +13,17 @@ import {
 import { SquareArrowOutUpRight } from "lucide-react";
 import { Carousel } from "@mantine/carousel";
 import UserAccount from "../user-account/UserAccount";
+import { useContext } from "react";
+import { SiteContext } from "../../Contexts";
 
 interface ObservationHeroProps {
 	observation?: Observation;
-	site: Site;
 }
 
 const ObservationHero: React.FC<ObservationHeroProps> = ({
 	observation,
-	site,
 }) => {
+	const [site] = useContext(SiteContext);
 	if (!observation) {
 		return <span>loading</span>;
 	}

@@ -3,12 +3,7 @@ import SitesList from "./SiteList";
 import { getSites } from "../../inaturalist/api";
 import { oneDay } from "../../constants/values";
 
-interface SiteSelectionPageProps {
-	site: Site;
-	setSite: React.Dispatch<React.SetStateAction<Site>>;
-}
-
-function SiteSelectionPage({ site, setSite }: SiteSelectionPageProps) {
+function SiteSelectionPage() {
 	const {
 		isPending,
 		isError,
@@ -23,7 +18,7 @@ function SiteSelectionPage({ site, setSite }: SiteSelectionPageProps) {
 			{isPending ? "Loading..." : null}
 			{isError ? `ERROR: ${error.name} ${error.message}` : null}
 			{isFetched && sites ? (
-				<SitesList sites={sites} currentSite={site} setCurrentSite={setSite} />
+				<SitesList sites={sites} />
 			) : null}
 		</main>
 	);

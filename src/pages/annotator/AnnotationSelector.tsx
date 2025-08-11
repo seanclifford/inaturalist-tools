@@ -1,22 +1,23 @@
 import { Chip, Group, Stack, Title } from "@mantine/core";
 import UserAccount from "../../components/user-account/UserAccount";
 import { EditableChipGroup } from "./EditableChipGroup";
+import { useContext } from "react";
+import { CurrentUserContext } from "../../Contexts";
 
 interface AnnotationSelectorProps {
 	observation: Observation;
 	observationControlledTerms: ControlledTerm[];
-	currentUser: User | null;
 	annotationFunctions?: AnnotationFunctions;
 }
 
 export function AnnotationSelector({
 	observation,
 	observationControlledTerms,
-	currentUser,
 	annotationFunctions,
 }: AnnotationSelectorProps) {
+	const currentUser = useContext(CurrentUserContext);
 	return (
-		<Stack gap="md">
+		<Stack gap="md" pt={3} pl={3}>
 			{observationControlledTerms.map((controlledTerm) => {
 				const annotations = observation.annotations.filter(
 					(a) => a.controlled_attribute_id === controlledTerm.id,

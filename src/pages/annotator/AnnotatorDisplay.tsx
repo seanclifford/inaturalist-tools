@@ -4,28 +4,22 @@ import { useAnnotatorObservations } from "./useAnnotatorObservations";
 import { useDisclosure } from "@mantine/hooks";
 import { SettingsIcon } from "lucide-react";
 import ObservationFilterModal from "../../components/observation-filter/ObservationFilterModal";
-import { useCurrentUser } from "../../hooks/useCurrentUser";
 
 interface AnnotatorDisplayProps {
-	site: Site;
-	authentication: Authentication;
 	pageQueryString: string;
 	setPageQueryString: (queryString: string) => void;
 }
 
 export default function AnnotatorDisplay({
-	site,
-	authentication,
 	pageQueryString,
 	setPageQueryString,
 }: AnnotatorDisplayProps) {
-	const currentUser = useCurrentUser(authentication);
 	const [submitedQueryString, setSubmitedQueryString] =
 		useState(pageQueryString);
 	const [settingsOpened, { open: openSettings, close: closeSettings }] =
 		useDisclosure(false);
 	const { annotatorObservations, status, error, annotationFunctions } =
-		useAnnotatorObservations(submitedQueryString, site, currentUser);
+		useAnnotatorObservations(submitedQueryString);
 	const runQuery = (queryString: string) => {
 		setPageQueryString(queryString);
 		closeSettings();
@@ -35,7 +29,6 @@ export default function AnnotatorDisplay({
 	return (
 		<>
 			<ObservationFilterModal
-				site={site}
 				opened={settingsOpened}
 				close={closeSettings}
 				pageQueryString={pageQueryString}
@@ -61,8 +54,6 @@ export default function AnnotatorDisplay({
 			{status === "success" && annotatorObservations ? (
 				<AnnotatorGallery
 					annotatorObservations={annotatorObservations}
-					site={site}
-					currentUser={currentUser}
 					annotationFunctions={annotationFunctions}
 				/>
 			) : null}

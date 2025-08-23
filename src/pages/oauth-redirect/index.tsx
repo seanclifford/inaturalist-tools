@@ -6,20 +6,28 @@ import useSite from "../../hooks/useSite";
 function OauthRedirect() {
 
     const [site] = useSite();
-    const [_, setLoadingStatus] = useState<LoadingStatus>("pending");
-
-    const urlParams = new URLSearchParams(window.location.search);
-    const authCode = urlParams.get('code');
-
+    const [loadingStatus, setLoadingStatus] = useState<LoadingStatus>("pending");
     
     useEffect(() => {
+        const urlParams = new URLSearchParams(window.location.search);
+        const authCode = urlParams.get('code');
+
         if (!authCode) {
-            alert("Authentication failed, please try again.");
+            alert("Authentication failed - no auth code supplied, please try again.");
             redirectToPreAuthLocation();
         }
         else
             performAccessTokenRequest(site, authCode, setLoadingStatus);
-    }, [site, authCode]);
+    }, [site]);
+
+    useEffect(() => {
+        if (loadingStatus === "success") {
+            redirectToPreAuthLocation();
+        } else if (loadingStatus === "error") {
+            alert("Authentication failed while requesting access token, please try again.");
+            redirectToPreAuthLocation();
+        }
+    }, [loadingStatus]);
 
 	return (
         <main>

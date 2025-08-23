@@ -13,8 +13,8 @@ export function isAuthenticated() {
 	return !!localStorage.getItem(AUTH_ACCESS_TOKEN);
 }
 
-export async function authenticate(currentSite: Site, returnLocation: string) {
-	sessionStorage.setItem(PRE_AUTH_LOCATION, returnLocation);
+export async function authenticate(currentSite: Site) {
+	sessionStorage.setItem(PRE_AUTH_LOCATION, window.location.href);
 
 	const verifier = generateRandomString();
 	sessionStorage.setItem(AUTH_VERIFIER, verifier);

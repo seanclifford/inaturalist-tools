@@ -8,7 +8,8 @@ interface ApiResult<T> {
 interface Authentication {
 	isAuthenticated: boolean;
 	authToken?: string | null;
-	login: (currentSite: Site, returnLocation: string) => void;
+	login: (currentSite: Site) => void;
+	logout?: () => void;
 }
 
 interface Site {

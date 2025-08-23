@@ -7,7 +7,7 @@ const AUTH_API_TOKEN = "auth_api_token";
 const PRE_AUTH_LOCATION = "pre_auth_location";
 
 const OAUTH_APPLICATION_ID = import.meta.env.VITE_OAUTH_APPLICATION_ID;
-const REDIRECT_URI = `${import.meta.env.VITE_THIS_SITE_URL}/oauth_redirect`;
+const REDIRECT_URI = `${import.meta.env.VITE_THIS_SITE_URL}/oauth-redirect`;
 
 export function isAuthenticated() {
 	return !!localStorage.getItem(AUTH_ACCESS_TOKEN);

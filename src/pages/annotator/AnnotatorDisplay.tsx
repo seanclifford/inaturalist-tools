@@ -18,14 +18,14 @@ export default function AnnotatorDisplay({
 		useState(pageQueryString);
 	const [settingsOpened, { open: openSettings, close: closeSettings }] =
 		useDisclosure(false);
-	const { annotatorObservations, status, error, annotationFunctions } =
+	const { annotatorObservations, status, error, annotationFunctions, loadMore } =
 		useAnnotatorObservations(submitedQueryString);
 	const runQuery = (queryString: string) => {
 		setPageQueryString(queryString);
 		closeSettings();
 	};
 	useEffect(() => setSubmitedQueryString(pageQueryString), [pageQueryString]);
-
+	
 	return (
 		<>
 			<ObservationFilterModal
@@ -55,6 +55,7 @@ export default function AnnotatorDisplay({
 				<AnnotatorGallery
 					annotatorObservations={annotatorObservations}
 					annotationFunctions={annotationFunctions}
+					loadMore={loadMore ?? (() => {})}
 				/>
 			) : null}
 		</>

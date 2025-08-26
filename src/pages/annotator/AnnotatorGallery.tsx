@@ -5,14 +5,20 @@ import { Carousel } from "@mantine/carousel";
 interface AnnotatorGalleryProps {
 	annotatorObservations: AnnotatorObservation[];
 	annotationFunctions?: AnnotationFunctions;
+	loadMore: () => void;
 }
 
 export default function AnnotatorGallery({
 	annotatorObservations,
 	annotationFunctions,
+	loadMore
 }: AnnotatorGalleryProps) {
+	const onSlideChange = (index: number) => {
+		if (index + 6 >= annotatorObservations.length) 
+			loadMore();
+	}
 	return (
-		<Carousel slideGap="md" slideSize="50vh" initialSlide={0}>
+		<Carousel slideGap="md" slideSize="50vh" initialSlide={0} onSlideChange={onSlideChange}>
 			{annotatorObservations?.map((annotatorObservation) => {
 				const { observation, controlledTerms } = annotatorObservation;
 

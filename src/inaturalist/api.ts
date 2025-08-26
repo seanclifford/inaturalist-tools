@@ -69,13 +69,17 @@ export async function getSites() {
 }
 
 export async function getObservations(query: URLSearchParams) {
-	query.set("per_page", "24");
+	const pageSize = 30;
+	query.set("per_page", pageSize.toString());
 	const response = await get(`observations?${query.toString()}`);
 	if (!response.ok) {
 		throw new Error("Could not load observations");
 	}
 	const body = (await response.json()) as ApiResult<Observation>;
-	return body.results;
+	return {
+		results: body.results,
+		pages: Math.ceil(body.total_results / pageSize),
+	};
 }
 
 export async function getObservation(id: number) {

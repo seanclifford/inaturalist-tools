@@ -1,0 +1,132 @@
+import { useContext, useEffect, useRef, useState } from "react";
+import { SiteContext } from "../Contexts";
+import { getObservations } from "../inaturalist/api";
+
+interface ObservationsSuccessResult {
+	data: Observation[];
+	status: "success";
+	error: null;
+	loadMore: () => void;
+}
+interface ObservationsPendingResult {
+	data: undefined;
+	status: "pending";
+	error: null;
+	loadMore: null;
+}
+interface ObservationsErrorResult {
+	data: undefined;
+	status: "error";
+	error: Error | null;
+	loadMore: null;
+}
+interface ObservationsRefetchErrorResult {
+	data: Observation[];
+	status: "error";
+	error: Error | null;
+	loadMore: null;
+}
+type ObservationsResult =
+	| ObservationsSuccessResult
+	| ObservationsPendingResult
+	| ObservationsErrorResult
+	| ObservationsRefetchErrorResult;
+
+export function useObservations(
+	submitedQueryString: string,
+): ObservationsResult {
+	const [site] = useContext(SiteContext);
+	const [observationMap, setObservationMap] = useState<Map<
+		number,
+		Observation
+	> | null>(null);
+	const [error, setError] = useState<Error | null>(null);
+	const pageNumber = useRef<number>(1);
+
+	useEffect(() => {
+		pageNumber.current = 1;
+		getObservations(generateQueryString(submitedQueryString, site, 1))
+			.then((data) => {
+				const map = new Map();
+				for (const obs of data.results) map.set(obs.id, obs);
+				setObservationMap(map);
+				setError(null);
+			})
+			.catch((err) => {
+				setObservationMap(null);
+				setError(err);
+			});
+	}, [submitedQueryString, site]);
+
+	const loadMore = () => {
+		if (!observationMap) return;
+
+		const execute = async () => {
+			try {
+				const newMap = new Map(observationMap);
+				const originalSize = newMap.size;
+				let pageLoaded = pageNumber.current;
+				let totalPages = await loadObservations(
+					submitedQueryString,
+					site,
+					pageLoaded,
+					newMap,
+				);
+
+				if (newMap.size === originalSize) pageNumber.current += 1;
+				while (pageLoaded < totalPages && newMap.size < originalSize + 10) {
+					pageLoaded += 1;
+					totalPages = await loadObservations(
+						submitedQueryString,
+						site,
+						pageLoaded,
+						newMap,
+					);
+				}
+				setObservationMap(newMap);
+			} catch (e) {
+				setError(e as Error);
+			}
+		};
+		execute();
+	};
+
+	if (error) {
+		return { data: undefined, status: "error", error: error, loadMore: null };
+	}
+	if (observationMap) {
+		return {
+			data: Array.from(observationMap, ([_, value]) => value),
+			status: "success",
+			error: null,
+			loadMore,
+		};
+	}
+	return { data: undefined, status: "pending", error: null, loadMore: null };
+}
+
+async function loadObservations(
+	submitedQueryString: string,
+	site: Site,
+	pageNumber: number,
+	resultMap: Map<number, Observation>,
+) {
+	const results = await getObservations(
+		generateQueryString(submitedQueryString, site, pageNumber),
+	);
+	for (const obs of results.results) resultMap.set(obs.id, obs);
+	return results.pages;
+}
+
+function generateQueryString(
+	query: string,
+	site: Site,
+	pageNumber: number,
+): URLSearchParams {
+	const searchParams = new URLSearchParams(query);
+	searchParams.append("locale", site.locale ?? navigator.language);
+	if (site.place_id)
+		searchParams.append("preferred_place_id", site.place_id.toString());
+	if (pageNumber > 1) searchParams.append("page", pageNumber.toString());
+	return searchParams;
+}

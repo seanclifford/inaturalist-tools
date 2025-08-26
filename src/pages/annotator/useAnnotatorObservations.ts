@@ -1,18 +1,16 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import {
-	addAnnotation,
-	deleteAnnotation,
-	getObservations,
-} from "../../inaturalist/api";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { addAnnotation, deleteAnnotation } from "../../inaturalist/api";
 import { useControlledTerms } from "../../hooks/useControlledTerms";
 import { useContext } from "react";
-import { AuthContext, CurrentUserContext, SiteContext } from "../../Contexts";
+import { AuthContext, CurrentUserContext } from "../../Contexts";
+import { useObservations } from "../../hooks/useObservations";
 
 interface AnnotatorObservationResult {
 	annotatorObservations?: AnnotatorObservation[];
 	status: LoadingStatus;
 	error?: Error;
 	annotationFunctions?: AnnotationFunctions;
+	loadMore?: () => void;
 }
 
 export function useAnnotatorObservations(
@@ -20,23 +18,13 @@ export function useAnnotatorObservations(
 ): AnnotatorObservationResult {
 	const authentication = useContext(AuthContext);
 	const currentUser = useContext(CurrentUserContext);
-	const [site] = useContext(SiteContext);
-	const generateQueryString = (query: string): URLSearchParams => {
-		const searchParams = new URLSearchParams(query);
-		searchParams.append("locale", site.locale ?? navigator.language);
-		if (site.place_id)
-			searchParams.append("preferred_place_id", site.place_id.toString());
-		return searchParams;
-	};
 
 	const {
 		status: observationStatus,
 		data: observations,
 		error: observationError,
-	} = useQuery({
-		queryKey: ["observations", submitedQueryString],
-		queryFn: () => getObservations(generateQueryString(submitedQueryString)),
-	});
+		loadMore,
+	} = useObservations(submitedQueryString);
 	const {
 		status: controlledTermStatus,
 		error: controlledTermsError,
@@ -104,7 +92,7 @@ export function useAnnotatorObservations(
 	if (observationStatus === "pending" || controlledTermStatus === "pending")
 		return { status: "pending" };
 	if (observationStatus === "error")
-		return { status: "error", error: observationError };
+		return { status: "error", error: observationError ?? undefined };
 	if (controlledTermStatus === "error")
 		return { status: "error", error: controlledTermsError };
 
@@ -116,7 +104,6 @@ export function useAnnotatorObservations(
 					observation.taxon,
 					controlledTerms,
 				),
-				status: "success",
 			} as AnnotatorObservation;
 		})
 		.filter(
@@ -130,6 +117,7 @@ export function useAnnotatorObservations(
 			saveAnnotation: addAnnotationMutation.mutateAsync,
 			deleteAnnotation: deleteAnnotationMutation.mutateAsync,
 		},
+		loadMore,
 	};
 }
 

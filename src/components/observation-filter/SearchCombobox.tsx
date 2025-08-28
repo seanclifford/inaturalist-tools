@@ -1,27 +1,33 @@
 import { CloseButton, Combobox, InputBase, useCombobox } from "@mantine/core";
 import { useDebouncedCallback } from "@mantine/hooks";
-import { useEffect, useState } from "react";
+import { type ReactNode, useEffect, useState } from "react";
 
-interface SearchComboboxProps {
-	value: string | null;
-	setValue: (val: string | null) => void;
-	autocompleteValues: string[];
+interface SearchComboboxProps<T> {
+	value: T | null;
+	setValue: (val: T | null) => void;
+	autocompleteValues: T[];
 	requestAutocomplete: (search: string) => void; //Should this be a promise?
 	placeholder: string;
+	buildOption: (model: T) => ReactNode;
+	getValue: (model: T | null) => string;
+	getKey: (model: T | null) => number;
 }
 
-export function SearchCombobox({
+export function SearchCombobox<T>({
 	value,
 	setValue,
 	autocompleteValues,
 	requestAutocomplete,
 	placeholder,
-}: SearchComboboxProps) {
+	buildOption,
+	getValue,
+	getKey,
+}: SearchComboboxProps<T>) {
 	const combobox = useCombobox({
 		onDropdownClose: () => combobox.resetSelectedOption(),
 	});
 
-	const [search, setSearch] = useState("");
+	const [search, setSearch] = useState(() => getValue(value));
 
 	const handleSearch = useDebouncedCallback((query: string) => {
 		requestAutocomplete(query);
@@ -32,13 +38,13 @@ export function SearchCombobox({
 	}, [handleSearch, search]);
 
 	const options = autocompleteValues.map((item) => (
-		<Combobox.Option value={item} key={item}>
-			{item}
+		<Combobox.Option value={getValue(item)} key={getKey(item)}>
+			{buildOption(item)}
 		</Combobox.Option>
 	));
 
 	function selectValue(val: string | null) {
-		setValue(val);
+		setValue(autocompleteValues.find((x) => getValue(x) === val) ?? null);
 		setSearch(val ?? "");
 	}
 
@@ -75,7 +81,7 @@ export function SearchCombobox({
 					onFocus={() => combobox.openDropdown()}
 					onBlur={() => {
 						combobox.closeDropdown();
-						setSearch(value || "");
+						setSearch(getValue(value) || "");
 					}}
 					placeholder={placeholder}
 					rightSectionPointerEvents={value === null ? "none" : "all"}

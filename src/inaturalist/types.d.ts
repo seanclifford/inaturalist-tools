@@ -47,6 +47,8 @@ interface Taxon {
 	preferred_common_name: string;
 	default_photo: TaxonPhoto;
 	ancestor_ids: number[];
+	rank: string;
+	rank_level: number;
 }
 
 interface TaxonPhoto {

@@ -91,13 +91,13 @@ export async function getObservation(id: number) {
 	return body.results[0];
 }
 
-export async function getTaxa() {
-	const response = await get("taxa/");
+export async function getTaxon(id: number) {
+	const response = await get(`taxa/${id}`);
 	if (!response.ok) {
-		throw new Error("Could not load taxa");
+		throw new Error("Could not load taxon");
 	}
 	const body = (await response.json()) as ApiResult<Taxon>;
-	return body.results;
+	return body.results[0];
 }
 
 export async function getTaxaAutocomplete(query: URLSearchParams) {

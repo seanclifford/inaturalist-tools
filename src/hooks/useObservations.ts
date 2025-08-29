@@ -7,24 +7,28 @@ interface ObservationsSuccessResult {
 	status: "success";
 	error: null;
 	loadMore: () => void;
+	replaceObservation: (observation: Observation) => void;
 }
 interface ObservationsPendingResult {
 	data: undefined;
 	status: "pending";
 	error: null;
 	loadMore: null;
+	replaceObservation: null;
 }
 interface ObservationsErrorResult {
 	data: undefined;
 	status: "error";
 	error: Error | null;
 	loadMore: null;
+	replaceObservation: null;
 }
 interface ObservationsRefetchErrorResult {
 	data: Observation[];
 	status: "error";
 	error: Error | null;
 	loadMore: null;
+	replaceObservation: null;
 }
 type ObservationsResult =
 	| ObservationsSuccessResult
@@ -92,7 +96,13 @@ export function useObservations(
 	};
 
 	if (error) {
-		return { data: undefined, status: "error", error: error, loadMore: null };
+		return {
+			data: undefined,
+			status: "error",
+			error: error,
+			loadMore: null,
+			replaceObservation: null,
+		};
 	}
 	if (observationMap) {
 		return {
@@ -100,9 +110,21 @@ export function useObservations(
 			status: "success",
 			error: null,
 			loadMore,
+			replaceObservation: (observation: Observation) => {
+				if (!observationMap) return;
+				const newMap = new Map(observationMap);
+				newMap.set(observation.id, observation);
+				setObservationMap(newMap);
+			},
 		};
 	}
-	return { data: undefined, status: "pending", error: null, loadMore: null };
+	return {
+		data: undefined,
+		status: "pending",
+		error: null,
+		loadMore: null,
+		replaceObservation: null,
+	};
 }
 
 async function loadObservations(

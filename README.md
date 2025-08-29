@@ -27,7 +27,10 @@ This tool is made to allow for fast annotations, targeting mobile devices mainly
 - Infinite scroll loading
   - Ensure rerenders don't happen too often
   - Look at virtualising the list
-- Display correctly on mobile where aspect ratio is thinner than 1:2
+- Fix bugs
+  - Display correctly on mobile where aspect ratio is thinner than 1:2
+  - Fix server side caching somehow - request without cache? Maybe authenticated?
+  - Change filter after scrolling right - reset scroll position
 - Zoom images functionality (how to do this?) - maybe click and hold = zoomed, then drag to move image around somehow
 - Improve method for changing images?
 - Settings to choose filters

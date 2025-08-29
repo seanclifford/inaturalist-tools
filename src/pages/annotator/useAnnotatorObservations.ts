@@ -1,4 +1,4 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { addAnnotation, deleteAnnotation } from "../../inaturalist/api";
 import { useControlledTerms } from "../../hooks/useControlledTerms";
 import { useContext } from "react";
@@ -24,6 +24,7 @@ export function useAnnotatorObservations(
 		data: observations,
 		error: observationError,
 		loadMore,
+		replaceObservation,
 	} = useObservations(submitedQueryString);
 	const {
 		status: controlledTermStatus,
@@ -31,7 +32,6 @@ export function useAnnotatorObservations(
 		data: controlledTerms,
 	} = useControlledTerms();
 
-	const queryClient = useQueryClient();
 	const addAnnotationMutation = useMutation({
 		mutationFn: (params: SaveAnnotationParams) => {
 			return addAnnotation(
@@ -48,20 +48,21 @@ export function useAnnotatorObservations(
 			console.error(error);
 		},
 		onSuccess: (annotation: NewAnnotation) => {
-			const observationsRefreshed = observations?.map((obs) => {
-				const observationCopy = { ...obs };
-				if (annotation.resource_id === obs.id && currentUser)
-					observationCopy.annotations.push({
-						...annotation,
-						vote_score: 0,
-						user: currentUser,
-					});
-				return observationCopy;
-			});
-			queryClient.setQueryData(
-				["observations", submitedQueryString],
-				observationsRefreshed,
+			if (!currentUser) return;
+			const observation = observations?.find(
+				(obs) => obs.id === annotation.resource_id,
 			);
+			if (!observation) {
+				console.error("Could not find observation to add annotation to");
+				return;
+			}
+			const observationCopy = { ...observation };
+			observationCopy.annotations.push({
+				...annotation,
+				vote_score: 0,
+				user: currentUser,
+			});
+			replaceObservation?.(observationCopy);
 		},
 	});
 
@@ -73,19 +74,18 @@ export function useAnnotatorObservations(
 			console.error(error);
 		},
 		onSuccess: (_, params: DeleteAnnotationParams) => {
-			const observationsRefreshed = observations?.map((obs) => {
-				const observationCopy = { ...obs };
-				if (params.observationId === obs.id) {
-					observationCopy.annotations = observationCopy.annotations.filter(
-						(a) => a.uuid !== params.annotationId,
-					);
-				}
-				return observationCopy;
-			});
-			queryClient.setQueryData(
-				["observations", submitedQueryString],
-				observationsRefreshed,
+			const observation = observations?.find(
+				(obs) => obs.id === params.observationId,
 			);
+			if (!observation) {
+				console.error("Could not find observation to add annotation to");
+				return;
+			}
+			const observationCopy = { ...observation };
+			observationCopy.annotations = observationCopy.annotations.filter(
+				(a) => a.uuid !== params.annotationId,
+			);
+			replaceObservation?.(observationCopy);
 		},
 	});
 

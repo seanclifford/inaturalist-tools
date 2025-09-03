@@ -91,7 +91,9 @@ export async function getObservation(id: number) {
 	return body.results[0];
 }
 
-export async function getTaxon(id: number) {
+export async function getTaxon(id?: number) {
+	if (!id) return null;
+
 	const response = await get(`taxa/${id}`);
 	if (!response.ok) {
 		throw new Error("Could not load taxon");

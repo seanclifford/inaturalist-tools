@@ -47,5 +47,5 @@ function setQueryStringParam(
 		if (searchParams.has(paramName)) searchParams.set(paramName, paramValue);
 		else searchParams.append(paramName, paramValue);
 	}
-	return `${paramName}=${paramValue}`;
+	return searchParams.toString();
 }

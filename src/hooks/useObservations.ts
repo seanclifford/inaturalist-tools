@@ -1,5 +1,5 @@
 import { useContext, useEffect, useRef, useState } from "react";
-import { SiteContext } from "../Contexts";
+import { AuthContext, SiteContext } from "../Contexts";
 import { getObservations } from "../inaturalist/api";
 
 interface ObservationsSuccessResult {
@@ -40,6 +40,7 @@ export function useObservations(
 	submitedQueryString: string,
 ): ObservationsResult {
 	const [site] = useContext(SiteContext);
+	const authentication = useContext(AuthContext);
 	const [observationMap, setObservationMap] = useState<Map<
 		number,
 		Observation
@@ -49,7 +50,10 @@ export function useObservations(
 
 	useEffect(() => {
 		pageNumber.current = 1;
-		getObservations(generateQueryString(submitedQueryString, site, 1))
+		getObservations(
+			generateQueryString(submitedQueryString, site, 1),
+			authentication,
+		)
 			.then((data) => {
 				const map = new Map();
 				for (const obs of data.results) map.set(obs.id, obs);
@@ -60,7 +64,7 @@ export function useObservations(
 				setObservationMap(null);
 				setError(err);
 			});
-	}, [submitedQueryString, site]);
+	}, [submitedQueryString, site, authentication]);
 
 	const loadMore = () => {
 		if (!observationMap) return;
@@ -73,6 +77,7 @@ export function useObservations(
 				let totalPages = await loadObservations(
 					submitedQueryString,
 					site,
+					authentication,
 					pageLoaded,
 					newMap,
 				);
@@ -83,6 +88,7 @@ export function useObservations(
 					totalPages = await loadObservations(
 						submitedQueryString,
 						site,
+						authentication,
 						pageLoaded,
 						newMap,
 					);
@@ -130,11 +136,13 @@ export function useObservations(
 async function loadObservations(
 	submitedQueryString: string,
 	site: Site,
+	authentication: Authentication,
 	pageNumber: number,
 	resultMap: Map<number, Observation>,
 ) {
 	const results = await getObservations(
 		generateQueryString(submitedQueryString, site, pageNumber),
+		authentication,
 	);
 	for (const obs of results.results) resultMap.set(obs.id, obs);
 	return results.pages;

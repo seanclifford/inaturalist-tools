@@ -6,20 +6,24 @@ import {
 } from "./fetch-options.js";
 import { limit } from "./api-limiter.js";
 
-function get(path: string): Promise<Response> {
+function get(path: string, useCache = true): Promise<Response> {
 	return limit(async () => {
 		return await fetch(
 			import.meta.env.VITE_INATURALIST_API_URL + path,
-			getFetchOptions(),
+			getFetchOptions(useCache),
 		);
 	});
 }
 
-function getAuth(path: string, authToken: string): Promise<Response> {
+function getAuth(
+	path: string,
+	authToken: string,
+	useCache = true,
+): Promise<Response> {
 	return limit(async () => {
 		return await fetch(
 			import.meta.env.VITE_INATURALIST_API_URL + path,
-			getAuthFetchOptions(authToken),
+			getAuthFetchOptions(authToken, useCache),
 		);
 	});
 }
@@ -68,10 +72,16 @@ export async function getSites() {
 	return body.results;
 }
 
-export async function getObservations(query: URLSearchParams) {
+export async function getObservations(
+	query: URLSearchParams,
+	authentication: Authentication,
+) {
 	const pageSize = 30;
 	query.set("per_page", pageSize.toString());
-	const response = await get(`observations?${query.toString()}`);
+	const path = `observations?${query.toString()}`;
+	const response = authentication.authToken
+		? await getAuth(path, authentication.authToken, false)
+		: await get(path, true);
 	if (!response.ok) {
 		throw new Error("Could not load observations");
 	}

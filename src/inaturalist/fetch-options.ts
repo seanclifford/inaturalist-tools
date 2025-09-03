@@ -2,12 +2,13 @@
 
 const USER_AGENT = "iNaturalist Tools (by agoranomos)";
 
-export const getFetchOptions = () => {
+export const getFetchOptions = (useCache = true): RequestInit => {
 	return {
 		method: "GET",
 		headers: {
 			"X-Via": USER_AGENT,
 		},
+		cache: useCache ? "default" : "no-cache",
 	};
 };
 
@@ -23,13 +24,17 @@ export const postAuthFetchOptions = (bodyObj: unknown, authToken: string) => {
 	};
 };
 
-export const getAuthFetchOptions = (authToken: string) => {
+export const getAuthFetchOptions = (
+	authToken: string,
+	useCache = true,
+): RequestInit => {
 	return {
 		method: "GET",
 		headers: {
 			"X-Via": USER_AGENT,
 			Authorization: authToken,
 		},
+		cache: useCache ? "default" : "no-cache",
 	};
 };
 

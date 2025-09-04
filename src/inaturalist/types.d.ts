@@ -132,3 +132,10 @@ interface ControlledTerm extends ControlledTermBase {
 interface ControlledTermValue extends ControlledTermBase {
 	blocking: boolean;
 }
+
+interface Place {
+	id: number;
+	uuid: string;
+	name: string;
+	display_name: string;
+}

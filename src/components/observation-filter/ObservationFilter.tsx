@@ -2,6 +2,7 @@ import { Stack } from "@mantine/core";
 import QueryStringInput from "../../pages/annotator/QueryStringInput";
 import { TaxonCombobox } from "./TaxonCombobox";
 import { useState } from "react";
+import { PlaceCombobox } from "./PlaceCombobox";
 
 interface ObservationFilterProps {
 	pageQueryString: string;
@@ -15,6 +16,7 @@ export default function ObservationFilter({
 	const [queryString, setQueryString] = useState(pageQueryString);
 
 	const taxonId = getQueryStringParam(queryString, "taxon_id");
+	const placeId = getQueryStringParam(queryString, "place_id");
 
 	const onTaxonChange = (taxon: Taxon | null) => {
 		setQueryString(
@@ -22,10 +24,17 @@ export default function ObservationFilter({
 		);
 	};
 
+	const onPlaceChange = (place: Place | null) => {
+		setQueryString(
+			setQueryStringParam(queryString, "place_id", place?.id.toString()),
+		);
+	};
+
 	return (
 		<Stack gap="xs">
 			<QueryStringInput pageQueryString={queryString} runQuery={runQuery} />
 			<TaxonCombobox onSelect={onTaxonChange} valueId={Number(taxonId)} />
+			<PlaceCombobox onSelect={onPlaceChange} valueId={Number(placeId)} />
 		</Stack>
 	);
 }

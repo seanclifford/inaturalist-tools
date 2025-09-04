@@ -184,3 +184,23 @@ export async function getProjects() {
         return body.results;
     }
 }*/
+
+export async function getPlace(id: number) {
+	if (!id) return null;
+
+	const response = await get(`places/${id}`);
+	if (!response.ok) {
+		throw new Error("Could not load place");
+	}
+	const body = (await response.json()) as ApiResult<Place>;
+	return body.results[0];
+}
+
+export async function getPlacesAutocomplete(query: URLSearchParams) {
+	const response = await get(`places/autocomplete?${query.toString()}`);
+	if (!response.ok) {
+		throw new Error("Could not load places");
+	}
+	const body = (await response.json()) as ApiResult<Place>;
+	return body.results;
+}

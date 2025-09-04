@@ -3,6 +3,7 @@ import QueryStringInput from "../../pages/annotator/QueryStringInput";
 import { TaxonCombobox } from "./TaxonCombobox";
 import { useState } from "react";
 import { PlaceCombobox } from "./PlaceCombobox";
+import { WithoutAnnotationSelect } from "./WithoutAnnotationSelect";
 
 interface ObservationFilterProps {
 	pageQueryString: string;
@@ -17,6 +18,7 @@ export default function ObservationFilter({
 
 	const taxonId = getQueryStringParam(queryString, "taxon_id");
 	const placeId = getQueryStringParam(queryString, "place_id");
+	const withoutTermId = getQueryStringParam(queryString, "without_term_id");
 
 	const onTaxonChange = (taxon: Taxon | null) => {
 		setQueryString(
@@ -30,11 +32,19 @@ export default function ObservationFilter({
 		);
 	};
 
+	const onWithoutTermChange = (termId: string | null) => {
+		setQueryString(setQueryStringParam(queryString, "without_term_id", termId));
+	};
+
 	return (
 		<Stack gap="xs">
 			<QueryStringInput pageQueryString={queryString} runQuery={runQuery} />
 			<TaxonCombobox onSelect={onTaxonChange} valueId={Number(taxonId)} />
 			<PlaceCombobox onSelect={onPlaceChange} valueId={Number(placeId)} />
+			<WithoutAnnotationSelect
+				onSelect={onWithoutTermChange}
+				valueId={withoutTermId}
+			/>
 		</Stack>
 	);
 }
@@ -47,7 +57,7 @@ function getQueryStringParam(queryString: string, paramName: string) {
 function setQueryStringParam(
 	queryString: string,
 	paramName: string,
-	paramValue: string | undefined,
+	paramValue: string | undefined | null,
 ): string {
 	const searchParams = new URLSearchParams(queryString);
 	if (!paramValue) {

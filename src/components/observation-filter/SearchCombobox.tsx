@@ -51,7 +51,7 @@ export function SearchCombobox<T>({
 	return (
 		<Combobox
 			store={combobox}
-			withinPortal={false}
+			withinPortal={true}
 			onOptionSubmit={(val) => {
 				selectValue(val);
 				combobox.closeDropdown();

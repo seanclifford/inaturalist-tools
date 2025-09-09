@@ -19,24 +19,31 @@ This tool is made to allow for fast annotations, targeting mobile devices mainly
 
 ## TODO List
 #### General
-- Full Authentication
 - Settings to choose site
 - Welcome page for first time with some suggested filters
 
 #### Annotator
+- Move site selection into settings
+- Show authentication in Modal settings
+- Separate tabs/sections in settings
 - Infinite scroll loading
   - Ensure rerenders don't happen too often
   - Look at virtualising the list
+- Search control improvements
+  - Don't hide search dropdowns during loading
+  - Show a magnifying glass image to the left - replace with taxon image when selected
+  - Show a label for them
+  - Make sure placeholder text makes sense
+  - Don't re-search when re-opening the modal
 - Fix bugs
   - Display correctly on mobile where aspect ratio is thinner than 1:2
   - Change filter after scrolling right - reset scroll position
-- Zoom images functionality (how to do this?) - maybe click and hold = zoomed, then drag to move image around somehow
 - Improve method for changing images?
 - Settings to choose filters
-    - Without Annotation
     - User
     - Project
     - Unreviewed
+- Zoom images functionality (how to do this?) - maybe click and hold = zoomed, then drag to move image around somehow
 - Allow marking observation as reviewed
 - Annotation voting for others annotations
 - Audio observation support

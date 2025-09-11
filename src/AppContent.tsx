@@ -19,7 +19,6 @@ function AppContent() {
 				<CurrentUserContext value={currentUser}>
 					<Router base={import.meta.env.VITE_BASE_PATH}>
 						<Route path="/">
-							<Header />
 							<Home />
 						</Route>
 						<Route path="/site-selection">

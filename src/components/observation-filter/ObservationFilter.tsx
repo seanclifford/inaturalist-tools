@@ -1,9 +1,10 @@
-import { Stack } from "@mantine/core";
+import { Button, Stack, Tabs } from "@mantine/core";
 import QueryStringInput from "../../pages/annotator/QueryStringInput";
 import { TaxonCombobox } from "./TaxonCombobox";
 import { useState } from "react";
 import { PlaceCombobox } from "./PlaceCombobox";
 import { WithoutAnnotationSelect } from "./WithoutAnnotationSelect";
+import AuthenticationDetails from "../authentication-details/AuthenticationDetails";
 
 interface ObservationFilterProps {
 	pageQueryString: string;
@@ -37,15 +38,29 @@ export default function ObservationFilter({
 	};
 
 	return (
-		<Stack gap="xs">
-			<QueryStringInput pageQueryString={queryString} runQuery={runQuery} />
-			<TaxonCombobox onSelect={onTaxonChange} valueId={Number(taxonId)} />
-			<PlaceCombobox onSelect={onPlaceChange} valueId={Number(placeId)} />
-			<WithoutAnnotationSelect
-				onSelect={onWithoutTermChange}
-				valueId={withoutTermId}
-			/>
-		</Stack>
+		<Tabs variant="outline" orientation="vertical" defaultValue="filter">
+			<Tabs.List>
+				<Tabs.Tab value="filters">Filters</Tabs.Tab>
+				<Tabs.Tab value="account">Account</Tabs.Tab>
+			</Tabs.List>
+
+			<Tabs.Panel value="filters" p="md">
+				<Stack gap="xs" maw="800px">
+					<QueryStringInput pageQueryString={queryString} runQuery={runQuery} />
+					<TaxonCombobox onSelect={onTaxonChange} valueId={Number(taxonId)} />
+					<PlaceCombobox onSelect={onPlaceChange} valueId={Number(placeId)} />
+					<WithoutAnnotationSelect
+						onSelect={onWithoutTermChange}
+						valueId={withoutTermId}
+					/>
+					<Button onClick={() => runQuery(queryString)}>Go</Button>
+				</Stack>
+			</Tabs.Panel>
+
+			<Tabs.Panel value="account" p="md">
+				<AuthenticationDetails />
+			</Tabs.Panel>
+		</Tabs>
 	);
 }
 

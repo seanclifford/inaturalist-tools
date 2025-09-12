@@ -1,4 +1,4 @@
-import { Button, Group, TextInput } from "@mantine/core";
+import { Group, TextInput } from "@mantine/core";
 import { useEffect, useState } from "react";
 
 interface QueryStringInputProps {
@@ -25,7 +25,6 @@ export default function QueryStringInput({
 				onChange={(e) => setQueryString(e.currentTarget.value)}
 				onKeyDown={(e) => e.key === "Enter" && runQuery(queryString)}
 			/>
-			<Button onClick={() => runQuery(queryString)}>Go</Button>
 		</Group>
 	);
 }

@@ -15,13 +15,7 @@ export default function ObservationFilterModal({
 	runQuery,
 }: ObservationFilterModalProps) {
 	return (
-		<Modal
-			opened={opened}
-			onClose={close}
-			title="Observation Filter"
-			centered
-			size="lg"
-		>
+		<Modal opened={opened} onClose={close} title="Settings" centered size="lg">
 			<ObservationFilter
 				pageQueryString={pageQueryString}
 				runQuery={runQuery}

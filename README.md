@@ -24,8 +24,6 @@ This tool is made to allow for fast annotations, targeting mobile devices mainly
 
 #### Annotator
 - Move site selection into settings
-- Show authentication in Modal settings
-- Separate tabs/sections in settings
 - Infinite scroll loading
   - Ensure rerenders don't happen too often
   - Look at virtualising the list

@@ -32,18 +32,18 @@ function Home() {
 			<p>Here are some suggested predefined filters to get you started:</p>
 			<ul>
 				<li>
-					<Link href="/annotator?without_term_id=1">
+					<Link href="/annotator?taxon_id=47158&without_term_id=1&photos=true">
 						Insects without a Life Stage annotation
 					</Link>
 				</li>
 				<li>
-					<Link href="/annotator?without_term_id=2">
-						Flowering Plants without a Flowering annotation
+					<Link href="/annotator?taxon_id=47125&without_term_id=12&photos=true">
+						Flowering Plants without a Flowers and Fruit annotation
 					</Link>
 				</li>
 				{currentUser ? (
 					<li>
-						<Link href={`/annotator?user_id=${currentUser?.id}`}>
+						<Link href={`/annotator?user_id=${currentUser?.id}&reviewed=any`}>
 							Your observations
 						</Link>
 					</li>

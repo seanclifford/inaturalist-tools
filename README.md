@@ -39,6 +39,7 @@ This tool is made to allow for fast annotations, targeting mobile devices mainly
 - Improve method for changing images?
 - Settings to choose filters
     - User
+    - Has Photos
     - Project
     - Unreviewed
 - Zoom images functionality (how to do this?) - maybe click and hold = zoomed, then drag to move image around somehow

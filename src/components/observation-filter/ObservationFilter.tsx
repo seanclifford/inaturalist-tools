@@ -38,7 +38,7 @@ export default function ObservationFilter({
 	};
 
 	return (
-		<Tabs variant="outline" orientation="vertical" defaultValue="filter">
+		<Tabs variant="outline" orientation="vertical" defaultValue="filters">
 			<Tabs.List>
 				<Tabs.Tab value="filters">Filters</Tabs.Tab>
 				<Tabs.Tab value="account">Account</Tabs.Tab>

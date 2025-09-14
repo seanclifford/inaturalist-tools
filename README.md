@@ -20,7 +20,6 @@ This tool is made to allow for fast annotations, targeting mobile devices mainly
 ## TODO List
 #### General
 - Settings to choose site
-- Welcome page for first time with some suggested filters
 
 #### Annotator
 - Move site selection into settings
@@ -34,7 +33,7 @@ This tool is made to allow for fast annotations, targeting mobile devices mainly
   - Make sure placeholder text makes sense
   - Don't re-search when re-opening the modal
 - Fix bugs
-  - Display correctly on mobile where aspect ratio is thinner than 1:2
+  - Fix vertical scrolling on reptiles and amphibians (Established annotation)
   - Change filter after scrolling right - reset scroll position
 - Improve method for changing images?
 - Settings to choose filters
@@ -44,6 +43,10 @@ This tool is made to allow for fast annotations, targeting mobile devices mainly
     - Unreviewed
 - Zoom images functionality (how to do this?) - maybe click and hold = zoomed, then drag to move image around somehow
 - Allow marking observation as reviewed
+- Help or about section in settings
+    - link to https://help.inaturalist.org/en/support/solutions/articles/151000191830-what-are-the-definitions-of-inaturalist-annotations
+    - explain best practices, or even better, link to them
+    - Back to home page
 - Annotation voting for others annotations
 - Audio observation support
 - Tweak styling to suit different displays

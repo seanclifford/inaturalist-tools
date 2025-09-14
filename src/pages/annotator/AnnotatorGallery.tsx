@@ -11,14 +11,18 @@ interface AnnotatorGalleryProps {
 export default function AnnotatorGallery({
 	annotatorObservations,
 	annotationFunctions,
-	loadMore
+	loadMore,
 }: AnnotatorGalleryProps) {
 	const onSlideChange = (index: number) => {
-		if (index + 6 >= annotatorObservations.length) 
-			loadMore();
-	}
+		if (index + 6 >= annotatorObservations.length) loadMore();
+	};
 	return (
-		<Carousel slideGap="md" slideSize="50vh" initialSlide={0} onSlideChange={onSlideChange}>
+		<Carousel
+			slideGap="md"
+			slideSize="min(50vh, 100vw)"
+			initialSlide={0}
+			onSlideChange={onSlideChange}
+		>
 			{annotatorObservations?.map((annotatorObservation) => {
 				const { observation, controlledTerms } = annotatorObservation;
 

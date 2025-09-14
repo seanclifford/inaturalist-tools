@@ -20,9 +20,7 @@ interface ObservationHeroProps {
 	observation?: Observation;
 }
 
-const ObservationHero: React.FC<ObservationHeroProps> = ({
-	observation,
-}) => {
+const ObservationHero: React.FC<ObservationHeroProps> = ({ observation }) => {
 	const [site] = useContext(SiteContext);
 	if (!observation) {
 		return <span>loading</span>;
@@ -33,11 +31,11 @@ const ObservationHero: React.FC<ObservationHeroProps> = ({
 	url.pathname = `/observations/${id}`;
 
 	return (
-		<Paper w="50vh" radius="md" shadow="sm" withBorder>
+		<Paper w="min(50vh, 100vw)" radius="md" shadow="sm" withBorder>
 			<Box style={{ position: "relative" }}>
-				<Center h="50vh" style={{ overflow: "hidden" }}>
+				<Center h="min(50vh, 100vw)" style={{ overflow: "hidden" }}>
 					<Carousel
-						h="50vh"
+						h="min(50vh, 100vw)"
 						orientation="vertical"
 						align="start"
 						withIndicators={photos.length > 1}
@@ -45,10 +43,13 @@ const ObservationHero: React.FC<ObservationHeroProps> = ({
 					>
 						{photos.map((photo) => (
 							<Carousel.Slide key={photo.id}>
-								<Center h="50vh">
+								<Center h="min(50vh, 100vw)">
 									<Image
 										src={getPhotoUrl(photo, "medium")}
-										style={{ maxHeight: "50vh", width: "50vh" }}
+										style={{
+											maxHeight: "min(50vh, 100vw)",
+											width: "min(50vh, 100vw)",
+										}}
 									/>
 								</Center>
 							</Carousel.Slide>

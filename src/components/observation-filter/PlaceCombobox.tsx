@@ -13,7 +13,7 @@ export function PlaceCombobox({ valueId, onSelect }: PlaceComboboxProps) {
 	const [site] = useContext(SiteContext);
 	const [value, setValue] = useState<Place | null>(null);
 	const [search, setSearch] = useState("");
-	const [loading, setLoading] = useState(true);
+	const [_, setLoading] = useState(true);
 	const places = usePlacesAutocomplete(search, site);
 
 	useEffect(() => {

@@ -19,7 +19,7 @@ export function TaxonCombobox({ valueId, onSelect }: TaxonComboboxProps) {
 	const [site] = useContext(SiteContext);
 	const [value, setValue] = useState<Taxon | null>(null);
 	const [search, setSearch] = useState("");
-	const [loading, setLoading] = useState(true);
+	const [_, setLoading] = useState(true);
 	const taxa = useTaxaAutocomplete(search, site);
 
 	useEffect(() => {

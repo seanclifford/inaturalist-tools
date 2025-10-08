@@ -7,6 +7,7 @@ interface SearchComboboxProps<T> {
 	setValue: (val: T | null) => void;
 	autocompleteValues: T[];
 	requestAutocomplete: (search: string) => void; //Should this be a promise?
+	label: string;
 	placeholder: string;
 	buildOption: (model: T) => ReactNode;
 	getValue: (model: T | null) => string;
@@ -18,6 +19,7 @@ export function SearchCombobox<T>({
 	setValue,
 	autocompleteValues,
 	requestAutocomplete,
+	label,
 	placeholder,
 	buildOption,
 	getValue,
@@ -63,6 +65,7 @@ export function SearchCombobox<T>({
 		>
 			<Combobox.Target>
 				<InputBase
+					label={label}
 					rightSection={
 						value !== null ? (
 							<CloseButton

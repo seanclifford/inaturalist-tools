@@ -57,6 +57,7 @@ export function PlaceCombobox({ valueId, onSelect }: PlaceComboboxProps) {
 				setValue={comboSetValue}
 				autocompleteValues={places}
 				requestAutocomplete={setSearch}
+				label="Place"
 				placeholder="Select a place"
 				getKey={getKey}
 				getValue={getPlaceName}

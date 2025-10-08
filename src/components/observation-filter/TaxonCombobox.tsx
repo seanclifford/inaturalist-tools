@@ -60,6 +60,7 @@ export function TaxonCombobox({ valueId, onSelect }: TaxonComboboxProps) {
 				setValue={comboSetValue}
 				autocompleteValues={taxa}
 				requestAutocomplete={setSearch}
+				label="Taxon"
 				placeholder="Select a taxon"
 				getKey={getKey}
 				getValue={getValue}

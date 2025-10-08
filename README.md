@@ -28,7 +28,6 @@ This tool is made to allow for fast annotations, targeting mobile devices mainly
   - Look at virtualising the list
 - Search control improvements
   - Show a magnifying glass image to the left - replace with taxon image when selected
-  - Show a label for them
   - Make sure placeholder text makes sense
   - Don't re-search when re-opening the modal
 - Fix bugs

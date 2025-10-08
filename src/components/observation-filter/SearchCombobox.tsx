@@ -27,11 +27,15 @@ export function SearchCombobox<T>({
 		onDropdownClose: () => combobox.resetSelectedOption(),
 	});
 
-	const [search, setSearch] = useState(() => getValue(value));
+	const [search, setSearch] = useState<string>("");
 
 	const handleSearch = useDebouncedCallback((query: string) => {
 		requestAutocomplete(query);
 	}, 500);
+
+	useEffect(() => {
+		setSearch(getValue(value) ?? "");
+	}, [value, getValue]);
 
 	useEffect(() => {
 		handleSearch(search);
@@ -45,7 +49,7 @@ export function SearchCombobox<T>({
 
 	function selectValue(val: string | null) {
 		setValue(autocompleteValues.find((x) => getValue(x) === val) ?? null);
-		setSearch(val ?? "");
+		//setSearch(val ?? "");
 	}
 
 	return (

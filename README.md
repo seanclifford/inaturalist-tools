@@ -27,7 +27,6 @@ This tool is made to allow for fast annotations, targeting mobile devices mainly
   - Ensure rerenders don't happen too often
   - Look at virtualising the list
 - Search control improvements
-  - Don't hide search dropdowns during loading
   - Show a magnifying glass image to the left - replace with taxon image when selected
   - Show a label for them
   - Make sure placeholder text makes sense

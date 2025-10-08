@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import { SearchCombobox } from "./SearchCombobox";
 import { getPlace } from "../../inaturalist/api";
 import { SiteContext } from "../../Contexts";
@@ -31,36 +31,37 @@ export function PlaceCombobox({ valueId, onSelect }: PlaceComboboxProps) {
 		} else setLoading(false);
 	}, [valueId, value]);
 
-	const comboSetValue = (place: Place | null) => {
-		if (place?.id === value?.id) return;
+	const comboSetValue = useCallback(
+		(place: Place | null) => {
+			if (place?.id === value?.id) return;
 
-		onSelect(place);
-	};
+			onSelect(place);
+		},
+		[value, onSelect],
+	);
+
+	const getKey = useCallback((place: Place | null) => place?.id ?? 0, []);
+	const getPlaceName = useCallback(
+		(place: Place | null) => place?.display_name || "",
+		[],
+	);
+	const buildOption = useCallback(
+		(place: Place) => getPlaceName(place),
+		[getPlaceName],
+	);
 
 	return (
 		<>
-			{loading ? null : (
-				<SearchCombobox
-					value={value}
-					setValue={comboSetValue}
-					autocompleteValues={places}
-					requestAutocomplete={setSearch}
-					placeholder="Select a place"
-					getKey={(x) => x?.id ?? 0}
-					getValue={(x) => getPlaceName(x)}
-					buildOption={buildOption}
-				/>
-			)}
+			<SearchCombobox
+				value={value}
+				setValue={comboSetValue}
+				autocompleteValues={places}
+				requestAutocomplete={setSearch}
+				placeholder="Select a place"
+				getKey={getKey}
+				getValue={getPlaceName}
+				buildOption={buildOption}
+			/>
 		</>
 	);
-}
-
-function buildOption(place: Place) {
-	const placeName = getPlaceName(place);
-
-	return placeName;
-}
-
-function getPlaceName(place: Place | null): string {
-	return place?.display_name || "";
 }

@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import { SearchCombobox } from "./SearchCombobox";
 import { useTaxaAutocomplete } from "../../hooks/useTaxaAutocomplete";
 import { Stack, Image, Group, Text } from "@mantine/core";
@@ -37,26 +37,34 @@ export function TaxonCombobox({ valueId, onSelect }: TaxonComboboxProps) {
 		} else setLoading(false);
 	}, [valueId, value]);
 
-	const comboSetValue = (taxon: Taxon | null) => {
-		if (taxon?.id === value?.id) return;
+	const comboSetValue = useCallback(
+		(taxon: Taxon | null) => {
+			if (taxon?.id === value?.id) return;
 
-		onSelect(taxon);
-	};
+			onSelect(taxon);
+		},
+		[value, onSelect],
+	);
+
+	const buildOptionInternal = useCallback(buildOption, []);
+	const getValue = useCallback(
+		(x: Taxon | null) => getTaxonNames(x)?.primaryName ?? "",
+		[],
+	);
+	const getKey = useCallback((x: Taxon | null) => x?.id ?? 0, []);
 
 	return (
 		<>
-			{loading ? null : (
-				<SearchCombobox
-					value={value}
-					setValue={comboSetValue}
-					autocompleteValues={taxa}
-					requestAutocomplete={setSearch}
-					placeholder="Select a taxon"
-					getKey={(x) => x?.id ?? 0}
-					getValue={(x) => getTaxonNames(x).primaryName ?? ""}
-					buildOption={buildOption}
-				/>
-			)}
+			<SearchCombobox
+				value={value}
+				setValue={comboSetValue}
+				autocompleteValues={taxa}
+				requestAutocomplete={setSearch}
+				placeholder="Select a taxon"
+				getKey={getKey}
+				getValue={getValue}
+				buildOption={buildOptionInternal}
+			/>
 		</>
 	);
 }

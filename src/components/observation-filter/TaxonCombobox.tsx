@@ -1,9 +1,9 @@
-import { useCallback, useContext, useEffect, useState } from "react";
+import { useCallback, useContext, useState } from "react";
 import { SearchCombobox } from "./SearchCombobox";
 import { useTaxaAutocomplete } from "../../hooks/useTaxaAutocomplete";
 import { Stack, Image, Group, Text } from "@mantine/core";
-import { getTaxon } from "../../inaturalist/api";
 import { SiteContext } from "../../Contexts";
+import { useTaxon } from "../../hooks/useTaxon";
 
 interface TaxonComboboxProps {
 	valueId: number | null;
@@ -17,25 +17,9 @@ interface TaxonNames {
 
 export function TaxonCombobox({ valueId, onSelect }: TaxonComboboxProps) {
 	const [site] = useContext(SiteContext);
-	const [value, setValue] = useState<Taxon | null>(null);
 	const [search, setSearch] = useState("");
-	const [_, setLoading] = useState(true);
 	const taxa = useTaxaAutocomplete(search, site);
-
-	useEffect(() => {
-		if (valueId !== value?.id) {
-			if (valueId == null) {
-				setValue(null);
-				setLoading(false);
-			} else {
-				setLoading(true);
-				getTaxon(valueId).then((result) => {
-					setValue(result);
-					setLoading(false);
-				});
-			}
-		} else setLoading(false);
-	}, [valueId, value]);
+	const { data: value } = useTaxon(valueId);
 
 	const comboSetValue = useCallback(
 		(taxon: Taxon | null) => {
@@ -56,7 +40,7 @@ export function TaxonCombobox({ valueId, onSelect }: TaxonComboboxProps) {
 	return (
 		<>
 			<SearchCombobox
-				value={value}
+				value={value ?? null}
 				setValue={comboSetValue}
 				autocompleteValues={taxa}
 				requestAutocomplete={setSearch}

@@ -1,16 +1,18 @@
 import { useEffect, useState } from "react";
 import { getTaxaAutocomplete } from "../inaturalist/api";
+import { type QueryClient, useQueryClient } from "@tanstack/react-query";
 
 export function useTaxaAutocomplete(search: string, site: Site): Taxon[] {
 	const [results, setResults] = useState<Taxon[]>([]);
+	const queryClient = useQueryClient();
 
 	useEffect(() => {
 		if (search.length <= 2 || !site) setResults([]);
 		else
 			getTaxaAutocomplete(generateQueryString(search, site))
-				.then((taxa) => setResults(taxa))
+				.then((taxa) => onLoadTaxa(taxa, setResults, queryClient))
 				.catch(console.error);
-	}, [search, site]);
+	}, [search, site, queryClient]);
 
 	return results;
 }
@@ -24,4 +26,14 @@ function generateQueryString(search: string, site: Site): URLSearchParams {
 	if (site.place_id)
 		searchParams.append("preferred_place_id", site.place_id.toString());
 	return searchParams;
+}
+
+function onLoadTaxa(
+	taxa: Taxon[],
+	setResults: (taxa: Taxon[]) => void,
+	queryClient: QueryClient,
+) {
+	setResults(taxa);
+	for (const taxon of taxa)
+		queryClient.setQueryData(["taxon", taxon.id], taxon);
 }

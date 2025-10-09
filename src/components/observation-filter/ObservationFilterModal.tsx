@@ -1,5 +1,6 @@
 import { Modal } from "@mantine/core";
 import ObservationFilter from "./ObservationFilter";
+import classes from "./ObservationFilterModal.module.css";
 
 interface ObservationFilterModalProps {
 	opened: boolean;
@@ -15,7 +16,14 @@ export default function ObservationFilterModal({
 	runQuery,
 }: ObservationFilterModalProps) {
 	return (
-		<Modal opened={opened} onClose={close} title="Settings" centered size="lg">
+		<Modal
+			opened={opened}
+			onClose={close}
+			title="Settings"
+			centered
+			size="lg"
+			classNames={{ body: classes.body }}
+		>
 			<ObservationFilter
 				pageQueryString={pageQueryString}
 				runQuery={runQuery}

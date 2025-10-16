@@ -4,6 +4,7 @@ import { useTaxaAutocomplete } from "../../hooks/useTaxaAutocomplete";
 import { Stack, Image, Group, Text } from "@mantine/core";
 import { SiteContext } from "../../Contexts";
 import { useTaxon } from "../../hooks/useTaxon";
+import { Search } from "lucide-react";
 
 interface TaxonComboboxProps {
 	valueId: number | null;
@@ -45,10 +46,17 @@ export function TaxonCombobox({ valueId, onSelect }: TaxonComboboxProps) {
 				autocompleteValues={taxa}
 				requestAutocomplete={setSearch}
 				label="Taxon"
-				placeholder="Select a taxon"
+				placeholder="Search for a taxon"
 				getKey={getKey}
 				getValue={getValue}
 				buildOption={buildOptionInternal}
+				leftSection={
+					value?.default_photo?.square_url ? (
+						<Image src={value.default_photo.square_url} h={"24px"} w={"24px"} />
+					) : (
+						<Search />
+					)
+				}
 			/>
 		</>
 	);

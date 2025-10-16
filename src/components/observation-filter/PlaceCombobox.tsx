@@ -3,6 +3,7 @@ import { SearchCombobox } from "./SearchCombobox";
 import { getPlace } from "../../inaturalist/api";
 import { SiteContext } from "../../Contexts";
 import { usePlacesAutocomplete } from "../../hooks/usePlacesAutocomplete";
+import { MapPin } from "lucide-react";
 
 interface PlaceComboboxProps {
 	valueId: number | null;
@@ -58,10 +59,11 @@ export function PlaceCombobox({ valueId, onSelect }: PlaceComboboxProps) {
 				autocompleteValues={places}
 				requestAutocomplete={setSearch}
 				label="Place"
-				placeholder="Select a place"
+				placeholder="Search for a place"
 				getKey={getKey}
 				getValue={getPlaceName}
 				buildOption={buildOption}
+				leftSection={<MapPin />}
 			/>
 		</>
 	);

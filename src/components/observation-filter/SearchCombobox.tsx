@@ -1,5 +1,6 @@
 import { CloseButton, Combobox, InputBase, useCombobox } from "@mantine/core";
 import { useDebouncedCallback } from "@mantine/hooks";
+import { Search } from "lucide-react";
 import { type ReactNode, useEffect, useState } from "react";
 
 interface SearchComboboxProps<T> {
@@ -12,6 +13,7 @@ interface SearchComboboxProps<T> {
 	buildOption: (model: T) => ReactNode;
 	getValue: (model: T | null) => string;
 	getKey: (model: T | null) => number;
+	leftSection?: ReactNode;
 }
 
 export function SearchCombobox<T>({
@@ -24,6 +26,7 @@ export function SearchCombobox<T>({
 	buildOption,
 	getValue,
 	getKey,
+	leftSection,
 }: SearchComboboxProps<T>) {
 	const combobox = useCombobox({
 		onDropdownClose: () => combobox.resetSelectedOption(),
@@ -66,6 +69,7 @@ export function SearchCombobox<T>({
 			<Combobox.Target>
 				<InputBase
 					label={label}
+					leftSection={leftSection ?? <Search />}
 					rightSection={
 						value !== null ? (
 							<CloseButton

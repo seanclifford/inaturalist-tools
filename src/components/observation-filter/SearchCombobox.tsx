@@ -37,7 +37,7 @@ export function SearchCombobox<T>({
 	const [search, setSearch] = useState<string>("");
 
 	const handleSearch = useDebouncedCallback((query: string) => {
-		requestAutocomplete(query);
+		if (getValue(value) !== query) requestAutocomplete(query);
 	}, 500);
 
 	useEffect(() => {

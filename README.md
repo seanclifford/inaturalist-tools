@@ -27,9 +27,7 @@ This tool is made to allow for fast annotations, targeting mobile devices mainly
   - Ensure rerenders don't happen too often
   - Look at virtualising the list
 - Search control improvements
-  - Show a magnifying glass image to the left - replace with taxon image when selected
-  - Make sure placeholder text makes sense
-  - Don't re-search when re-opening the modal
+  - Prevent backspacing text being undone after first load
 - Fix bugs
   - Fix vertical scrolling on reptiles and amphibians (Established annotation)
   - Change filter after scrolling right - reset scroll position

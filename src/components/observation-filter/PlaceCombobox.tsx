@@ -13,7 +13,7 @@ interface PlaceComboboxProps {
 export function PlaceCombobox({ valueId, onSelect }: PlaceComboboxProps) {
 	const [site] = useContext(SiteContext);
 	const [search, setSearch] = useState("");
-	const { data: value } = usePlace(valueId);
+	const { data: value, isLoading } = usePlace(valueId);
 	const places = usePlacesAutocomplete(search, site);
 
 	const comboSetValue = useCallback(
@@ -40,6 +40,7 @@ export function PlaceCombobox({ valueId, onSelect }: PlaceComboboxProps) {
 			<SearchCombobox
 				value={value ?? null}
 				setValue={comboSetValue}
+				loading={isLoading}
 				autocompleteValues={places}
 				requestAutocomplete={setSearch}
 				label="Place"

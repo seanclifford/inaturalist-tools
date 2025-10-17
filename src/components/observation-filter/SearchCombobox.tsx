@@ -6,6 +6,7 @@ import { type ReactNode, useEffect, useState } from "react";
 interface SearchComboboxProps<T> {
 	value: T | null;
 	setValue: (val: T | null) => void;
+	loading: boolean;
 	autocompleteValues: T[];
 	requestAutocomplete: (search: string) => void; //Should this be a promise?
 	label: string;
@@ -19,6 +20,7 @@ interface SearchComboboxProps<T> {
 export function SearchCombobox<T>({
 	value,
 	setValue,
+	loading,
 	autocompleteValues,
 	requestAutocomplete,
 	label,
@@ -54,7 +56,6 @@ export function SearchCombobox<T>({
 
 	function selectValue(val: string | null) {
 		setValue(autocompleteValues.find((x) => getValue(x) === val) ?? null);
-		//setSearch(val ?? "");
 	}
 
 	return (
@@ -69,7 +70,8 @@ export function SearchCombobox<T>({
 			<Combobox.Target>
 				<InputBase
 					label={label}
-					leftSection={leftSection ?? <Search />}
+					disabled={loading}
+					leftSection={loading ? null : (leftSection ?? <Search />)}
 					rightSection={
 						value !== null ? (
 							<CloseButton
@@ -94,7 +96,7 @@ export function SearchCombobox<T>({
 						combobox.closeDropdown();
 						setSearch(getValue(value) || "");
 					}}
-					placeholder={placeholder}
+					placeholder={loading ? "Loading..." : placeholder}
 					rightSectionPointerEvents={value === null ? "none" : "all"}
 				/>
 			</Combobox.Target>

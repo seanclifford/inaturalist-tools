@@ -20,7 +20,7 @@ export function TaxonCombobox({ valueId, onSelect }: TaxonComboboxProps) {
 	const [site] = useContext(SiteContext);
 	const [search, setSearch] = useState("");
 	const taxa = useTaxaAutocomplete(search, site);
-	const { data: value } = useTaxon(valueId);
+	const { data: value, isLoading } = useTaxon(valueId);
 
 	const comboSetValue = useCallback(
 		(taxon: Taxon | null) => {
@@ -43,6 +43,7 @@ export function TaxonCombobox({ valueId, onSelect }: TaxonComboboxProps) {
 			<SearchCombobox
 				value={value ?? null}
 				setValue={comboSetValue}
+				loading={isLoading}
 				autocompleteValues={taxa}
 				requestAutocomplete={setSearch}
 				label="Taxon"

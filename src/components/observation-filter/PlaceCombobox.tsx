@@ -1,9 +1,9 @@
-import { useCallback, useContext, useEffect, useState } from "react";
+import { useCallback, useContext, useState } from "react";
 import { SearchCombobox } from "./SearchCombobox";
-import { getPlace } from "../../inaturalist/api";
 import { SiteContext } from "../../Contexts";
 import { usePlacesAutocomplete } from "../../hooks/usePlacesAutocomplete";
-import { MapPin } from "lucide-react";
+import { MapPin, Search } from "lucide-react";
+import { usePlace } from "../../hooks/usePlace";
 
 interface PlaceComboboxProps {
 	valueId: number | null;
@@ -12,25 +12,9 @@ interface PlaceComboboxProps {
 
 export function PlaceCombobox({ valueId, onSelect }: PlaceComboboxProps) {
 	const [site] = useContext(SiteContext);
-	const [value, setValue] = useState<Place | null>(null);
 	const [search, setSearch] = useState("");
-	const [_, setLoading] = useState(true);
+	const { data: value } = usePlace(valueId);
 	const places = usePlacesAutocomplete(search, site);
-
-	useEffect(() => {
-		if (valueId !== value?.id) {
-			if (valueId == null) {
-				setValue(null);
-				setLoading(false);
-			} else {
-				setLoading(true);
-				getPlace(valueId).then((result) => {
-					setValue(result);
-					setLoading(false);
-				});
-			}
-		} else setLoading(false);
-	}, [valueId, value]);
 
 	const comboSetValue = useCallback(
 		(place: Place | null) => {
@@ -54,7 +38,7 @@ export function PlaceCombobox({ valueId, onSelect }: PlaceComboboxProps) {
 	return (
 		<>
 			<SearchCombobox
-				value={value}
+				value={value ?? null}
 				setValue={comboSetValue}
 				autocompleteValues={places}
 				requestAutocomplete={setSearch}
@@ -63,7 +47,7 @@ export function PlaceCombobox({ valueId, onSelect }: PlaceComboboxProps) {
 				getKey={getKey}
 				getValue={getPlaceName}
 				buildOption={buildOption}
-				leftSection={<MapPin />}
+				leftSection={value ? <MapPin /> : <Search />}
 			/>
 		</>
 	);

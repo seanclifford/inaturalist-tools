@@ -185,10 +185,10 @@ export async function getProjects() {
     }
 }*/
 
-export async function getPlace(id: number) {
+export async function getPlace(id: number | null, query: URLSearchParams) {
 	if (!id) return null;
 
-	const response = await get(`places/${id}`);
+	const response = await get(`places/${id}?${query.toString()}`);
 	if (!response.ok) {
 		throw new Error("Could not load place");
 	}

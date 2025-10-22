@@ -36,20 +36,18 @@ export function PlaceCombobox({ valueId, onSelect }: PlaceComboboxProps) {
 	);
 
 	return (
-		<>
-			<SearchCombobox
-				value={value ?? null}
-				setValue={comboSetValue}
-				loading={isLoading}
-				autocompleteValues={places}
-				requestAutocomplete={setSearch}
-				label="Place"
-				placeholder="Search for a place"
-				getKey={getKey}
-				getValue={getPlaceName}
-				buildOption={buildOption}
-				leftSection={value ? <MapPin /> : <Search />}
-			/>
-		</>
+		<SearchCombobox
+			value={value ?? null}
+			setValue={comboSetValue}
+			loading={isLoading}
+			autocompleteValues={places}
+			requestAutocomplete={setSearch}
+			label="Place"
+			placeholder="Search for a place"
+			getKey={getKey}
+			getValue={getPlaceName}
+			buildOption={buildOption}
+			leftSection={value ? <MapPin /> : <Search />}
+		/>
 	);
 }

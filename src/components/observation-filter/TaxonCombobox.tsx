@@ -39,27 +39,25 @@ export function TaxonCombobox({ valueId, onSelect }: TaxonComboboxProps) {
 	const getKey = useCallback((x: Taxon | null) => x?.id ?? 0, []);
 
 	return (
-		<>
-			<SearchCombobox
-				value={value ?? null}
-				setValue={comboSetValue}
-				loading={isLoading}
-				autocompleteValues={taxa}
-				requestAutocomplete={setSearch}
-				label="Taxon"
-				placeholder="Search for a taxon"
-				getKey={getKey}
-				getValue={getValue}
-				buildOption={buildOptionInternal}
-				leftSection={
-					value?.default_photo?.square_url ? (
-						<Image src={value.default_photo.square_url} h={"24px"} w={"24px"} />
-					) : (
-						<Search />
-					)
-				}
-			/>
-		</>
+		<SearchCombobox
+			value={value ?? null}
+			setValue={comboSetValue}
+			loading={isLoading}
+			autocompleteValues={taxa}
+			requestAutocomplete={setSearch}
+			label="Taxon"
+			placeholder="Search for a taxon"
+			getKey={getKey}
+			getValue={getValue}
+			buildOption={buildOptionInternal}
+			leftSection={
+				value?.default_photo?.square_url ? (
+					<Image src={value.default_photo.square_url} h={"24px"} w={"24px"} />
+				) : (
+					<Search />
+				)
+			}
+		/>
 	);
 }
 

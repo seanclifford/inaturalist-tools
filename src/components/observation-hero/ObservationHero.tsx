@@ -37,9 +37,9 @@ const ObservationHero: React.FC<ObservationHeroProps> = ({ observation }) => {
 					<Carousel
 						h="min(50vh, 100vw)"
 						orientation="vertical"
-						align="start"
 						withIndicators={photos.length > 1}
 						withControls={photos.length > 1}
+						emblaOptions={{ align: "start" }}
 					>
 						{photos.map((photo) => (
 							<Carousel.Slide key={photo.id}>

@@ -22,27 +22,37 @@ This tool is made to allow for fast annotations, targeting mobile devices mainly
 - Settings to choose site
 
 #### Annotator
-- Move site selection into settings
+- Improve new user experience
+  - Move site selection into Account tab of settings
+  - Make it obvious that you need to login before annotating
 - Infinite scroll loading
   - Ensure rerenders don't happen too often
   - Look at virtualising the list
 - Search control improvements
   - Prevent backspacing text being undone after first load
+  - Display dropdown appropriate to the vertical screen size available - allow for on screen keyboards
 - Fix bugs
+  - Flowering and Fruiting not allowing multi-select
   - Fix vertical scrolling on reptiles and amphibians (Established annotation)
   - Change filter after scrolling right - reset scroll position
-- Improve method for changing images?
+- Improve method for changing images
+  - Indicate the number of photos
+  - Allow vertical swiping?
+  - Would a gallery of thumbnails help?
 - Settings to choose filters
-    - User
-    - Has Photos
-    - Project
-    - Unreviewed
-- Zoom images functionality (how to do this?) - maybe click and hold = zoomed, then drag to move image around somehow
+  - User
+  - Has Photos
+  - Project
+  - Unreviewed
+- Zoom images functionality
+  - Download the original sized image and display
 - Allow marking observation as reviewed
 - Help or about section in settings
     - link to https://help.inaturalist.org/en/support/solutions/articles/151000191830-what-are-the-definitions-of-inaturalist-annotations
     - explain best practices, or even better, link to them
     - Back to home page
-- Annotation voting for others annotations
-- Audio observation support
 - Tweak styling to suit different displays
+- Bulk annotate many observations at once somehow (later)
+- Annotation voting for others annotations (later)
+- Audio observation support (later)
+- Add keyboard shortcuts (later)

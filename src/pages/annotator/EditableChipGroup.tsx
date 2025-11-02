@@ -40,7 +40,7 @@ export function EditableChipGroup({
 
 			setProcessing(true);
 			try {
-				if (existingAnnotation) {
+				if (existingAnnotation && !controlledTerm.multivalued) {
 					console.log(
 						`Deleting existing annotation ${existingAnnotation.uuid}`,
 					);
@@ -48,8 +48,6 @@ export function EditableChipGroup({
 						observationId: observation.id,
 						annotationId: existingAnnotation.uuid,
 					});
-				} else {
-					console.log("No existing annotation found to delete");
 				}
 				const result = await saveAnnotation(params);
 				return result;

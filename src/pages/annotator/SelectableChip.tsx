@@ -1,4 +1,5 @@
 import { Chip } from "@mantine/core";
+import { LoaderCircle } from "lucide-react";
 import { useState } from "react";
 
 interface SelectableChipProps {
@@ -26,38 +27,44 @@ export default function SelectableChip({
 		(annotation) => annotation?.controlled_value_id === controlledValue.id,
 	);
 
+	const checkChanged = () => {
+		if (!checked && saveAnnotation) {
+			setProcessing(true);
+			saveAnnotation({
+				observationId: observation.id,
+				controlledTermId: controlledTerm.id,
+				controlledValueId: controlledValue.id,
+			})
+				.finally(() => setProcessing(false))
+				.catch(console.error);
+		} else {
+			const annotation = yourAnnotations.find(
+				(a) => a.controlled_value_id === controlledValue.id,
+			);
+			if (annotation && deleteAnnotation) {
+				setProcessing(true);
+				deleteAnnotation({
+					observationId: observation.id,
+					annotationId: annotation.uuid,
+				})
+					.finally(() => setProcessing(false))
+					.catch(console.error);
+			}
+		}
+	};
+
 	return (
 		<Chip
 			value={controlledValue.id}
-			checked={checked}
+			checked={checked || (processing && disabled)}
 			disabled={disabled}
-			onChange={() => {
-				if (!checked && saveAnnotation) {
-					setProcessing(true);
-					saveAnnotation({
-						observationId: observation.id,
-						controlledTermId: controlledTerm.id,
-						controlledValueId: controlledValue.id,
-					})
-						.finally(() => setProcessing(false))
-						.catch(console.error);
-				} else {
-					const annotation = yourAnnotations.find(
-						(a) => a.controlled_value_id === controlledValue.id,
-					);
-					if (annotation && deleteAnnotation) {
-						setProcessing(true);
-						deleteAnnotation({
-							observationId: observation.id,
-							annotationId: annotation.uuid,
-						})
-							.finally(() => setProcessing(false))
-							.catch(console.error);
-					}
-				}
-			}}
+			icon={
+				processing ? (
+					<LoaderCircle className="spinner rotate" size="1em" />
+				) : null
+			}
+			onChange={checkChanged}
 		>
-			{processing ? "..." : ""}
 			{controlledValue.label}
 		</Chip>
 	);

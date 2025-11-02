@@ -10,3 +10,10 @@ main {
 main.annotator {
 	padding: 0;
 }
+
+.rotate{
+  animation: spinner 1s linear infinite; 
+}
+@keyframes spinner {
+  to { transform: rotate(360deg); }
+}

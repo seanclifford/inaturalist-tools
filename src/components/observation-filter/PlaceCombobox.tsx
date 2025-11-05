@@ -1,9 +1,9 @@
-import { useCallback, useContext, useState } from "react";
-import { SearchCombobox } from "./SearchCombobox";
-import { SiteContext } from "../../Contexts";
-import { usePlacesAutocomplete } from "../../hooks/usePlacesAutocomplete";
 import { MapPin, Search } from "lucide-react";
+import { useCallback, useContext, useState } from "react";
+import { SiteContext } from "../../Contexts";
 import { usePlace } from "../../hooks/usePlace";
+import { usePlacesAutocomplete } from "../../hooks/usePlacesAutocomplete";
+import { SearchCombobox } from "./SearchCombobox";
 
 interface PlaceComboboxProps {
 	valueId: number | null;

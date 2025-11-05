@@ -1,10 +1,10 @@
+import { limit } from "./api-limiter.js";
 import {
-	getFetchOptions,
-	postAuthFetchOptions,
 	deleteAuthFetchOptions,
 	getAuthFetchOptions,
+	getFetchOptions,
+	postAuthFetchOptions,
 } from "./fetch-options.js";
-import { limit } from "./api-limiter.js";
 
 function get(path: string, useCache = true): Promise<Response> {
 	return limit(async () => {

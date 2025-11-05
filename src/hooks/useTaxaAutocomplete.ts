@@ -1,6 +1,6 @@
+import { type QueryClient, useQueryClient } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { getTaxaAutocomplete } from "../inaturalist/api";
-import { type QueryClient, useQueryClient } from "@tanstack/react-query";
 
 export function useTaxaAutocomplete(search: string, site: Site): Taxon[] {
 	const [results, setResults] = useState<Taxon[]>([]);

@@ -1,7 +1,7 @@
 import "./App.css";
-import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
-import AppContent from "./AppContent";
 import { MantineProvider } from "@mantine/core";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import AppContent from "./AppContent";
 import "@mantine/core/styles.css";
 import "@mantine/carousel/styles.css";
 

@@ -1,8 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
-import { getTaxon } from "../inaturalist/api";
-import useSite from "./useSite";
-import { getSiteUrlParams } from "../inaturalist/params";
 import { oneDay } from "../constants/values";
+import { getTaxon } from "../inaturalist/api";
+import { getSiteUrlParams } from "../inaturalist/params";
+import useSite from "./useSite";
 
 export function useTaxon(id: number | null) {
 	const [site] = useSite();

@@ -1,10 +1,10 @@
 import { Button, Stack, Tabs } from "@mantine/core";
-import QueryStringInput from "../../pages/annotator/QueryStringInput";
-import { TaxonCombobox } from "./TaxonCombobox";
 import { useState } from "react";
-import { PlaceCombobox } from "./PlaceCombobox";
-import { WithoutAnnotationSelect } from "./WithoutAnnotationSelect";
+import QueryStringInput from "../../pages/annotator/QueryStringInput";
 import AuthenticationDetails from "../authentication-details/AuthenticationDetails";
+import { PlaceCombobox } from "./PlaceCombobox";
+import { TaxonCombobox } from "./TaxonCombobox";
+import { WithoutAnnotationSelect } from "./WithoutAnnotationSelect";
 
 interface ObservationFilterProps {
 	pageQueryString: string;

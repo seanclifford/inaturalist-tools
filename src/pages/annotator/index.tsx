@@ -1,5 +1,5 @@
-import { usePageQueryString } from "../../hooks/usePageQueryString";
 import ObservationFilter from "../../components/observation-filter/ObservationFilter";
+import { usePageQueryString } from "../../hooks/usePageQueryString";
 import AnnotatorDisplay from "./AnnotatorDisplay";
 
 function Annotator() {

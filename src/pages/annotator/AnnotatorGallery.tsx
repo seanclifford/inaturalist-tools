@@ -1,6 +1,6 @@
+import { Carousel } from "@mantine/carousel";
 import ObservationHero from "../../components/observation-hero/ObservationHero";
 import { AnnotationSelector } from "./AnnotationSelector";
-import { Carousel } from "@mantine/carousel";
 
 interface AnnotatorGalleryProps {
 	annotatorObservations: AnnotatorObservation[];

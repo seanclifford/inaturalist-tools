@@ -1,10 +1,10 @@
-import { useCallback, useContext, useState } from "react";
-import { SearchCombobox } from "./SearchCombobox";
-import { useTaxaAutocomplete } from "../../hooks/useTaxaAutocomplete";
-import { Stack, Image, Group, Text } from "@mantine/core";
-import { SiteContext } from "../../Contexts";
-import { useTaxon } from "../../hooks/useTaxon";
+import { Group, Image, Stack, Text } from "@mantine/core";
 import { Search } from "lucide-react";
+import { useCallback, useContext, useState } from "react";
+import { SiteContext } from "../../Contexts";
+import { useTaxaAutocomplete } from "../../hooks/useTaxaAutocomplete";
+import { useTaxon } from "../../hooks/useTaxon";
+import { SearchCombobox } from "./SearchCombobox";
 
 interface TaxonComboboxProps {
 	valueId: number | null;

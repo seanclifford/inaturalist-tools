@@ -1,9 +1,9 @@
 import { useMutation } from "@tanstack/react-query";
-import { addAnnotation, deleteAnnotation } from "../../inaturalist/api";
-import { useControlledTerms } from "../../hooks/useControlledTerms";
 import { useContext } from "react";
 import { AuthContext, CurrentUserContext } from "../../Contexts";
+import { useControlledTerms } from "../../hooks/useControlledTerms";
 import { useObservations } from "../../hooks/useObservations";
+import { addAnnotation, deleteAnnotation } from "../../inaturalist/api";
 
 interface AnnotatorObservationResult {
 	annotatorObservations?: AnnotatorObservation[];

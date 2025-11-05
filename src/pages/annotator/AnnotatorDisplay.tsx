@@ -1,9 +1,9 @@
-import { useEffect, useState } from "react";
-import AnnotatorGallery from "./AnnotatorGallery";
-import { useAnnotatorObservations } from "./useAnnotatorObservations";
 import { useDisclosure } from "@mantine/hooks";
 import { SettingsIcon } from "lucide-react";
+import { useEffect, useState } from "react";
 import ObservationFilterModal from "../../components/observation-filter/ObservationFilterModal";
+import AnnotatorGallery from "./AnnotatorGallery";
+import { useAnnotatorObservations } from "./useAnnotatorObservations";
 
 interface AnnotatorDisplayProps {
 	pageQueryString: string;
@@ -18,14 +18,19 @@ export default function AnnotatorDisplay({
 		useState(pageQueryString);
 	const [settingsOpened, { open: openSettings, close: closeSettings }] =
 		useDisclosure(false);
-	const { annotatorObservations, status, error, annotationFunctions, loadMore } =
-		useAnnotatorObservations(submitedQueryString);
+	const {
+		annotatorObservations,
+		status,
+		error,
+		annotationFunctions,
+		loadMore,
+	} = useAnnotatorObservations(submitedQueryString);
 	const runQuery = (queryString: string) => {
 		setPageQueryString(queryString);
 		closeSettings();
 	};
 	useEffect(() => setSubmitedQueryString(pageQueryString), [pageQueryString]);
-	
+
 	return (
 		<>
 			<ObservationFilterModal

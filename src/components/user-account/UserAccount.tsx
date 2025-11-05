@@ -1,5 +1,5 @@
-import  { Avatar, Group, Text } from "@mantine/core";
 import type { MantineSize } from "@mantine/core";
+import { Avatar, Group, Text } from "@mantine/core";
 
 interface UserAccountProps {
 	user: User;

@@ -1,6 +1,6 @@
+import { type QueryClient, useQueryClient } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { getPlacesAutocomplete } from "../inaturalist/api";
-import { type QueryClient, useQueryClient } from "@tanstack/react-query";
 
 export function usePlacesAutocomplete(search: string, site: Site): Place[] {
 	const [results, setResults] = useState<Place[]>([]);

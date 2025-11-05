@@ -1,8 +1,8 @@
 import { Chip, Group, Stack, Title } from "@mantine/core";
-import UserAccount from "../../components/user-account/UserAccount";
-import { EditableChipGroup } from "./EditableChipGroup";
 import { useContext } from "react";
 import { CurrentUserContext } from "../../Contexts";
+import UserAccount from "../../components/user-account/UserAccount";
+import { EditableChipGroup } from "./EditableChipGroup";
 
 interface AnnotationSelectorProps {
 	observation: Observation;

@@ -1,20 +1,20 @@
-import type React from "react";
-import getPhotoUrl from "../../inaturalist/photo-urls";
+import { Carousel } from "@mantine/carousel";
 import {
 	Anchor,
+	Box,
 	Center,
 	Group,
 	Image,
 	Paper,
 	Stack,
 	Text,
-	Box,
 } from "@mantine/core";
 import { SquareArrowOutUpRight } from "lucide-react";
-import { Carousel } from "@mantine/carousel";
-import UserAccount from "../user-account/UserAccount";
+import type React from "react";
 import { useContext } from "react";
 import { SiteContext } from "../../Contexts";
+import getPhotoUrl from "../../inaturalist/photo-urls";
+import UserAccount from "../user-account/UserAccount";
 
 interface ObservationHeroProps {
 	observation?: Observation;

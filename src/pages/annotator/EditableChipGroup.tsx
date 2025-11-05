@@ -1,6 +1,6 @@
 import { Chip, Group } from "@mantine/core";
-import SelectableChip from "./SelectableChip";
 import { useState } from "react";
+import SelectableChip from "./SelectableChip";
 
 interface EditableChipGroupProps {
 	observation: Observation;

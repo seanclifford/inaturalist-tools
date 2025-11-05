@@ -1,5 +1,5 @@
-import { getAuthFetchOptions, postFetchOptions } from "./fetch-options";
 import { limit } from "./api-limiter.js";
+import { getAuthFetchOptions, postFetchOptions } from "./fetch-options";
 
 const AUTH_VERIFIER = "auth_verifier";
 const AUTH_ACCESS_TOKEN = "auth_access_token";

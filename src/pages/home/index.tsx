@@ -17,8 +17,7 @@ function Home() {
 				The first (and so far only) tool is a mobile friendly annotator
 			</p>
 			<Group>
-				Choose your site (optional):
-				<SiteCombobox />
+				<SiteCombobox label="Choose your site (optional)" />
 			</Group>
 			<h3>
 				<Link href="/annotator">Annotator</Link>

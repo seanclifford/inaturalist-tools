@@ -1,4 +1,5 @@
 import {
+	Center,
 	Combobox,
 	Group,
 	Image,
@@ -12,6 +13,10 @@ import { useContext } from "react";
 import { SiteContext } from "../../Contexts";
 import { oneDay } from "../../constants/values";
 import { getSites } from "../../inaturalist/api";
+
+interface SiteComboboxProps {
+	label: string;
+}
 
 function SelectOption({ name, url, icon_url }: Site) {
 	return (
@@ -29,7 +34,7 @@ function SelectOption({ name, url, icon_url }: Site) {
 	);
 }
 
-export default function SiteCombobox() {
+export default function SiteCombobox({ label }: SiteComboboxProps) {
 	const [currentSite, setCurrentSite] = useContext(SiteContext);
 	const { isFetched, data: sites } = useQuery({
 		queryKey: ["sites"],
@@ -63,6 +68,7 @@ export default function SiteCombobox() {
 		>
 			<Combobox.Target>
 				<InputBase
+					label={label}
 					component="button"
 					type="button"
 					pointer
@@ -74,7 +80,13 @@ export default function SiteCombobox() {
 					{selectedOption ? (
 						<SelectOption {...selectedOption} />
 					) : (
-						<Input.Placeholder>Pick value</Input.Placeholder>
+						<Input.Placeholder>
+							<Center>
+								<Text h="2.5em" w="17em">
+									Loading...
+								</Text>
+							</Center>
+						</Input.Placeholder>
 					)}
 				</InputBase>
 			</Combobox.Target>

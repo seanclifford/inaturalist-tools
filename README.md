@@ -35,7 +35,6 @@ This tool is made to allow for fast annotations, targeting mobile devices mainly
   - Prevent backspacing text being undone after first load
   - Display dropdown appropriate to the vertical screen size available - allow for on screen keyboards
 - Fix bugs
-  - Flowering and Fruiting not allowing multi-select
   - Fix vertical scrolling on reptiles and amphibians (Established annotation)
   - Change filter after scrolling right - reset scroll position
 - Improve method for changing images

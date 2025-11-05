@@ -1,9 +1,9 @@
-import { Link } from "wouter";
-import INatSite from "../../components/inat-site";
-import useSite from "../../hooks/useSite";
 import { Group } from "@mantine/core";
+import { Link } from "wouter";
+import SiteCombobox from "../../components/site-combobox/SiteCombobox";
 import useAuthentication from "../../hooks/useAuthentication";
 import { useCurrentUser } from "../../hooks/useCurrentUser";
+import useSite from "../../hooks/useSite";
 
 function Home() {
 	const [site] = useSite();
@@ -18,9 +18,7 @@ function Home() {
 			</p>
 			<Group>
 				Choose your site (optional):
-				<Link href="/site-selection">
-					<INatSite site={site} isShort />
-				</Link>
+				<SiteCombobox />
 			</Group>
 			<h3>
 				<Link href="/annotator">Annotator</Link>

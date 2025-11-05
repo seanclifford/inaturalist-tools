@@ -1,13 +1,11 @@
-import Home from "./pages/home";
-import SiteSelectionPage from "./pages/site-selection";
-import Header from "./components/header";
 import { Route, Router } from "wouter";
-import useSite from "./hooks/useSite";
-import useAuthentication from "./hooks/useAuthentication";
-import Annotator from "./pages/annotator";
 import { AuthContext, CurrentUserContext, SiteContext } from "./Contexts";
-import OauthRedirect from "./pages/oauth-redirect";
+import useAuthentication from "./hooks/useAuthentication";
 import { useCurrentUser } from "./hooks/useCurrentUser";
+import useSite from "./hooks/useSite";
+import Annotator from "./pages/annotator";
+import Home from "./pages/home";
+import OauthRedirect from "./pages/oauth-redirect";
 
 function AppContent() {
 	const [site, setSite] = useSite();
@@ -20,10 +18,6 @@ function AppContent() {
 					<Router base={import.meta.env.VITE_BASE_PATH}>
 						<Route path="/">
 							<Home />
-						</Route>
-						<Route path="/site-selection">
-							<Header />
-							<SiteSelectionPage />
 						</Route>
 						<Route path="/annotator">
 							<Annotator />

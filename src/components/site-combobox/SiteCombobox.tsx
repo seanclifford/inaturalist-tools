@@ -5,6 +5,7 @@ import {
 	Image,
 	Input,
 	InputBase,
+	ScrollArea,
 	Text,
 	useCombobox,
 } from "@mantine/core";
@@ -92,7 +93,9 @@ export default function SiteCombobox({ label }: SiteComboboxProps) {
 			</Combobox.Target>
 
 			<Combobox.Dropdown>
-				<Combobox.Options>{options}</Combobox.Options>
+				<Combobox.Options>
+					<ScrollArea.Autosize mah="42vh">{options}</ScrollArea.Autosize>
+				</Combobox.Options>
 			</Combobox.Dropdown>
 		</Combobox>
 	);

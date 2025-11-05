@@ -1,4 +1,10 @@
-import { CloseButton, Combobox, InputBase, useCombobox } from "@mantine/core";
+import {
+	CloseButton,
+	Combobox,
+	InputBase,
+	ScrollArea,
+	useCombobox,
+} from "@mantine/core";
 import { useDebouncedCallback } from "@mantine/hooks";
 import { Search } from "lucide-react";
 import { type ReactNode, useEffect, useState } from "react";
@@ -103,11 +109,13 @@ export function SearchCombobox<T>({
 
 			<Combobox.Dropdown>
 				<Combobox.Options>
-					{options.length > 0 ? (
-						options
-					) : (
-						<Combobox.Empty>Nothing found</Combobox.Empty>
-					)}
+					<ScrollArea.Autosize mah="42vh">
+						{options.length > 0 ? (
+							options
+						) : (
+							<Combobox.Empty>Nothing found</Combobox.Empty>
+						)}
+					</ScrollArea.Autosize>
 				</Combobox.Options>
 			</Combobox.Dropdown>
 		</Combobox>

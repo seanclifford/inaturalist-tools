@@ -1,6 +1,6 @@
-import { getCurrentUser } from "../inaturalist/api";
 import { useLocalStorage } from "@mantine/hooks";
 import { useEffect } from "react";
+import { getCurrentUser } from "../inaturalist/api";
 
 export function useCurrentUser(authentication: Authentication): User | null {
 	const [currentUser, setCurrentUser] = useLocalStorage<User | null>({

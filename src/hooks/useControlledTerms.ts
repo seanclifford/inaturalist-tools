@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
-import { getControlledTerms } from "../inaturalist/api";
 import { oneDay } from "../constants/values";
+import { getControlledTerms } from "../inaturalist/api";
 
 export function useControlledTerms() {
 	return useQuery({

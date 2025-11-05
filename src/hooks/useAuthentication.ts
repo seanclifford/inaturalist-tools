@@ -2,9 +2,9 @@ import { useEffect, useRef, useState } from "react";
 import {
 	authenticate,
 	getApiToken,
-	requestApiToken,
-	isAuthenticated,
 	getApiTokenExpiry,
+	isAuthenticated,
+	requestApiToken,
 } from "../inaturalist/auth";
 
 export default function useAuthentication(

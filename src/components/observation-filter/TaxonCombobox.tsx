@@ -1,4 +1,4 @@
-import { Group, Image, Stack, Text } from "@mantine/core";
+import { Box, Group, Image, Text } from "@mantine/core";
 import { Search } from "lucide-react";
 import { useCallback, useContext, useState } from "react";
 import { SiteContext } from "../../Contexts";
@@ -63,24 +63,28 @@ export function TaxonCombobox({ valueId, onSelect }: TaxonComboboxProps) {
 
 function buildOption(taxon: Taxon) {
 	const { primaryName, secondaryName } = getTaxonNames(taxon);
-	const rank = taxon.rank_level > 10 ? taxon.rank : "";
+	const rank = taxon.rank_level > 10 ? taxon.rank : null;
 
 	return (
 		<Group>
 			{taxon.default_photo?.square_url ? (
 				<Image src={taxon.default_photo?.square_url} h={"40px"} w={"40px"} />
 			) : null}
-			<Stack gap="xs">
-				{primaryName}
-				<Group gap="xs">
-					{rank}
+			<Box>
+				<Text fz="sm">{primaryName}</Text>
+				<Group gap="xs" opacity={0.6}>
+					{rank && (
+						<Text lh="xs" fz="sm">
+							{rank}
+						</Text>
+					)}
 					{secondaryName ? (
 						<Text size="xs" fs={taxon.rank_level <= 10 ? "italic" : ""}>
 							{secondaryName}
 						</Text>
 					) : null}
 				</Group>
-			</Stack>
+			</Box>
 		</Group>
 	);
 }

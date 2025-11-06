@@ -2,6 +2,7 @@ import { Button, Stack, Tabs } from "@mantine/core";
 import { useState } from "react";
 import QueryStringInput from "../../pages/annotator/QueryStringInput";
 import AuthenticationDetails from "../authentication-details/AuthenticationDetails";
+import SiteCombobox from "../site-combobox/SiteCombobox";
 import { PlaceCombobox } from "./PlaceCombobox";
 import { TaxonCombobox } from "./TaxonCombobox";
 import { WithoutAnnotationSelect } from "./WithoutAnnotationSelect";
@@ -58,7 +59,10 @@ export default function ObservationFilter({
 			</Tabs.Panel>
 
 			<Tabs.Panel value="account" p="md">
-				<AuthenticationDetails />
+				<Stack align="flex-start">
+					<SiteCombobox label="iNaturalist Site" />
+					<AuthenticationDetails />
+				</Stack>
 			</Tabs.Panel>
 		</Tabs>
 	);

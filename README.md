@@ -26,14 +26,12 @@ This tool is made to allow for fast annotations, targeting mobile devices mainly
 
 #### Annotator
 - Improve new user experience
-  - Move site selection into Account tab of settings
   - Make it obvious that you need to login before annotating
 - Infinite scroll loading
   - Ensure rerenders don't happen too often
   - Look at virtualising the list
 - Search control improvements
   - Prevent backspacing text being undone after first load
-  - Display dropdown appropriate to the vertical screen size available - allow for on screen keyboards
 - Fix bugs
   - Fix vertical scrolling on reptiles and amphibians (Established annotation)
   - Change filter after scrolling right - reset scroll position

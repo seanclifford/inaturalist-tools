@@ -37,6 +37,8 @@ This tool is made to allow for fast annotations, targeting mobile devices mainly
   - Change filter after scrolling right - reset scroll position
 - Improve method for changing images
   - Indicate the number of photos
+    - Show the photos similarly as iNat - small image squares along the bottom. Hide when there is only one.
+    - Could also have a grid of photos with magnify option to zoom on each
   - Allow vertical swiping?
   - Would a gallery of thumbnails help?
 - Settings to choose filters

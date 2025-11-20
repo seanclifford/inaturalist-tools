@@ -1,5 +1,4 @@
-import { Chip } from "@mantine/core";
-import { LoaderCircle } from "lucide-react";
+import { Chip, Loader } from "@mantine/core";
 import { useState } from "react";
 
 interface SelectableChipProps {
@@ -58,11 +57,7 @@ export default function SelectableChip({
 			value={controlledValue.id}
 			checked={checked || (processing && disabled)}
 			disabled={disabled}
-			icon={
-				processing ? (
-					<LoaderCircle className="spinner rotate" size="1em" />
-				) : null
-			}
+			icon={processing ? <Loader size="12" /> : null}
 			onChange={checkChanged}
 		>
 			{controlledValue.label}

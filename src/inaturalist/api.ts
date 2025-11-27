@@ -1,3 +1,4 @@
+import { AuthenticationError } from "../errors/AuthenticationError.js";
 import { limit } from "./api-limiter.js";
 import {
 	deleteAuthFetchOptions,
@@ -144,7 +145,7 @@ export async function addAnnotation(
 	authentication: Authentication,
 ): Promise<NewAnnotation> {
 	if (!authentication.authToken) {
-		throw new Error("Authentication is required to add an annotation");
+		throw new AuthenticationError("Authentication is required to add an annotation");
 	}
 
 	const response = await post(
@@ -162,8 +163,8 @@ export async function deleteAnnotation(
 	uuid: string,
 	authentication: Authentication,
 ) {
-	if (!authentication.authToken) {
-		throw new Error("Authentication is required to add an annotation");
+	if (!authentication.authToken || !authentication.isAuthenticated) {
+		throw new AuthenticationError("Authentication is required to add an annotation");
 	}
 	const response = await remove(
 		`annotations/${uuid}`,

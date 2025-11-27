@@ -34,7 +34,7 @@ export default function SelectableChip({
 				controlledTermId: controlledTerm.id,
 				controlledValueId: controlledValue.id,
 			})
-				.finally(() => setProcessing(false))
+				?.finally(() => setProcessing(false))
 				.catch(console.error);
 		} else {
 			const annotation = yourAnnotations.find(

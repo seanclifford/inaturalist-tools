@@ -1,6 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
 import { useContext } from "react";
 import { AuthContext, CurrentUserContext } from "../../Contexts";
+import { AuthenticationError } from "../../errors/AuthenticationError";
 import { useControlledTerms } from "../../hooks/useControlledTerms";
 import { useObservations } from "../../hooks/useObservations";
 import { addAnnotation, deleteAnnotation } from "../../inaturalist/api";
@@ -15,6 +16,7 @@ interface AnnotatorObservationResult {
 
 export function useAnnotatorObservations(
 	submitedQueryString: string,
+	requestAuthentication: () => void
 ): AnnotatorObservationResult {
 	const authentication = useContext(AuthContext);
 	const currentUser = useContext(CurrentUserContext);
@@ -45,7 +47,10 @@ export function useAnnotatorObservations(
 			);
 		},
 		onError(error) {
-			console.error(error);
+			if (error instanceof AuthenticationError)
+				requestAuthentication();
+			else
+				console.error(error);
 		},
 		onSuccess: (annotation: NewAnnotation) => {
 			if (!currentUser) return;
@@ -71,7 +76,10 @@ export function useAnnotatorObservations(
 			return deleteAnnotation(params.annotationId, authentication);
 		},
 		onError(error) {
-			console.error(error);
+			if (error instanceof AuthenticationError)
+				requestAuthentication();
+			else
+				console.error(error);
 		},
 		onSuccess: (_, params: DeleteAnnotationParams) => {
 			const observation = observations?.find(

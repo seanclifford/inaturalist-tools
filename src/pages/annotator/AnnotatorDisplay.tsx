@@ -1,6 +1,7 @@
 import { useDisclosure } from "@mantine/hooks";
 import { SettingsIcon } from "lucide-react";
 import { useEffect, useState } from "react";
+import AuthenticationModal from "../../components/authentication-modal/AuthenticationModal";
 import ObservationFilterModal from "../../components/observation-filter/ObservationFilterModal";
 import AnnotatorGallery from "./AnnotatorGallery";
 import { useAnnotatorObservations } from "./useAnnotatorObservations";
@@ -18,13 +19,17 @@ export default function AnnotatorDisplay({
 		useState(pageQueryString);
 	const [settingsOpened, { open: openSettings, close: closeSettings }] =
 		useDisclosure(false);
+	const [
+		authenticationOpened,
+		{ open: openAuthentication, close: closeAuthentication },
+	] = useDisclosure(false);
 	const {
 		annotatorObservations,
 		status,
 		error,
 		annotationFunctions,
 		loadMore,
-	} = useAnnotatorObservations(submitedQueryString);
+	} = useAnnotatorObservations(submitedQueryString, openAuthentication);
 	const runQuery = (queryString: string) => {
 		setPageQueryString(queryString);
 		closeSettings();
@@ -38,6 +43,10 @@ export default function AnnotatorDisplay({
 				close={closeSettings}
 				pageQueryString={pageQueryString}
 				runQuery={runQuery}
+			/>
+			<AuthenticationModal
+				opened={authenticationOpened}
+				close={closeAuthentication}
 			/>
 			<SettingsIcon
 				fill="white"

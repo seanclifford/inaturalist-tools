@@ -1,0 +1,4 @@
+.content {
+    /* biome-ignore lint/complexity/noImportantStyles: Needed to override the mantine style somehow */
+    overflow-y: visible !important;
+}

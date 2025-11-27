@@ -1,20 +1,10 @@
-import { Carousel } from "@mantine/carousel";
-import {
-	Anchor,
-	Box,
-	Center,
-	Group,
-	Image,
-	Paper,
-	Stack,
-	Text,
-} from "@mantine/core";
+import { Anchor, Box, Group, Paper, Stack, Text } from "@mantine/core";
 import { SquareArrowOutUpRight } from "lucide-react";
 import type React from "react";
 import { useContext } from "react";
 import { SiteContext } from "../../Contexts";
-import getPhotoUrl from "../../inaturalist/photo-urls";
 import UserAccount from "../user-account/UserAccount";
+import ObservationPhotos from "./ObservationPhotos";
 
 interface ObservationHeroProps {
 	observation?: Observation;
@@ -33,29 +23,7 @@ const ObservationHero: React.FC<ObservationHeroProps> = ({ observation }) => {
 	return (
 		<Paper w="min(50vh, 100vw)" radius="md" shadow="sm" withBorder>
 			<Box style={{ position: "relative" }}>
-				<Center h="min(50vh, 100vw)" style={{ overflow: "hidden" }}>
-					<Carousel
-						h="min(50vh, 100vw)"
-						orientation="vertical"
-						align="start"
-						withIndicators={photos.length > 1}
-						withControls={photos.length > 1}
-					>
-						{photos.map((photo) => (
-							<Carousel.Slide key={photo.id}>
-								<Center h="min(50vh, 100vw)">
-									<Image
-										src={getPhotoUrl(photo, "medium")}
-										style={{
-											maxHeight: "min(50vh, 100vw)",
-											width: "min(50vh, 100vw)",
-										}}
-									/>
-								</Center>
-							</Carousel.Slide>
-						))}
-					</Carousel>
-				</Center>
+				<ObservationPhotos photos={photos} />
 				<Box
 					style={{
 						position: "absolute",

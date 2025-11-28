@@ -7,7 +7,7 @@ import useSite from "../../hooks/useSite";
 
 function Home() {
 	const [site] = useSite();
-	const [auth] = useAuthentication(site);
+	const auth = useAuthentication(site);
 	const currentUser = useCurrentUser(auth);
 	return (
 		<main>

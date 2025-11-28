@@ -9,7 +9,7 @@ import {
 
 export default function useAuthentication(
 	currentSite: Site,
-): [Authentication, () => void] {
+): Authentication {
 	const [authentication, saveAuthentication] = useState(() =>
 		loadAuthenticationFromStore(),
 	);
@@ -42,7 +42,7 @@ export default function useAuthentication(
 		saveAuthentication(unauthenticated());
 	}
 
-	return [authentication, logout];
+	return {...authentication, logout};
 }
 
 function refreshAuthToken(
@@ -62,10 +62,10 @@ function refreshAuthToken(
 
 function loadAuthenticationFromStore(): Authentication {
 	if (!isAuthenticated()) {
-		return { ...unauthenticated(), authToken: import.meta.env.VITE_AUTH_TOKEN };
+		return { ...unauthenticated() };
 	}
 
-	const authToken = getApiToken();
+	const authToken = import.meta.env.VITE_AUTH_TOKEN ?? getApiToken();
 
 	return {
 		isAuthenticated: true,

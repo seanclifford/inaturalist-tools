@@ -10,7 +10,7 @@ const OAUTH_APPLICATION_ID = import.meta.env.VITE_OAUTH_APPLICATION_ID;
 const REDIRECT_URI = `${import.meta.env.VITE_THIS_SITE_URL}/oauth-redirect`;
 
 export function isAuthenticated() {
-	return !!localStorage.getItem(AUTH_ACCESS_TOKEN);
+	return !!localStorage.getItem(AUTH_ACCESS_TOKEN) || !!import.meta.env.VITE_AUTH_TOKEN;
 }
 
 export async function authenticate(currentSite: Site) {

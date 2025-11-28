@@ -25,8 +25,6 @@ This tool is made to allow for fast annotations, targeting mobile devices mainly
 - Settings to choose site
 
 #### Annotator
-- Improve new user experience
-  - Make it obvious that you need to login before annotating
 - Infinite scroll loading
   - Ensure rerenders don't happen too often
   - Look at virtualising the list

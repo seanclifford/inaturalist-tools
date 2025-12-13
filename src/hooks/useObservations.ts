@@ -47,6 +47,7 @@ export function useObservations(
 	> | null>(null);
 	const [error, setError] = useState<Error | null>(null);
 	const pageNumber = useRef<number>(1);
+	const loadingMore = useRef(false);
 
 	useEffect(() => {
 		pageNumber.current = 1;
@@ -70,6 +71,10 @@ export function useObservations(
 		if (!observationMap) return;
 
 		const execute = async () => {
+			if (loadingMore.current)
+				return;
+
+			loadingMore.current = true;
 			try {
 				const newMap = new Map(observationMap);
 				const originalSize = newMap.size;
@@ -96,6 +101,9 @@ export function useObservations(
 				setObservationMap(newMap);
 			} catch (e) {
 				setError(e as Error);
+			}
+			finally {
+				loadingMore.current = false;
 			}
 		};
 		execute();

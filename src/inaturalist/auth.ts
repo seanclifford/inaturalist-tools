@@ -1,3 +1,4 @@
+import { jwtDecode } from "jwt-decode";
 import { limit } from "./api-limiter.js";
 import { getAuthFetchOptions, postFetchOptions } from "./fetch-options";
 
@@ -9,8 +10,16 @@ const PRE_AUTH_LOCATION = "pre_auth_location";
 const OAUTH_APPLICATION_ID = import.meta.env.VITE_OAUTH_APPLICATION_ID;
 const REDIRECT_URI = `${import.meta.env.VITE_THIS_SITE_URL}/oauth-redirect`;
 
+interface INatJwt {
+	user_id: number;
+	exp: number;
+}
+
 export function isAuthenticated() {
-	return !!localStorage.getItem(AUTH_ACCESS_TOKEN) || !!import.meta.env.VITE_AUTH_TOKEN;
+	return (
+		!!localStorage.getItem(AUTH_ACCESS_TOKEN) ||
+		!!import.meta.env.VITE_AUTH_TOKEN
+	);
 }
 
 export async function authenticate(currentSite: Site) {
@@ -36,12 +45,26 @@ export function getApiToken() {
 }
 
 export function getApiTokenExpiry(token: string): number {
-	const payload = JSON.parse(atob(token.split(".")[1]));
-	return payload.exp * 1000; // Convert to milliseconds
+	const payload = decodeJwt(token);
+	return (payload?.exp ?? 0) * 1000; // Convert to milliseconds
 }
 
 function tokenIsExpired(token: string): boolean {
-	return getApiTokenExpiry(token) > Date.now();
+	return getApiTokenExpiry(token) < Date.now();
+}
+
+export function getUserIdFromToken(token: string): number | undefined {
+	const payload = decodeJwt(token);
+	return payload?.user_id;
+}
+
+function decodeJwt(token: string) {
+	try {
+		return jwtDecode<INatJwt>(token);
+	} catch (e) {
+		console.error(e);
+		return null;
+	}
 }
 
 export async function requestApiToken(currentSite: Site) {

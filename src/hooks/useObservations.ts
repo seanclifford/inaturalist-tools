@@ -71,8 +71,7 @@ export function useObservations(
 		if (!observationMap) return;
 
 		const execute = async () => {
-			if (loadingMore.current)
-				return;
+			if (loadingMore.current) return;
 
 			loadingMore.current = true;
 			try {
@@ -101,8 +100,7 @@ export function useObservations(
 				setObservationMap(newMap);
 			} catch (e) {
 				setError(e as Error);
-			}
-			finally {
+			} finally {
 				loadingMore.current = false;
 			}
 		};

@@ -1,6 +1,7 @@
 import { useLocalStorage } from "@mantine/hooks";
 import { useEffect } from "react";
 import { getCurrentUser } from "../inaturalist/api";
+import { getUserIdFromToken } from "../inaturalist/auth";
 
 export function useCurrentUser(authentication: Authentication): User | null {
 	const [currentUser, setCurrentUser] = useLocalStorage<User | null>({
@@ -9,9 +10,16 @@ export function useCurrentUser(authentication: Authentication): User | null {
 	});
 
 	useEffect(() => {
-		if (!authentication || !authentication.authToken) setCurrentUser(null);
-		else getCurrentUser(authentication).then((user) => setCurrentUser(user));
-	}, [authentication, setCurrentUser]);
+		if (!authentication || !authentication.authToken) {
+			if (currentUser) setCurrentUser(null);
+		} else if (
+			currentUser?.id !== getUserIdFromToken(authentication.authToken)
+		) {
+			getCurrentUser(authentication).then((user) => {
+				setCurrentUser(user);
+			});
+		}
+	}, [authentication, setCurrentUser, currentUser]);
 
 	return currentUser;
 }

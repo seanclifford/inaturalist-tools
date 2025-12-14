@@ -1,14 +1,11 @@
 import { Group } from "@mantine/core";
+import { useContext } from "react";
 import { Link } from "wouter";
+import { CurrentUserContext } from "../../Contexts";
 import SiteCombobox from "../../components/site-combobox/SiteCombobox";
-import useAuthentication from "../../hooks/useAuthentication";
-import { useCurrentUser } from "../../hooks/useCurrentUser";
-import useSite from "../../hooks/useSite";
 
 function Home() {
-	const [site] = useSite();
-	const auth = useAuthentication(site);
-	const currentUser = useCurrentUser(auth);
+	const currentUser = useContext(CurrentUserContext);
 	return (
 		<main>
 			<h1>iNaturalist Tools by agoranomos</h1>

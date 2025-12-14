@@ -1,11 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
+import { useContext } from "react";
+import { SiteContext } from "../Contexts";
 import { oneDay } from "../constants/values";
 import { getPlace } from "../inaturalist/api";
 import { getSiteUrlParams } from "../inaturalist/params";
-import useSite from "./useSite";
 
 export function usePlace(id: number | null) {
-	const [site] = useSite();
+	const [site] = useContext(SiteContext);
 
 	return useQuery({
 		queryKey: ["place", id],

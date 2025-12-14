@@ -1,13 +1,13 @@
 import { Center } from "@mantine/core";
-import { useEffect, useState } from "react";
-import useSite from "../../hooks/useSite";
+import { useContext, useEffect, useState } from "react";
+import { SiteContext } from "../../Contexts";
 import {
 	performAccessTokenRequest,
 	redirectToPreAuthLocation,
 } from "../../inaturalist/auth";
 
 function OauthRedirect() {
-	const [site] = useSite();
+	const [site] = useContext(SiteContext);
 	const [loadingStatus, setLoadingStatus] = useState<LoadingStatus>("pending");
 
 	useEffect(() => {

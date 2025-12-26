@@ -1,0 +1,11 @@
+.photoLoading {
+	object-fit: cover;
+	filter: blur(0.2em);
+	transition: none;
+}
+
+.photo {
+	object-fit: cover;
+	filter: none;
+	transition: filter 0.3s ease-out;
+}

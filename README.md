@@ -28,17 +28,16 @@ This tool is made to allow for fast annotations, targeting mobile devices mainly
 - Infinite scroll loading
   - Ensure rerenders don't happen too often
   - Look at virtualising the list
+  - Lazy load images that are just out of the viewport
 - Search control improvements
   - Prevent backspacing text being undone after first load
 - Fix bugs
   - Fix vertical scrolling on reptiles and amphibians (Established annotation)
   - Change filter after scrolling right - reset scroll position
-- Improve method for changing images
-  - Indicate the number of photos
-    - Show the photos similarly as iNat - small image squares along the bottom. Hide when there is only one.
-    - Could also have a grid of photos with magnify option to zoom on each
-  - Allow vertical swiping?
-  - Would a gallery of thumbnails help?
+- Image styling improvements
+  - Selected thumbnail style could be better
+  - Loading indicator over the top of blurred images
+  - Thumbnails that overflow the row should be scrollable somehow
 - Settings to choose filters
   - User
   - Has Photos
@@ -46,6 +45,7 @@ This tool is made to allow for fast annotations, targeting mobile devices mainly
   - Unreviewed
 - Zoom images functionality
   - Download the original sized image and display
+  - Can pinch to zoom be overridden to always show an X to close no matter the zoom level?
 - Allow marking observation as reviewed
 - Help or about section in settings
     - link to https://help.inaturalist.org/en/support/solutions/articles/151000191830-what-are-the-definitions-of-inaturalist-annotations

@@ -32,6 +32,7 @@ const ObservationHero: React.FC<ObservationHeroProps> = ({ observation }) => {
 						height: "100%",
 						width: "100%",
 						background: "linear-gradient(0deg, rgba(0,0,0,0.3), rgba(0,0,0,0))",
+						pointerEvents: "none",
 					}}
 				/>
 				<Box

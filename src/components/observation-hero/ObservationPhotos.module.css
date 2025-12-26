@@ -1,0 +1,11 @@
+.selected {
+	box-sizing: content-box;
+	border: black 0.2em solid;
+}
+
+.thumbnail,
+.selected {
+	object-fit: cover;
+	aspect-ratio: 1;
+	cursor: pointer;
+}

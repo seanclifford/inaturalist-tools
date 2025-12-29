@@ -27,7 +27,7 @@
 		"@types/node": "^24.2.1",
 		"@types/react": "^19.0.8",
 		"@types/react-dom": "^19.0.3",
-		"@vitejs/plugin-react": "^4.3.4",
+		"@vitejs/plugin-react": "^5.1.2",
 		"globals": "^15.14.0",
 		"postcss": "^8.5.1",
 		"postcss-preset-mantine": "^1.17.0",

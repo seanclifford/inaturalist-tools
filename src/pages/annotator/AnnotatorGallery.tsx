@@ -1,44 +1,61 @@
 import { Carousel } from "@mantine/carousel";
-import ObservationHero from "../../components/observation-hero/ObservationHero";
-import { AnnotationSelector } from "./AnnotationSelector";
+import { useCallback } from "react";
+import AnnotatorSlide from "./AnnotatorSlide";
+import { useAnnotatorObservations } from "./useAnnotatorObservations";
 
 interface AnnotatorGalleryProps {
-	annotatorObservations: AnnotatorObservation[];
-	annotationFunctions?: AnnotationFunctions;
-	loadMore: () => void;
+	submittedQueryString: string;
+	openAuthentication: () => void;
 }
 
 export default function AnnotatorGallery({
-	annotatorObservations,
-	annotationFunctions,
-	loadMore,
+	submittedQueryString,
+	openAuthentication,
 }: AnnotatorGalleryProps) {
-	const onSlideChange = (index: number) => {
-		if (index + 6 >= annotatorObservations.length) loadMore();
-	};
-	return (
-		<Carousel
-			slideGap="md"
-			slideSize="min(50vh, 100vw)"
-			initialSlide={0}
-			onSlideChange={onSlideChange}
-		>
-			{annotatorObservations?.map((annotatorObservation) => {
-				const { observation, controlledTerms } = annotatorObservation;
+	const {
+		annotatorObservations,
+		status,
+		error,
+		annotationFunctions,
+		loadMore,
+	} = useAnnotatorObservations(submittedQueryString, openAuthentication);
 
-				return (
-					<Carousel.Slide key={observation.id}>
-						<ObservationHero observation={observation} />
-						{observation && controlledTerms ? (
-							<AnnotationSelector
-								observationControlledTerms={controlledTerms}
-								observation={observation}
-								annotationFunctions={annotationFunctions}
-							/>
-						) : null}
-					</Carousel.Slide>
-				);
-			})}
-		</Carousel>
+	const onSlideChange = useCallback(
+		(index: number) => {
+			if (!annotatorObservations || !loadMore) return;
+			if (index + 6 >= annotatorObservations.length) loadMore();
+		},
+		[annotatorObservations, loadMore],
 	);
+
+	switch (status) {
+		case "pending":
+			return <div key="loading">Loading...</div>;
+		case "error":
+			return (
+				<div key="loading">
+					Error: {error?.name ?? "unknown"} {error?.message}
+				</div>
+			);
+		case "success":
+			return (
+				<Carousel
+					slideGap="md"
+					slideSize="min(50vh, 100vw)"
+					initialSlide={0}
+					onSlideChange={onSlideChange}
+				>
+					{annotatorObservations?.map((annotatorObservation) => {
+						return (
+							<Carousel.Slide key={annotatorObservation.observation.id}>
+								<AnnotatorSlide
+									annotatorObservation={annotatorObservation}
+									annotationFunctions={annotationFunctions}
+								/>
+							</Carousel.Slide>
+						);
+					})}
+				</Carousel>
+			);
+	}
 }

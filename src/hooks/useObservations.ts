@@ -1,4 +1,4 @@
-import { useContext, useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useMemo, useRef, useState } from "react";
 import { AuthContext, SiteContext } from "../Contexts";
 import { getObservations } from "../inaturalist/api";
 
@@ -48,6 +48,11 @@ export function useObservations(
 	const [error, setError] = useState<Error | null>(null);
 	const pageNumber = useRef<number>(1);
 	const loadingMore = useRef(false);
+
+	const observations = useMemo(() => {
+		if (!observationMap || error) return;
+		return Array.from(observationMap, ([_, value]) => value);
+	}, [observationMap, error]);
 
 	useEffect(() => {
 		pageNumber.current = 1;
@@ -107,6 +112,13 @@ export function useObservations(
 		execute();
 	};
 
+	const replaceObservation = (observation: Observation) => {
+		if (!observationMap) return;
+		const newMap = new Map(observationMap);
+		newMap.set(observation.id, observation);
+		setObservationMap(newMap);
+	};
+
 	if (error) {
 		return {
 			data: undefined,
@@ -116,18 +128,13 @@ export function useObservations(
 			replaceObservation: null,
 		};
 	}
-	if (observationMap) {
+	if (observations) {
 		return {
-			data: Array.from(observationMap, ([_, value]) => value),
+			data: observations,
 			status: "success",
 			error: null,
 			loadMore,
-			replaceObservation: (observation: Observation) => {
-				if (!observationMap) return;
-				const newMap = new Map(observationMap);
-				newMap.set(observation.id, observation);
-				setObservationMap(newMap);
-			},
+			replaceObservation,
 		};
 	}
 	return {

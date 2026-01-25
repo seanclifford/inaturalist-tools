@@ -4,18 +4,18 @@ interface AnnotatorObservation {
 }
 
 interface AnnotationFunctions {
-	saveAnnotation: (_: SaveAnnotationParams) => Promise<NewAnnotation>;
-	deleteAnnotation: (_: DeleteAnnotationParams) => Promise<void>;
+	saveAnnotation: (_: SaveAnnotationParams) => Promise<Observation>;
+	deleteAnnotation: (_: DeleteAnnotationParams) => Promise<Observation>;
 }
 
 interface SaveAnnotationParams {
-	observationId: number;
+	observation: Observation;
 	controlledTermId: number;
 	controlledValueId: number;
 }
 
 interface DeleteAnnotationParams {
-	observationId: number;
+	observation: Observation;
 	annotationId: string;
 }
 

@@ -1,5 +1,5 @@
 import { useMutation } from "@tanstack/react-query";
-import { useContext } from "react";
+import { useContext, useMemo } from "react";
 import { AuthContext, CurrentUserContext } from "../../Contexts";
 import { AuthenticationError } from "../../errors/AuthenticationError";
 import { useControlledTerms } from "../../hooks/useControlledTerms";
@@ -16,7 +16,7 @@ interface AnnotatorObservationResult {
 
 export function useAnnotatorObservations(
 	submitedQueryString: string,
-	requestAuthentication: () => void
+	requestAuthentication: () => void,
 ): AnnotatorObservationResult {
 	const authentication = useContext(AuthContext);
 	const currentUser = useContext(CurrentUserContext);
@@ -34,68 +34,80 @@ export function useAnnotatorObservations(
 		data: controlledTerms,
 	} = useControlledTerms();
 
-	const addAnnotationMutation = useMutation({
-		mutationFn: (params: SaveAnnotationParams) => {
-			return addAnnotation(
+	const { mutateAsync: addAnnotationMutation } = useMutation({
+		async mutationFn(params: SaveAnnotationParams) {
+			if (!currentUser) throw new AuthenticationError("No user currently");
+			const annotation = await addAnnotation(
 				{
 					controlled_attribute_id: params.controlledTermId,
 					controlled_value_id: params.controlledValueId,
-					resource_id: params.observationId,
+					resource_id: params.observation.id,
 					resource_type: "Observation",
 				},
 				authentication,
 			);
-		},
-		onError(error) {
-			if (error instanceof AuthenticationError)
-				requestAuthentication();
-			else
-				console.error(error);
-		},
-		onSuccess: (annotation: NewAnnotation) => {
-			if (!currentUser) return;
-			const observation = observations?.find(
-				(obs) => obs.id === annotation.resource_id,
-			);
-			if (!observation) {
-				console.error("Could not find observation to add annotation to");
-				return;
-			}
-			const observationCopy = { ...observation };
+			const observationCopy = { ...params.observation };
 			observationCopy.annotations.push({
 				...annotation,
 				vote_score: 0,
 				user: currentUser,
 			});
-			replaceObservation?.(observationCopy);
+			return observationCopy;
+		},
+		onError(error) {
+			if (error instanceof AuthenticationError) requestAuthentication();
+			else console.error(error);
+		},
+		onSuccess(observation: Observation) {
+			replaceObservation?.(observation);
 		},
 	});
 
-	const deleteAnnotationMutation = useMutation({
-		mutationFn: (params: DeleteAnnotationParams) => {
-			return deleteAnnotation(params.annotationId, authentication);
-		},
-		onError(error) {
-			if (error instanceof AuthenticationError)
-				requestAuthentication();
-			else
-				console.error(error);
-		},
-		onSuccess: (_, params: DeleteAnnotationParams) => {
-			const observation = observations?.find(
-				(obs) => obs.id === params.observationId,
-			);
-			if (!observation) {
-				console.error("Could not find observation to add annotation to");
-				return;
-			}
+	const { mutateAsync: deleteAnnotationMutation } = useMutation({
+		async mutationFn({ observation, annotationId }: DeleteAnnotationParams) {
+			await deleteAnnotation(annotationId, authentication);
 			const observationCopy = { ...observation };
 			observationCopy.annotations = observationCopy.annotations.filter(
-				(a) => a.uuid !== params.annotationId,
+				(a) => a.uuid !== annotationId,
 			);
-			replaceObservation?.(observationCopy);
+			return observationCopy;
+		},
+		onError(error) {
+			if (error instanceof AuthenticationError) requestAuthentication();
+			else console.error(error);
+		},
+		onSuccess: (observation) => {
+			replaceObservation?.(observation);
 		},
 	});
+
+	const annotationFunctions = useMemo(() => {
+		return {
+			saveAnnotation: addAnnotationMutation,
+			deleteAnnotation: deleteAnnotationMutation,
+		};
+	}, [addAnnotationMutation, deleteAnnotationMutation]);
+
+	const annotatorObservations = useMemo(
+		() =>
+			observations && controlledTerms
+				? observations
+						.map((observation) => {
+							return {
+								observation: observation,
+								controlledTerms: getTaxonControlledTerms(
+									observation.taxon,
+									controlledTerms,
+								),
+							} as AnnotatorObservation;
+						})
+						.filter(
+							(annotatorObservation) =>
+								annotatorObservation.controlledTerms.length > 0,
+						)
+				: undefined,
+		[observations, controlledTerms],
+	);
 
 	if (observationStatus === "pending" || controlledTermStatus === "pending")
 		return { status: "pending" };
@@ -104,27 +116,10 @@ export function useAnnotatorObservations(
 	if (controlledTermStatus === "error")
 		return { status: "error", error: controlledTermsError };
 
-	const annotatorObservations = observations
-		.map((observation) => {
-			return {
-				observation: observation,
-				controlledTerms: getTaxonControlledTerms(
-					observation.taxon,
-					controlledTerms,
-				),
-			} as AnnotatorObservation;
-		})
-		.filter(
-			(annotatorObservation) => annotatorObservation.controlledTerms.length > 0,
-		);
-
 	return {
 		annotatorObservations,
 		status: "success",
-		annotationFunctions: {
-			saveAnnotation: addAnnotationMutation.mutateAsync,
-			deleteAnnotation: deleteAnnotationMutation.mutateAsync,
-		},
+		annotationFunctions,
 		loadMore,
 	};
 }

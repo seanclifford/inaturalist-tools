@@ -35,6 +35,7 @@ This tool is made to allow for fast annotations, targeting mobile devices mainly
   - Fix vertical scrolling on reptiles and amphibians (Established annotation)
   - Change filter after scrolling right - reset scroll position
 - Image styling improvements
+  - Thumbnails would be better down the bottom as hard to select up top on a phone
   - Selected thumbnail style could be better
   - Loading indicator over the top of blurred images
   - Thumbnails that overflow the row should be scrollable somehow

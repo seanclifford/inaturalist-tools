@@ -30,7 +30,7 @@ export default function SelectableChip({
 		if (!checked && saveAnnotation) {
 			setProcessing(true);
 			saveAnnotation({
-				observationId: observation.id,
+				observation: observation,
 				controlledTermId: controlledTerm.id,
 				controlledValueId: controlledValue.id,
 			})
@@ -43,7 +43,7 @@ export default function SelectableChip({
 			if (annotation && deleteAnnotation) {
 				setProcessing(true);
 				deleteAnnotation({
-					observationId: observation.id,
+					observation: observation,
 					annotationId: annotation.uuid,
 				})
 					.finally(() => setProcessing(false))

@@ -40,16 +40,17 @@ export function EditableChipGroup({
 
 			setProcessing(true);
 			try {
+				let observation = params.observation;
 				if (existingAnnotation && !controlledTerm.multivalued) {
 					console.log(
 						`Deleting existing annotation ${existingAnnotation.uuid}`,
 					);
-					await deleteAnnotation({
-						observationId: observation.id,
+					observation = await deleteAnnotation({
+						observation: observation,
 						annotationId: existingAnnotation.uuid,
 					});
 				}
-				const result = await saveAnnotation(params);
+				const result = await saveAnnotation({ ...params, observation });
 				return result;
 			} finally {
 				setProcessing(false);
@@ -59,7 +60,7 @@ export function EditableChipGroup({
 		const smartDeleteAnnotation = async (params: DeleteAnnotationParams) => {
 			setProcessing(true);
 			try {
-				await deleteAnnotation(params);
+				return await deleteAnnotation(params);
 			} finally {
 				setProcessing(false);
 			}

@@ -1,0 +1,10 @@
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    Content-Security-Policy = '''
+      default-src 'self';
+      style-src-elem 'self' 'unsafe-inline';
+      connect-src https://api.inaturalist.org;
+      img-src 'self' inaturalist.org https://inaturalist-open-data.s3.amazonaws.com'''
+

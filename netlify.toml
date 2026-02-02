@@ -6,5 +6,5 @@
       default-src 'self';
       style-src-elem 'self' 'unsafe-inline';
       connect-src https://api.inaturalist.org;
-      img-src 'self' inaturalist.org https://inaturalist-open-data.s3.amazonaws.com'''
+      img-src 'self' *.inaturalist.org https://inaturalist-open-data.s3.amazonaws.com'''
 

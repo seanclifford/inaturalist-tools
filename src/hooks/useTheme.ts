@@ -17,5 +17,6 @@ export default function useTheme() {
 			],
 		},
 		primaryColor: "inat-green",
+		fontFamily: "Lato",
 	});
 }

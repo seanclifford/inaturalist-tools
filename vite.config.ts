@@ -11,7 +11,9 @@ export default defineConfig(({ mode }) => {
 		preview: {
 			headers: {
 				"content-security-policy":
-					"default-src 'self'; style-src-elem 'self' 'unsafe-inline'; img-src 'self' *.inaturalist.org https://inaturalist-open-data.s3.amazonaws.com; " +
+					"default-src 'self'; style-src-elem 'self' 'unsafe-inline';" +
+					"img-src 'self' *.inaturalist.org https://inaturalist-open-data.s3.amazonaws.com; " +
+					"font-src https://fonts.googleapis.com https://fonts.gstatic.com;" +
 					"connect-src *.inaturalist.org inaturalist.nz inaturalist.ca www.biodiversity4all.org inaturalist.ala.org.au www.argentinat.org inaturalist.mma.gob.cl inaturalist.laji.fi www.inaturalist.se inaturalist.lu www.naturalista.uy",
 			},
 		},

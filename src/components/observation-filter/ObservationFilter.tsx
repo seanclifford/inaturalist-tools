@@ -2,6 +2,7 @@ import { Button, Stack, Tabs } from "@mantine/core";
 import { useState } from "react";
 import QueryStringInput from "../../pages/annotator/QueryStringInput";
 import AccountSettings from "../account-settings/AccountSettings";
+import HelpSection from "./HelpSection";
 import { PlaceCombobox } from "./PlaceCombobox";
 import { TaxonCombobox } from "./TaxonCombobox";
 import { WithoutAnnotationSelect } from "./WithoutAnnotationSelect";
@@ -42,6 +43,7 @@ export default function ObservationFilter({
 			<Tabs.List>
 				<Tabs.Tab value="filters">Filters</Tabs.Tab>
 				<Tabs.Tab value="account">Account</Tabs.Tab>
+				<Tabs.Tab value="help">Help</Tabs.Tab>
 			</Tabs.List>
 
 			<Tabs.Panel value="filters" p="md">
@@ -59,6 +61,10 @@ export default function ObservationFilter({
 
 			<Tabs.Panel value="account" p="md">
 				<AccountSettings />
+			</Tabs.Panel>
+
+			<Tabs.Panel value="help" p="md">
+				<HelpSection />
 			</Tabs.Panel>
 		</Tabs>
 	);

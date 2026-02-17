@@ -1,4 +1,4 @@
-# iNaturalist Tools by agoranoms
+# iNaturalist Tools by agoranomos
 **PLEASE NOTE**: This is still a work in progress, and while parts are functional, it's not in a state to be shared widely yet...
 
 This is a site of small tools to enhance the functionality of iNaturalist.
@@ -35,6 +35,7 @@ This tool is made to allow for fast annotations, targeting mobile devices mainly
   - Fix vertical scrolling on reptiles and amphibians (Established annotation)
   - Change filter after scrolling right - reset scroll position
 - Image styling improvements
+  - Can't see all of an image: portrait cut off on top and landscape on sides. Could fix by zoom image overlay. Nothing fancy needed.
   - Thumbnails would be better down the bottom as hard to select up top on a phone
   - Selected thumbnail style could be better
   - Loading indicator over the top of blurred images

@@ -7,5 +7,4 @@
       style-src-elem 'self' 'unsafe-inline';
       connect-src *.inaturalist.org inaturalist.nz inaturalist.ca www.biodiversity4all.org inaturalist.ala.org.au www.argentinat.org inaturalist.mma.gob.cl inaturalist.laji.fi www.inaturalist.se inaturalist.lu www.naturalista.uy;
       img-src 'self' *.inaturalist.org https://inaturalist-open-data.s3.amazonaws.com;
-      font-src https://fonts.googleapis.com https://fonts.gstatic.com;
-
+      font-src https://fonts.googleapis.com https://fonts.gstatic.com'''

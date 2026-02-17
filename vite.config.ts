@@ -12,8 +12,7 @@ export default defineConfig(({ mode }) => {
 			headers: {
 				"content-security-policy":
 					"default-src 'self';" +
-					"style-src https://fonts.googleapis.com;" +
-					"style-src-elem 'self' 'unsafe-inline';" +
+					"style-src-elem 'self' 'unsafe-inline' https://fonts.googleapis.com;" +
 					"img-src 'self' *.inaturalist.org https://inaturalist-open-data.s3.amazonaws.com;" +
 					"font-src https://fonts.gstatic.com;" +
 					"connect-src *.inaturalist.org inaturalist.nz inaturalist.ca www.biodiversity4all.org inaturalist.ala.org.au www.argentinat.org inaturalist.mma.gob.cl inaturalist.laji.fi www.inaturalist.se inaturalist.lu www.naturalista.uy",

@@ -40,15 +40,7 @@ export default function ObservationPhotos({ photos }: ObservationPhotosProps) {
 				</Group>
 			) : null}
 
-			{photo ? (
-				<ObservationPhoto photo={photo} h={imageHeight} />
-			) : (
-				<Center h={imageHeight}>
-					<Text size="xl" c="dimmed">
-						No Image
-					</Text>
-				</Center>
-			)}
+			<ObservationPhoto photo={photo} h={imageHeight} />
 		</Box>
 	);
 }

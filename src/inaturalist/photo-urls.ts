@@ -1,5 +1,3 @@
-type PhotoSize = "square" | "thumb" | "small" | "medium" | "large" | "original";
-
 function getPhotoUrl(photo: Photo, size: PhotoSize): string {
 	switch (size) {
 		case "square":

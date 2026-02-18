@@ -63,6 +63,8 @@ interface Photo {
 	attribution: string;
 }
 
+type PhotoSize = "square" | "thumb" | "small" | "medium" | "large" | "original";
+
 interface Sound {
 	id: number;
 	file_url: string;

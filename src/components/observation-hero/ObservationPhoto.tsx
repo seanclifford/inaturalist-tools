@@ -1,24 +1,19 @@
-import { Image } from "@mantine/core";
-import useProgressiveImage from "../../hooks/useProgressiveImage";
-import getPhotoUrl from "../../inaturalist/photo-urls";
-import classes from "./ObservationPhoto.module.css";
+import { Center, Text } from "@mantine/core";
+import PhotoWithLoading from "../photo-with-loading/PhotoWithLoading";
 
 interface ObservationPhotoProps {
 	photo: Photo;
 	h: string;
 }
 
-export default function ObservationPhotos({ photo, h }: ObservationPhotoProps) {
-	const [imgSrc, loading] = useProgressiveImage(
-		getPhotoUrl(photo, "thumb"),
-		getPhotoUrl(photo, "medium"),
-	);
+export default function ObservationPhoto({ photo, h }: ObservationPhotoProps) {
+	if (photo) return <PhotoWithLoading photo={photo} h={h} size="medium" />;
 
 	return (
-		<Image
-			src={imgSrc}
-			className={loading ? classes.photoLoading : classes.photo}
-			h={h}
-		/>
+		<Center h={h}>
+			<Text size="xl" c="dimmed">
+				No Image
+			</Text>
+		</Center>
 	);
 }

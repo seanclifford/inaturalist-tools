@@ -4,6 +4,7 @@ import type React from "react";
 import { useContext } from "react";
 import { SiteContext } from "../../Contexts";
 import UserAccount from "../user-account/UserAccount";
+import { outerWidth } from "./dimensions";
 import ObservationPhotos from "./ObservationPhotos";
 
 interface ObservationHeroProps {
@@ -21,7 +22,7 @@ const ObservationHero: React.FC<ObservationHeroProps> = ({ observation }) => {
 	url.pathname = `/observations/${id}`;
 
 	return (
-		<Paper w="min(50vh, 100vw)" radius="md" shadow="sm" withBorder>
+		<Paper w={outerWidth} radius="md" shadow="sm" withBorder>
 			<Box style={{ position: "relative" }}>
 				<ObservationPhotos photos={photos} />
 				<Box

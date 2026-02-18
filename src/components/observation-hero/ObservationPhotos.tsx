@@ -1,6 +1,11 @@
-import { Box, Center, Group, Image, Text } from "@mantine/core";
+import { Box, Group, Image } from "@mantine/core";
 import { useState } from "react";
 import getPhotoUrl from "../../inaturalist/photo-urls";
+import {
+	getMainImageHeight,
+	outerHeight,
+	photoBannerHeight,
+} from "./dimensions";
 import ObservationPhoto from "./ObservationPhoto";
 import classes from "./ObservationPhotos.module.css";
 
@@ -11,13 +16,10 @@ interface ObservationPhotosProps {
 export default function ObservationPhotos({ photos }: ObservationPhotosProps) {
 	const [photoIndex, setPhotoIndex] = useState(0);
 	const photo = photos[photoIndex];
-
-	const photoBannerHeight = "5em";
-	const subtractAmount = photos.length > 1 ? ` - ${photoBannerHeight}` : "";
-	const imageHeight = `min(50vh${subtractAmount}, 100vw${subtractAmount})`;
+	const imageHeight = getMainImageHeight(photos.length);
 
 	return (
-		<Box h="min(50vh, 100vw)">
+		<Box h={outerHeight}>
 			{photos.length > 1 ? (
 				<Group
 					justify="center"

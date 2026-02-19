@@ -1,10 +1,19 @@
-import { Anchor, Box, Group, Paper, Stack, Text } from "@mantine/core";
+import {
+	Anchor,
+	Box,
+	Group,
+	Paper,
+	Stack,
+	Text,
+	useMantineTheme,
+} from "@mantine/core";
 import { SquareArrowOutUpRight } from "lucide-react";
 import type React from "react";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { SiteContext } from "../../Contexts";
 import UserAccount from "../user-account/UserAccount";
-import { outerWidth } from "./dimensions";
+import { getMainImageHeight, outerWidth } from "./dimensions";
+import ObservationPhoto from "./ObservationPhoto";
 import ObservationPhotos from "./ObservationPhotos";
 
 interface ObservationHeroProps {
@@ -13,6 +22,9 @@ interface ObservationHeroProps {
 
 const ObservationHero: React.FC<ObservationHeroProps> = ({ observation }) => {
 	const [site] = useContext(SiteContext);
+	const [photoIndex, setPhotoIndex] = useState(0);
+	const theme = useMantineTheme();
+
 	if (!observation) {
 		return <span>loading</span>;
 	}
@@ -21,10 +33,14 @@ const ObservationHero: React.FC<ObservationHeroProps> = ({ observation }) => {
 	const url = new URL(site.url);
 	url.pathname = `/observations/${id}`;
 
+	const photo = photos[photoIndex];
+	const imageHeight = getMainImageHeight(photos.length);
+
 	return (
 		<Paper w={outerWidth} radius="md" shadow="sm" withBorder>
 			<Box style={{ position: "relative" }}>
-				<ObservationPhotos photos={photos} />
+				<ObservationPhoto photo={photo} h={imageHeight} />
+
 				<Box
 					style={{
 						position: "absolute",
@@ -58,7 +74,12 @@ const ObservationHero: React.FC<ObservationHeroProps> = ({ observation }) => {
 					)}
 				</Box>
 			</Box>
-			<Stack p="xs">
+			<ObservationPhotos
+				photos={photos}
+				photoIndex={photoIndex}
+				setPhotoIndex={setPhotoIndex}
+			/>
+			<Stack p="xs" bg={theme.colors.gray[1]}>
 				<Group>
 					<UserAccount user={user} />
 					<Anchor

@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
 
-const useProgressiveImage = (lowQualitySrc: string, highQualitySrc: string) => {
+const useProgressiveImage = (
+	lowQualitySrc: string,
+	highQualitySrc: string,
+): [string, boolean] => {
 	const [src, setSrc] = useState(lowQualitySrc);
 
 	useEffect(() => {

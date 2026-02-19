@@ -37,7 +37,6 @@ This tool is made to allow for fast annotations, targeting mobile devices mainly
 - Image styling improvements
   - Can't see all of an image: portrait cut off on top and landscape on sides. Could fix by zoom image overlay. Nothing fancy needed.
   - Selected thumbnail style could be better
-  - Loading indicator over the top of blurred images
   - Thumbnails that overflow the row should be scrollable somehow
 - Settings to choose filters
   - User

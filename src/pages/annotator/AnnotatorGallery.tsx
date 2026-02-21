@@ -1,4 +1,5 @@
 import { Carousel } from "@mantine/carousel";
+import { Center, Loader, Stack, Text } from "@mantine/core";
 import { useCallback } from "react";
 import AnnotatorSlide from "./AnnotatorSlide";
 import { useAnnotatorObservations } from "./useAnnotatorObservations";
@@ -30,12 +31,22 @@ export default function AnnotatorGallery({
 
 	switch (status) {
 		case "pending":
-			return <div key="loading">Loading...</div>;
+			return (
+				<Center key="loading" h="100vh">
+					<Stack align="center">
+						<Text size="lg">Loading Observations</Text>
+						<Loader size={40} />
+					</Stack>
+				</Center>
+			);
 		case "error":
 			return (
-				<div key="loading">
-					Error: {error?.name ?? "unknown"} {error?.message}
-				</div>
+				<Center key="loading">
+					<Stack>
+						<Text>Error: {error?.name ?? "unknown"}</Text>{" "}
+						<Text>{error?.message}</Text>
+					</Stack>
+				</Center>
 			);
 		case "success":
 			return (

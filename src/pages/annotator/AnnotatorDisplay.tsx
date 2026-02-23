@@ -48,7 +48,7 @@ export default function AnnotatorDisplay({
 					position: "fixed",
 					right: "16px",
 					top: "16px",
-					zIndex: "1",
+					zIndex: "100",
 				}}
 			/>
 			<AnnotatorGallery

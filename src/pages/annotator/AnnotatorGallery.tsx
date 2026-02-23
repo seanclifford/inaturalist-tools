@@ -1,8 +1,11 @@
-import { Carousel } from "@mantine/carousel";
 import { Center, Loader, Stack, Text } from "@mantine/core";
 import { useCallback } from "react";
+import { Navigation, Virtual } from "swiper/modules";
+import { Swiper, type SwiperClass, SwiperSlide } from "swiper/react";
 import AnnotatorSlide from "./AnnotatorSlide";
 import { useAnnotatorObservations } from "./useAnnotatorObservations";
+import "swiper/css";
+import "swiper/css/navigation";
 
 interface AnnotatorGalleryProps {
 	submittedQueryString: string;
@@ -22,9 +25,9 @@ export default function AnnotatorGallery({
 	} = useAnnotatorObservations(submittedQueryString, openAuthentication);
 
 	const onSlideChange = useCallback(
-		(index: number) => {
+		(swiper: SwiperClass) => {
 			if (!annotatorObservations || !loadMore) return;
-			if (index + 6 >= annotatorObservations.length) loadMore();
+			if (swiper.activeIndex + 6 >= annotatorObservations.length) loadMore();
 		},
 		[annotatorObservations, loadMore],
 	);
@@ -50,23 +53,36 @@ export default function AnnotatorGallery({
 			);
 		case "success":
 			return (
-				<Carousel
-					slideGap="md"
-					slideSize="min(50vh, 100vw)"
-					initialSlide={0}
+				<Swiper
+					modules={[Navigation, Virtual]}
+					slidesPerView={1}
+					navigation
+					virtual={{ addSlidesBefore: 2, addSlidesAfter: 2 }}
 					onSlideChange={onSlideChange}
+					breakpoints={{
+						"@1": { slidesPerView: 2 },
+						"@1.5": { slidesPerView: 3 },
+						"@2": { slidesPerView: 4 },
+						"@2.5": { slidesPerView: 5 },
+					}}
 				>
-					{annotatorObservations?.map((annotatorObservation) => {
+					{annotatorObservations?.map((annotatorObservation, index) => {
 						return (
-							<Carousel.Slide key={annotatorObservation.observation.id}>
-								<AnnotatorSlide
-									annotatorObservation={annotatorObservation}
-									annotationFunctions={annotationFunctions}
-								/>
-							</Carousel.Slide>
+							<SwiperSlide
+								key={annotatorObservation.observation.id}
+								virtualIndex={index}
+							>
+								<Center>
+									<AnnotatorSlide
+										annotatorObservation={annotatorObservation}
+										annotationFunctions={annotationFunctions}
+									/>
+								</Center>
+							</SwiperSlide>
 						);
 					})}
-				</Carousel>
+					;
+				</Swiper>
 			);
 	}
 }

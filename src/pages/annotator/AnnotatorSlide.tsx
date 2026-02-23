@@ -1,4 +1,6 @@
+import { Box } from "@mantine/core";
 import React from "react";
+import { outerWidth } from "../../components/observation-hero/dimensions";
 import ObservationHero from "../../components/observation-hero/ObservationHero";
 import { AnnotationSelector } from "./AnnotationSelector";
 
@@ -14,7 +16,7 @@ const AnnotatorSlide = React.memo(function AnnotatorSlide({
 	const { observation, controlledTerms } = annotatorObservation;
 
 	return (
-		<>
+		<Box w={outerWidth}>
 			<ObservationHero observation={observation} />
 			{observation && controlledTerms && (
 				<AnnotationSelector
@@ -23,7 +25,7 @@ const AnnotatorSlide = React.memo(function AnnotatorSlide({
 					annotationFunctions={annotationFunctions}
 				/>
 			)}
-		</>
+		</Box>
 	);
 });
 

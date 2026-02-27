@@ -1,0 +1,6 @@
+.swiper {
+	--swiper-navigation-size: "48px";
+	--swiper-navigation-top-offset: 20%;
+	--swiper-navigation-sides-offset: 10px;
+	--swiper-navigation-color: white;
+}

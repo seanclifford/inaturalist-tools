@@ -6,6 +6,7 @@ import AnnotatorSlide from "./AnnotatorSlide";
 import { useAnnotatorObservations } from "./useAnnotatorObservations";
 import "swiper/css";
 import "swiper/css/navigation";
+import styles from "./AnnotatorGallery.module.css";
 
 interface AnnotatorGalleryProps {
 	submittedQueryString: string;
@@ -65,6 +66,7 @@ export default function AnnotatorGallery({
 						"@2": { slidesPerView: 4 },
 						"@2.5": { slidesPerView: 5 },
 					}}
+					className={styles.swiper}
 				>
 					{annotatorObservations?.map((annotatorObservation, index) => {
 						return (
@@ -81,7 +83,6 @@ export default function AnnotatorGallery({
 							</SwiperSlide>
 						);
 					})}
-					;
 				</Swiper>
 			);
 	}

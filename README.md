@@ -25,10 +25,6 @@ This tool is made to allow for fast annotations, targeting mobile devices mainly
 - Settings to choose site
 
 #### Annotator
-- Infinite scroll loading
-  - Ensure rerenders don't happen too often
-  - Look at virtualising the list
-  - Lazy load images that are just out of the viewport
 - Search control improvements
   - Prevent backspacing text being undone after first load
 - Fix bugs

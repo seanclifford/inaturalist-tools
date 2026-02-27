@@ -42,12 +42,13 @@ export default function AnnotatorDisplay({
 			/>
 			<SettingsIcon
 				fill="white"
-				size={40}
+				size={34}
 				onClick={openSettings}
+				strokeWidth={1.1}
 				style={{
 					position: "fixed",
-					right: "16px",
-					top: "16px",
+					right: "12px",
+					top: "12px",
 					zIndex: "100",
 				}}
 			/>

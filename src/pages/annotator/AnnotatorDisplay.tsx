@@ -1,9 +1,9 @@
 import { useDisclosure } from "@mantine/hooks";
 import { SettingsIcon } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import AuthenticationModal from "../../components/authentication-modal/AuthenticationModal";
 import ObservationFilterModal from "../../components/observation-filter/ObservationFilterModal";
-import AnnotatorGallery from "./AnnotatorGallery";
+import AnnotatorGallery, { type SlidesRef } from "./AnnotatorGallery";
 
 interface AnnotatorDisplayProps {
 	pageQueryString: string;
@@ -14,6 +14,7 @@ export default function AnnotatorDisplay({
 	pageQueryString,
 	setPageQueryString,
 }: AnnotatorDisplayProps) {
+	const slidesRef = useRef<SlidesRef>(null);
 	const [submittedQueryString, setSubmittedQueryString] =
 		useState(pageQueryString);
 	const [settingsOpened, { open: openSettings, close: closeSettings }] =
@@ -24,6 +25,7 @@ export default function AnnotatorDisplay({
 	] = useDisclosure(false);
 	const runQuery = (queryString: string) => {
 		setPageQueryString(queryString);
+		slidesRef.current?.resetToBeginning();
 		closeSettings();
 	};
 	useEffect(() => setSubmittedQueryString(pageQueryString), [pageQueryString]);
@@ -53,6 +55,7 @@ export default function AnnotatorDisplay({
 				}}
 			/>
 			<AnnotatorGallery
+				ref={slidesRef}
 				submittedQueryString={submittedQueryString}
 				openAuthentication={openAuthentication}
 			/>

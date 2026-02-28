@@ -1,7 +1,12 @@
 import { Center, Loader, Stack, Text } from "@mantine/core";
-import { useCallback } from "react";
+import { type Ref, useCallback, useImperativeHandle, useRef } from "react";
 import { Navigation, Virtual } from "swiper/modules";
-import { Swiper, type SwiperClass, SwiperSlide } from "swiper/react";
+import {
+	Swiper,
+	type SwiperClass,
+	type SwiperRef,
+	SwiperSlide,
+} from "swiper/react";
 import AnnotatorSlide from "./AnnotatorSlide";
 import { useAnnotatorObservations } from "./useAnnotatorObservations";
 import "swiper/css";
@@ -9,11 +14,17 @@ import "swiper/css/navigation";
 import styles from "./AnnotatorGallery.module.css";
 
 interface AnnotatorGalleryProps {
+	ref: Ref<SlidesRef>;
 	submittedQueryString: string;
 	openAuthentication: () => void;
 }
 
+export interface SlidesRef {
+	resetToBeginning: () => void;
+}
+
 export default function AnnotatorGallery({
+	ref,
 	submittedQueryString,
 	openAuthentication,
 }: AnnotatorGalleryProps) {
@@ -25,6 +36,7 @@ export default function AnnotatorGallery({
 		loadMore,
 	} = useAnnotatorObservations(submittedQueryString, openAuthentication);
 
+	const swiperRef = useRef<SwiperRef>(null);
 	const onSlideChange = useCallback(
 		(swiper: SwiperClass) => {
 			if (!annotatorObservations || !loadMore) return;
@@ -32,6 +44,15 @@ export default function AnnotatorGallery({
 		},
 		[annotatorObservations, loadMore],
 	);
+	useImperativeHandle(ref, () => {
+		return {
+			resetToBeginning: () => {
+				if (!swiperRef.current) return;
+				if (swiperRef.current.swiper.activeIndex > 0)
+					swiperRef.current.swiper.slideTo(0, 0, false);
+			},
+		};
+	});
 
 	switch (status) {
 		case "pending":
@@ -55,6 +76,7 @@ export default function AnnotatorGallery({
 		case "success":
 			return (
 				<Swiper
+					ref={swiperRef}
 					modules={[Navigation, Virtual]}
 					slidesPerView={1}
 					navigation

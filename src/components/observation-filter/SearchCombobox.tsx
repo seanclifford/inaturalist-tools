@@ -2,6 +2,7 @@ import {
 	CloseButton,
 	Combobox,
 	InputBase,
+	Loader,
 	ScrollArea,
 	useCombobox,
 } from "@mantine/core";
@@ -13,7 +14,7 @@ interface SearchComboboxProps<T> {
 	value: T | null;
 	setValue: (val: T | null) => void;
 	loading: boolean;
-	autocompleteValues: T[];
+	autocompleteValues: AutocompleteResults<T>;
 	requestAutocomplete: (search: string) => void; //Should this be a promise?
 	label: string;
 	placeholder: string;
@@ -43,7 +44,8 @@ export function SearchCombobox<T>({
 	const [search, setSearch] = useState<string>("");
 
 	const handleSearch = useDebouncedCallback((query: string) => {
-		if (getValue(value) !== query) requestAutocomplete(query);
+		if (getValue(value) !== query || query.length === 0)
+			requestAutocomplete(query);
 	}, 500);
 
 	useEffect(() => {
@@ -52,16 +54,19 @@ export function SearchCombobox<T>({
 
 	useEffect(() => {
 		handleSearch(search);
-	}, [handleSearch, search]);
+		if (search.length === 0) setValue(null);
+	}, [handleSearch, setValue, search]);
 
-	const options = autocompleteValues.map((item) => (
+	const options = autocompleteValues.results.map((item) => (
 		<Combobox.Option value={getValue(item)} key={getKey(item)}>
 			{buildOption(item)}
 		</Combobox.Option>
 	));
 
 	function selectValue(val: string | null) {
-		setValue(autocompleteValues.find((x) => getValue(x) === val) ?? null);
+		setValue(
+			autocompleteValues.results.find((x) => getValue(x) === val) ?? null,
+		);
 	}
 
 	return (
@@ -79,11 +84,13 @@ export function SearchCombobox<T>({
 					disabled={loading}
 					leftSection={loading ? null : (leftSection ?? <Search />)}
 					rightSection={
-						value !== null ? (
+						autocompleteValues.state === "loading" ? (
+							<Loader size="sm" />
+						) : value !== null ? (
 							<CloseButton
 								size="sm"
 								onMouseDown={(event) => event.preventDefault()}
-								onClick={() => selectValue(null)}
+								onClick={() => setSearch("")}
 								aria-label="Clear value"
 							/>
 						) : (
@@ -107,7 +114,7 @@ export function SearchCombobox<T>({
 				/>
 			</Combobox.Target>
 
-			<Combobox.Dropdown>
+			<Combobox.Dropdown hidden={autocompleteValues.state !== "loaded"}>
 				<Combobox.Options>
 					<ScrollArea.Autosize mah="42vh">
 						{options.length > 0 ? (

@@ -9,16 +9,16 @@ export default function HelpSection() {
 				<Anchor href="https://www.inaturalist.org">iNaturalist</Anchor> through
 				a mobile device. <br />
 				Before you can start annotating, you need to
-				<List type="ordered">
-					<List.Item>
-						Set a filter on the <b>Filters</b> tab
-					</List.Item>
-					<List.Item>
-						Authorize this app to use your iNaturalist account on the{" "}
-						<b>Account</b> tab
-					</List.Item>
-				</List>
 			</Text>
+			<List type="ordered">
+				<List.Item>
+					Set a filter on the <b>Filters</b> tab
+				</List.Item>
+				<List.Item>
+					Authorize this app to use your iNaturalist account on the{" "}
+					<b>Account</b> tab
+				</List.Item>
+			</List>
 			<br />
 			<Title order={4}>Filtering</Title>
 			<Text>

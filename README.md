@@ -29,7 +29,6 @@ This tool is made to allow for fast annotations, targeting mobile devices mainly
   - Prevent backspacing text being undone after first load
 - Fix bugs
   - Fix vertical scrolling on reptiles and amphibians (Established annotation)
-- Show placeholder when there are no observations to display
 - Image styling improvements
   - Can't see all of an image: portrait cut off on top and landscape on sides. Could fix by zoom image overlay. Nothing fancy needed.
   - Selected thumbnail style could be better

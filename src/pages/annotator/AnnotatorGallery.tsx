@@ -1,4 +1,4 @@
-import { Center, Loader, Stack, Text } from "@mantine/core";
+import { Center, Loader, Stack, Text, useMantineTheme } from "@mantine/core";
 import { type Ref, useCallback, useImperativeHandle, useRef } from "react";
 import { Navigation, Virtual } from "swiper/modules";
 import {
@@ -28,6 +28,7 @@ export default function AnnotatorGallery({
 	submittedQueryString,
 	openAuthentication,
 }: AnnotatorGalleryProps) {
+	const theme = useMantineTheme();
 	const {
 		annotatorObservations,
 		status,
@@ -57,7 +58,7 @@ export default function AnnotatorGallery({
 	switch (status) {
 		case "pending":
 			return (
-				<Center key="loading" h="100vh">
+				<Center h="100vh">
 					<Stack align="center">
 						<Text size="lg">Loading Observations</Text>
 						<Loader size={40} />
@@ -66,15 +67,23 @@ export default function AnnotatorGallery({
 			);
 		case "error":
 			return (
-				<Center key="loading">
+				<Center>
 					<Stack>
-						<Text>Error: {error?.name ?? "unknown"}</Text>{" "}
+						<Text c={theme.colors.red[5]}>
+							Error: {error?.name ?? "unknown"}
+						</Text>{" "}
 						<Text>{error?.message}</Text>
 					</Stack>
 				</Center>
 			);
 		case "success":
-			return (
+			return !annotatorObservations || annotatorObservations?.length === 0 ? (
+				<Center h="100vh">
+					<Stack align="center">
+						<Text size="lg">No Observations</Text>
+					</Stack>
+				</Center>
+			) : (
 				<Swiper
 					ref={swiperRef}
 					modules={[Navigation, Virtual]}

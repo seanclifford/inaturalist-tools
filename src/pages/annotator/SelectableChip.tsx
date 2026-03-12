@@ -57,7 +57,7 @@ export default function SelectableChip({
 			value={controlledValue.id}
 			checked={checked || (processing && disabled)}
 			disabled={disabled}
-			icon={processing ? <Loader size="12" /> : null}
+			icon={processing ? <Loader size="12" /> : undefined}
 			onChange={checkChanged}
 		>
 			{controlledValue.label}

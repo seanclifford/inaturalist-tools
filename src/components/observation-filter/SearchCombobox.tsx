@@ -54,8 +54,7 @@ export function SearchCombobox<T>({
 
 	useEffect(() => {
 		handleSearch(search);
-		if (search.length === 0) setValue(null);
-	}, [handleSearch, setValue, search]);
+	}, [handleSearch, search]);
 
 	const options = autocompleteValues.results.map((item) => (
 		<Combobox.Option value={getValue(item)} key={getKey(item)}>
@@ -90,7 +89,7 @@ export function SearchCombobox<T>({
 							<CloseButton
 								size="sm"
 								onMouseDown={(event) => event.preventDefault()}
-								onClick={() => setSearch("")}
+								onClick={() => setValue(null)}
 								aria-label="Clear value"
 							/>
 						) : (
@@ -107,7 +106,9 @@ export function SearchCombobox<T>({
 					onFocus={() => combobox.openDropdown()}
 					onBlur={() => {
 						combobox.closeDropdown();
-						setSearch(getValue(value) || "");
+						if (search.length === 0) {
+							setValue(null);
+						}
 					}}
 					placeholder={loading ? "Loading..." : placeholder}
 					rightSectionPointerEvents={value === null ? "none" : "all"}

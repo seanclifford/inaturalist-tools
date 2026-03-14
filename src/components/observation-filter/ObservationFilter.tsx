@@ -1,5 +1,5 @@
 import { Button, Stack, Tabs } from "@mantine/core";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import QueryStringInput from "../../pages/annotator/QueryStringInput";
 import AccountSettings from "../account-settings/AccountSettings";
 import HelpSection from "./HelpSection";
@@ -22,11 +22,14 @@ export default function ObservationFilter({
 	const placeId = getQueryStringParam(queryString, "place_id");
 	const withoutTermId = getQueryStringParam(queryString, "without_term_id");
 
-	const onTaxonChange = (taxon: Taxon | null) => {
-		setQueryString(
-			setQueryStringParam(queryString, "taxon_id", taxon?.id.toString()),
-		);
-	};
+	const onTaxonChange = useCallback(
+		(taxon: Taxon | null) => {
+			setQueryString(
+				setQueryStringParam(queryString, "taxon_id", taxon?.id.toString()),
+			);
+		},
+		[queryString],
+	);
 
 	const onPlaceChange = (place: Place | null) => {
 		setQueryString(

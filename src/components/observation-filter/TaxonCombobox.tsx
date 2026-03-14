@@ -1,6 +1,6 @@
 import { Box, Group, Image, Text } from "@mantine/core";
 import { Search } from "lucide-react";
-import { useCallback, useContext, useState } from "react";
+import { useCallback, useContext, useMemo, useState } from "react";
 import { SiteContext } from "../../Contexts";
 import { useTaxaAutocomplete } from "../../hooks/useTaxaAutocomplete";
 import { useTaxon } from "../../hooks/useTaxon";
@@ -18,14 +18,13 @@ interface TaxonNames {
 
 export function TaxonCombobox({ valueId, onSelect }: TaxonComboboxProps) {
 	const [site] = useContext(SiteContext);
-	const [search, setSearch] = useState("");
-	const taxa = useTaxaAutocomplete(search, site);
+	const [autocomplete, setAutocomplete] = useState("");
+	const taxa = useTaxaAutocomplete(autocomplete, site);
 	const { data: value, isLoading } = useTaxon(valueId);
 
 	const comboSetValue = useCallback(
 		(taxon: Taxon | null) => {
 			if (taxon?.id === value?.id) return;
-
 			onSelect(taxon);
 		},
 		[value, onSelect],
@@ -38,25 +37,27 @@ export function TaxonCombobox({ valueId, onSelect }: TaxonComboboxProps) {
 	);
 	const getKey = useCallback((x: Taxon | null) => x?.id ?? 0, []);
 
+	const leftSection = useMemo(() => {
+		return value?.default_photo?.square_url ? (
+			<Image src={value.default_photo.square_url} h={"24px"} w={"24px"} />
+		) : (
+			<Search />
+		);
+	}, [value?.default_photo?.square_url]);
+
 	return (
 		<SearchCombobox
 			value={value ?? null}
 			setValue={comboSetValue}
 			loading={isLoading}
 			autocompleteValues={taxa}
-			requestAutocomplete={setSearch}
+			requestAutocomplete={setAutocomplete}
 			label="Taxon"
 			placeholder="Search for a taxon"
 			getKey={getKey}
 			getValue={getValue}
 			buildOption={buildOptionInternal}
-			leftSection={
-				value?.default_photo?.square_url ? (
-					<Image src={value.default_photo.square_url} h={"24px"} w={"24px"} />
-				) : (
-					<Search />
-				)
-			}
+			leftSection={leftSection}
 		/>
 	);
 }

@@ -18,5 +18,24 @@ export default defineConfig(({ mode }) => {
 					"connect-src *.inaturalist.org www.inaturalist.nz www.inaturalist.ca www.biodiversity4all.org inaturalist.ala.org.au www.argentinat.org inaturalist.mma.gob.cl inaturalist.laji.fi www.inaturalist.se www.inaturalist.lu www.naturalista.uy",
 			},
 		},
+		build: {
+			rolldownOptions: {
+				output: {
+					codeSplitting: {
+						groups: [
+							{
+								name: "react-vendor",
+								test: /node_modules[\\/]react/,
+								priority: 20,
+							},
+							{
+								name: "vendor",
+								test: /node_modules/,
+							},
+						],
+					},
+				},
+			},
+		},
 	};
 });

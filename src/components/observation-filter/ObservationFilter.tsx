@@ -42,14 +42,14 @@ export default function ObservationFilter({
 	};
 
 	return (
-		<Tabs variant="outline" orientation="vertical" defaultValue="filters">
+		<Tabs variant="outline" defaultValue="filters">
 			<Tabs.List>
 				<Tabs.Tab value="filters">Filters</Tabs.Tab>
 				<Tabs.Tab value="account">Account</Tabs.Tab>
 				<Tabs.Tab value="help">Help</Tabs.Tab>
 			</Tabs.List>
 
-			<Tabs.Panel value="filters" p="md">
+			<Tabs.Panel value="filters" px="0" pt="xs">
 				<Stack gap="xs" maw="800px">
 					<QueryStringInput pageQueryString={queryString} runQuery={runQuery} />
 					<TaxonCombobox onSelect={onTaxonChange} valueId={Number(taxonId)} />

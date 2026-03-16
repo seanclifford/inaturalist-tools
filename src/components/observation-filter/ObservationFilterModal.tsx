@@ -1,4 +1,5 @@
 import { Modal } from "@mantine/core";
+import { useMediaQuery } from "@mantine/hooks";
 import ObservationFilter from "./ObservationFilter";
 import classes from "./ObservationFilterModal.module.css";
 
@@ -15,13 +16,17 @@ export default function ObservationFilterModal({
 	pageQueryString,
 	runQuery,
 }: ObservationFilterModalProps) {
+	const isMobile = useMediaQuery("(max-width: 50em)");
+
 	return (
 		<Modal
 			opened={opened}
 			onClose={close}
 			title="Settings"
-			centered
+			centered={!isMobile}
+			fullScreen={isMobile}
 			size="lg"
+			padding="xs"
 			classNames={{ body: classes.body }}
 		>
 			<ObservationFilter

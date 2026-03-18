@@ -1,3 +1,4 @@
+import { Center, Stack, Title } from "@mantine/core";
 import ObservationFilter from "../../components/observation-filter/ObservationFilter";
 import { usePageQueryString } from "../../hooks/usePageQueryString";
 import AnnotatorDisplay from "./AnnotatorDisplay";
@@ -13,10 +14,15 @@ function Annotator() {
 					setPageQueryString={setPageQueryString}
 				/>
 			) : (
-				<ObservationFilter
-					pageQueryString={pageQueryString}
-					runQuery={setPageQueryString}
-				/>
+				<Center>
+					<Stack p="sm">
+						<Title size="xl">Enter filters to load observations</Title>
+						<ObservationFilter
+							pageQueryString={pageQueryString}
+							runQuery={setPageQueryString}
+						/>
+					</Stack>
+				</Center>
 			)}
 		</main>
 	);

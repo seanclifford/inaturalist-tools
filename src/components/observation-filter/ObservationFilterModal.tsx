@@ -1,7 +1,6 @@
 import { Modal } from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
 import ObservationFilter from "./ObservationFilter";
-import classes from "./ObservationFilterModal.module.css";
 
 interface ObservationFilterModalProps {
 	opened: boolean;
@@ -27,7 +26,6 @@ export default function ObservationFilterModal({
 			fullScreen={isMobile}
 			size="lg"
 			padding="xs"
-			classNames={{ body: classes.body }}
 		>
 			<ObservationFilter
 				pageQueryString={pageQueryString}

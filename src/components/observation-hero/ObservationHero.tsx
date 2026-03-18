@@ -3,7 +3,6 @@ import {
 	Box,
 	Group,
 	Paper,
-	Stack,
 	Text,
 	useMantineTheme,
 } from "@mantine/core";

@@ -79,20 +79,19 @@ const ObservationHero: React.FC<ObservationHeroProps> = ({ observation }) => {
 				photoIndex={photoIndex}
 				setPhotoIndex={setPhotoIndex}
 			/>
-			<Stack p="xs" bg={theme.colors.gray[1]}>
-				<Group>
-					<UserAccount user={user} />
-					<Anchor
-						ml="auto"
-						href={url.toString()}
-						target="_blank"
-						rel="noreferrer"
-						aria-label={`See it on ${site.name}`}
-					>
-						<SquareArrowOutUpRight />
-					</Anchor>
-				</Group>
-			</Stack>
+			<Group align="center" p="0.4em" bg={theme.colors.gray[1]}>
+				<UserAccount user={user} size="sm" />
+				<Anchor
+					ml="auto"
+					h={24}
+					href={url.toString()}
+					target="_blank"
+					rel="noreferrer"
+					aria-label={`See it on ${site.name}`}
+				>
+					<SquareArrowOutUpRight />
+				</Anchor>
+			</Group>
 		</Paper>
 	);
 };

@@ -17,7 +17,7 @@ export function AnnotationSelector({
 }: AnnotationSelectorProps) {
 	const currentUser = useContext(CurrentUserContext);
 	return (
-		<Stack gap="lg" pt={10} pl={3}>
+		<Stack gap="sm" pt={10} pl={3}>
 			{observationControlledTerms.map((controlledTerm) => {
 				const annotations = observation.annotations.filter(
 					(a) => a.controlled_attribute_id === controlledTerm.id,

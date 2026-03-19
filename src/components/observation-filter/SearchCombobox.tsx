@@ -117,7 +117,7 @@ export function SearchCombobox<T>({
 
 			<Combobox.Dropdown hidden={autocompleteValues.state !== "loaded"}>
 				<Combobox.Options>
-					<ScrollArea.Autosize mah="42vh">
+					<ScrollArea.Autosize mah="34vh">
 						{options.length > 0 ? (
 							options
 						) : (

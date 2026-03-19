@@ -35,7 +35,7 @@ export function usePlacesAutocomplete(
 function generateQueryString(search: string, site: Site): URLSearchParams {
 	const searchParams = new URLSearchParams();
 	searchParams.append("q", search);
-	searchParams.append("per_page", "12");
+	searchParams.append("per_page", "8");
 	searchParams.append("locale", site.locale ?? navigator.language);
 	return searchParams;
 }

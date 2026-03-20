@@ -1,20 +1,20 @@
 import { Modal } from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
-import ObservationFilter from "./ObservationFilter";
+import Settings from "./Settings";
 
-interface ObservationFilterModalProps {
+interface SettingsModalProps {
 	opened: boolean;
 	close: () => void;
 	pageQueryString: string;
 	runQuery: (_: string) => void;
 }
 
-export default function ObservationFilterModal({
+export default function SettingsModal({
 	opened,
 	close,
 	pageQueryString,
 	runQuery,
-}: ObservationFilterModalProps) {
+}: SettingsModalProps) {
 	const isMobile = useMediaQuery("(max-width: 50em)");
 
 	return (
@@ -27,10 +27,7 @@ export default function ObservationFilterModal({
 			size="lg"
 			padding="xs"
 		>
-			<ObservationFilter
-				pageQueryString={pageQueryString}
-				runQuery={runQuery}
-			/>
+			<Settings pageQueryString={pageQueryString} runQuery={runQuery} />
 		</Modal>
 	);
 }

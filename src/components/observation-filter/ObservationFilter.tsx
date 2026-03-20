@@ -1,8 +1,6 @@
-import { Button, Stack, Tabs } from "@mantine/core";
+import { Button, Stack } from "@mantine/core";
 import { useCallback, useState } from "react";
 import QueryStringInput from "../../pages/annotator/QueryStringInput";
-import AccountSettings from "../account-settings/AccountSettings";
-import HelpSection from "./HelpSection";
 import { PlaceCombobox } from "./PlaceCombobox";
 import { TaxonCombobox } from "./TaxonCombobox";
 import { WithoutAnnotationSelect } from "./WithoutAnnotationSelect";
@@ -42,34 +40,16 @@ export default function ObservationFilter({
 	};
 
 	return (
-		<Tabs variant="outline" defaultValue="filters">
-			<Tabs.List>
-				<Tabs.Tab value="filters">Filters</Tabs.Tab>
-				<Tabs.Tab value="account">Account</Tabs.Tab>
-				<Tabs.Tab value="help">Help</Tabs.Tab>
-			</Tabs.List>
-
-			<Tabs.Panel value="filters" px="0" pt="xs">
-				<Stack gap="xs" maw="800px">
-					<QueryStringInput pageQueryString={queryString} runQuery={runQuery} />
-					<TaxonCombobox onSelect={onTaxonChange} valueId={Number(taxonId)} />
-					<PlaceCombobox onSelect={onPlaceChange} valueId={Number(placeId)} />
-					<WithoutAnnotationSelect
-						onSelect={onWithoutTermChange}
-						valueId={withoutTermId}
-					/>
-					<Button onClick={() => runQuery(queryString)}>Go</Button>
-				</Stack>
-			</Tabs.Panel>
-
-			<Tabs.Panel value="account" p="md">
-				<AccountSettings />
-			</Tabs.Panel>
-
-			<Tabs.Panel value="help" p="md">
-				<HelpSection />
-			</Tabs.Panel>
-		</Tabs>
+		<Stack gap="xs" maw="800px">
+			<QueryStringInput pageQueryString={queryString} runQuery={runQuery} />
+			<TaxonCombobox onSelect={onTaxonChange} valueId={Number(taxonId)} />
+			<PlaceCombobox onSelect={onPlaceChange} valueId={Number(placeId)} />
+			<WithoutAnnotationSelect
+				onSelect={onWithoutTermChange}
+				valueId={withoutTermId}
+			/>
+			<Button onClick={() => runQuery(queryString)}>Go</Button>
+		</Stack>
 	);
 }
 

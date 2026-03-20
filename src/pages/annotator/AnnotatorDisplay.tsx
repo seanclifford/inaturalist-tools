@@ -2,7 +2,7 @@ import { useDisclosure } from "@mantine/hooks";
 import { SettingsIcon } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import AuthenticationModal from "../../components/authentication-modal/AuthenticationModal";
-import ObservationFilterModal from "../../components/observation-filter/ObservationFilterModal";
+import SettingsModal from "../../components/settings/SettingsModal";
 import AnnotatorGallery, { type SlidesRef } from "./AnnotatorGallery";
 
 interface AnnotatorDisplayProps {
@@ -32,7 +32,7 @@ export default function AnnotatorDisplay({
 
 	return (
 		<>
-			<ObservationFilterModal
+			<SettingsModal
 				opened={settingsOpened}
 				close={closeSettings}
 				pageQueryString={pageQueryString}

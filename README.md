@@ -36,6 +36,7 @@ This tool is made to allow for fast annotations, targeting mobile devices mainly
   - Has Photos
   - Project
   - Unreviewed
+  - Allow unsupported filters to be displayed and added/removed (pills of remaining filters?)
 - Zoom images functionality
   - Download the original sized image and display
   - Can pinch to zoom be overridden to always show an X to close no matter the zoom level?

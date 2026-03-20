@@ -10,20 +10,31 @@ interface ObservationFilterProps {
 	runQuery: (_: string) => void;
 }
 
+const paramTaxonId = "taxon_id";
+const paramPlaceId = "place_id";
+const paramWithoutTermId = "without_term_id";
+
 export default function ObservationFilter({
 	pageQueryString,
 	runQuery,
 }: ObservationFilterProps) {
 	const [queryString, setQueryString] = useState(pageQueryString);
 
-	const taxonId = getQueryStringParam(queryString, "taxon_id");
-	const placeId = getQueryStringParam(queryString, "place_id");
-	const withoutTermId = getQueryStringParam(queryString, "without_term_id");
+	const searchParams = new URLSearchParams(queryString);
+	const taxonId = Number(searchParams.get(paramTaxonId));
+	const placeId = Number(searchParams.get(paramPlaceId));
+	const withoutTermId = searchParams.get(paramWithoutTermId);
+
+	/* TODO: use remaining search params to populate a list of removable pills
+	searchParams.delete(paramTaxonId);
+	searchParams.delete(paramPlaceId);
+	searchParams.delete(paramWithoutTermId);
+	*/
 
 	const onTaxonChange = useCallback(
 		(taxon: Taxon | null) => {
 			setQueryString(
-				setQueryStringParam(queryString, "taxon_id", taxon?.id.toString()),
+				setQueryStringParam(queryString, paramTaxonId, taxon?.id.toString()),
 			);
 		},
 		[queryString],
@@ -31,19 +42,21 @@ export default function ObservationFilter({
 
 	const onPlaceChange = (place: Place | null) => {
 		setQueryString(
-			setQueryStringParam(queryString, "place_id", place?.id.toString()),
+			setQueryStringParam(queryString, paramPlaceId, place?.id.toString()),
 		);
 	};
 
 	const onWithoutTermChange = (termId: string | null) => {
-		setQueryString(setQueryStringParam(queryString, "without_term_id", termId));
+		setQueryString(
+			setQueryStringParam(queryString, paramWithoutTermId, termId),
+		);
 	};
 
 	return (
 		<Stack gap="xs" maw="800px">
 			<QueryStringInput pageQueryString={queryString} runQuery={runQuery} />
-			<TaxonCombobox onSelect={onTaxonChange} valueId={Number(taxonId)} />
-			<PlaceCombobox onSelect={onPlaceChange} valueId={Number(placeId)} />
+			<TaxonCombobox onSelect={onTaxonChange} valueId={taxonId} />
+			<PlaceCombobox onSelect={onPlaceChange} valueId={placeId} />
 			<WithoutAnnotationSelect
 				onSelect={onWithoutTermChange}
 				valueId={withoutTermId}
@@ -51,11 +64,6 @@ export default function ObservationFilter({
 			<Button onClick={() => runQuery(queryString)}>Go</Button>
 		</Stack>
 	);
-}
-
-function getQueryStringParam(queryString: string, paramName: string) {
-	const searchParams = new URLSearchParams(queryString);
-	return searchParams.get(paramName);
 }
 
 function setQueryStringParam(

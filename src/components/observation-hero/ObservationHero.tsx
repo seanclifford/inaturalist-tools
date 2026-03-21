@@ -116,6 +116,7 @@ const ObservationHero: React.FC<ObservationHeroProps> = ({ observation }) => {
 					return { src: getPhotoUrl(p, "large") };
 				})}
 				carousel={{ finite: true }}
+				controller={{ closeOnBackdropClick: true }}
 			/>
 		</Paper>
 	);

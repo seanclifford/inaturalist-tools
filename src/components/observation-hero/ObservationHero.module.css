@@ -1,0 +1,25 @@
+.overlay {
+	position: absolute;
+	left: 0;
+	top: 0;
+	height: 100%;
+	width: 100%;
+	background: linear-gradient(0deg, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0));
+	pointer-events: none;
+}
+
+.taxonText {
+	position: absolute;
+	left: 10px;
+	bottom: 10px;
+	color: white;
+}
+
+.zoomIcon {
+	position: absolute;
+	bottom: 1em;
+	right: 1em;
+	height: 1.8em;
+	width: 1.8em;
+	color: white;
+}

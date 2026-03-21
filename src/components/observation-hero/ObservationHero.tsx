@@ -16,6 +16,7 @@ import { SiteContext } from "../../Contexts";
 import getPhotoUrl from "../../inaturalist/photo-urls";
 import UserAccount from "../user-account/UserAccount";
 import { getMainImageHeight, outerWidth } from "./dimensions";
+import classes from "./ObservationHero.module.css";
 import ObservationPhoto from "./ObservationPhoto";
 import ObservationPhotos from "./ObservationPhotos";
 
@@ -44,36 +45,12 @@ const ObservationHero: React.FC<ObservationHeroProps> = ({ observation }) => {
 		<Paper w={outerWidth} radius="md" shadow="sm" withBorder>
 			<Box style={{ position: "relative" }}>
 				<ObservationPhoto photo={photo} h={imageHeight} />
-				<Box
-					style={{
-						position: "absolute",
-						left: "0",
-						top: "0",
-						height: "100%",
-						width: "100%",
-						background: "linear-gradient(0deg, rgba(0,0,0,0.3), rgba(0,0,0,0))",
-						pointerEvents: "none",
-					}}
-				/>
+				<Box className={classes.overlay} />
 				<ZoomInIcon
-					style={{
-						position: "absolute",
-						bottom: "1em",
-						right: "1em",
-						height: "1.8em",
-						width: "1.8em",
-						color: "white",
-					}}
+					className={classes.zoomIcon}
 					onClick={() => setLightBoxOpen(true)}
 				/>
-				<Box
-					style={{
-						position: "absolute",
-						left: "10px",
-						bottom: "10px",
-						color: "white",
-					}}
-				>
+				<Box className={classes.taxonText}>
 					{taxon && !taxon.preferred_common_name ? (
 						<Text size="lg" fs="italic">
 							{taxon?.name}

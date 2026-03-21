@@ -21,14 +21,11 @@ If you have an iNaturalist instance running locally for testing you can create a
 This tool is made to allow for fast annotations, targeting mobile devices mainly, but with full keyboard support for laptops and desktops
 
 ## TODO List
-#### General
-- Settings to choose site
 
 #### Annotator
 - Search control improvements
   - Prevent backspacing text being undone after first load
 - Image styling improvements
-  - Can't see all of an image: portrait cut off on top and landscape on sides. Could fix by zoom image overlay. Nothing fancy needed.
   - Selected thumbnail style could be better
   - Thumbnails that overflow the row should be scrollable somehow
 - Settings to choose filters
@@ -37,9 +34,6 @@ This tool is made to allow for fast annotations, targeting mobile devices mainly
   - Project
   - Unreviewed
   - Allow unsupported filters to be displayed and added/removed (pills of remaining filters?)
-- Zoom images functionality
-  - Download the original sized image and display
-  - Can pinch to zoom be overridden to always show an X to close no matter the zoom level?
 - Allow marking observation as reviewed
 - Help or about section in settings
     - link to https://help.inaturalist.org/en/support/solutions/articles/151000191830-what-are-the-definitions-of-inaturalist-annotations

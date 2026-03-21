@@ -2,6 +2,7 @@ import { Center, Stack, Title } from "@mantine/core";
 import Settings from "../../components/settings/Settings";
 import { usePageQueryString } from "../../hooks/usePageQueryString";
 import AnnotatorDisplay from "./AnnotatorDisplay";
+import "yet-another-react-lightbox/styles.css";
 
 function Annotator() {
 	const [pageQueryString, setPageQueryString] = usePageQueryString();

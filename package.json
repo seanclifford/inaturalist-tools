@@ -18,7 +18,8 @@
 		"react": "^19.0.0",
 		"react-dom": "^19.0.0",
 		"swiper": "^12.1.2",
-		"wouter": "^3.5.1"
+		"wouter": "^3.5.1",
+		"yet-another-react-lightbox": "^3.29.1"
 	},
 	"devDependencies": {
 		"@biomejs/biome": "^2.4.0",

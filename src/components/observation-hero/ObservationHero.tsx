@@ -1,15 +1,19 @@
 import {
 	Anchor,
 	Box,
+	Center,
 	Group,
 	Paper,
 	Text,
 	useMantineTheme,
 } from "@mantine/core";
-import { SquareArrowOutUpRight } from "lucide-react";
+import { SquareArrowOutUpRight, ZoomInIcon } from "lucide-react";
 import type React from "react";
 import { useContext, useState } from "react";
+import Lightbox from "yet-another-react-lightbox";
+import { Zoom } from "yet-another-react-lightbox/plugins";
 import { SiteContext } from "../../Contexts";
+import getPhotoUrl from "../../inaturalist/photo-urls";
 import UserAccount from "../user-account/UserAccount";
 import { getMainImageHeight, outerWidth } from "./dimensions";
 import ObservationPhoto from "./ObservationPhoto";
@@ -22,10 +26,11 @@ interface ObservationHeroProps {
 const ObservationHero: React.FC<ObservationHeroProps> = ({ observation }) => {
 	const [site] = useContext(SiteContext);
 	const [photoIndex, setPhotoIndex] = useState(0);
+	const [lightboxOpen, setLightBoxOpen] = useState(false);
 	const theme = useMantineTheme();
 
 	if (!observation) {
-		return <span>loading</span>;
+		return <Center>Loading...</Center>;
 	}
 	const { id, photos, user, taxon } = observation;
 
@@ -39,7 +44,6 @@ const ObservationHero: React.FC<ObservationHeroProps> = ({ observation }) => {
 		<Paper w={outerWidth} radius="md" shadow="sm" withBorder>
 			<Box style={{ position: "relative" }}>
 				<ObservationPhoto photo={photo} h={imageHeight} />
-
 				<Box
 					style={{
 						position: "absolute",
@@ -50,6 +54,17 @@ const ObservationHero: React.FC<ObservationHeroProps> = ({ observation }) => {
 						background: "linear-gradient(0deg, rgba(0,0,0,0.3), rgba(0,0,0,0))",
 						pointerEvents: "none",
 					}}
+				/>
+				<ZoomInIcon
+					style={{
+						position: "absolute",
+						bottom: "1em",
+						right: "1em",
+						height: "1.8em",
+						width: "1.8em",
+						color: "white",
+					}}
+					onClick={() => setLightBoxOpen(true)}
 				/>
 				<Box
 					style={{
@@ -91,6 +106,17 @@ const ObservationHero: React.FC<ObservationHeroProps> = ({ observation }) => {
 					<SquareArrowOutUpRight />
 				</Anchor>
 			</Group>
+			<Lightbox
+				plugins={[Zoom]}
+				open={lightboxOpen}
+				close={() => setLightBoxOpen(false)}
+				index={photoIndex}
+				on={{ view: (i) => setPhotoIndex(i.index) }}
+				slides={photos.map((p) => {
+					return { src: getPhotoUrl(p, "large") };
+				})}
+				carousel={{ finite: true }}
+			/>
 		</Paper>
 	);
 };

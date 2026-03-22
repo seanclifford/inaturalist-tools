@@ -26,8 +26,8 @@ This tool is made to allow for fast annotations, targeting mobile devices mainly
 - Search control improvements
   - Prevent backspacing text being undone after first load
 - Image styling improvements
-  - Selected thumbnail style could be better
   - Thumbnails that overflow the row should be scrollable somehow
+- Change swiper next/prev icons to look like the lightbox with shadow (visible on white background)
 - Settings to choose filters
   - User
   - Has Photos
@@ -35,11 +35,14 @@ This tool is made to allow for fast annotations, targeting mobile devices mainly
   - Unreviewed
   - Allow unsupported filters to be displayed and added/removed (pills of remaining filters?)
 - Allow marking observation as reviewed
-- Help or about section in settings
-    - link to https://help.inaturalist.org/en/support/solutions/articles/151000191830-what-are-the-definitions-of-inaturalist-annotations
-    - explain best practices, or even better, link to them
-    - Back to home page
+- Add QR Code for quick access for mobiles - put it in Help and the Main page
+- Add About section in settings
+    - Say who I am. Link to profile
+    - Link to github source code
+    - Check licenses and add any dependency notices required
+- Consider putting it on it's own domain
 - Tweak styling to suit different displays
+- Double check scope can't be reduced for OAuth token (using default login+write)
 - Bulk annotate many observations at once somehow (later)
 - Annotation voting for others annotations (later)
 - Audio observation support (later)

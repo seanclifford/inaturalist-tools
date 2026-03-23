@@ -11,6 +11,8 @@ import AnnotatorSlide from "./AnnotatorSlide";
 import { useAnnotatorObservations } from "./useAnnotatorObservations";
 import "swiper/css";
 import "swiper/css/navigation";
+import "swiper/css/virtual";
+import "./swiper-custom.css";
 import styles from "./AnnotatorGallery.module.css";
 
 interface AnnotatorGalleryProps {

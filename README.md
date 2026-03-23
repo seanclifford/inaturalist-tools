@@ -27,7 +27,6 @@ This tool is made to allow for fast annotations, targeting mobile devices mainly
   - Prevent backspacing text being undone after first load
 - Image styling improvements
   - Thumbnails that overflow the row should be scrollable somehow
-- Change swiper next/prev icons to look like the lightbox with shadow (visible on white background)
 - Settings to choose filters
   - User
   - Has Photos

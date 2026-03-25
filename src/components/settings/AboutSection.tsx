@@ -12,10 +12,10 @@ export default function AboutSection() {
 				{")"}
 			</Text>
 			<Title order={3}>Source code</Title>
-			<Text>The code is all open source and available here</Text>
+			<Text>The code is open source and available here:</Text>
 			<Anchor href="https://github.com/seanclifford/inaturalist-tools">
-				<Group gap={0}>
-					<Image src="/public/GitHub_Invertocat_Black.svg" w="2em" />
+				<Group gap="xs">
+					<Image src="/GitHub_Invertocat_Black.svg" w="2em" />
 					<Code>https://github.com/seanclifford/inaturalist-tools</Code>
 				</Group>
 			</Anchor>

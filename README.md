@@ -25,8 +25,13 @@ This tool is made to allow for fast annotations, targeting mobile devices mainly
 #### Annotator
 - Search control improvements
   - Prevent backspacing text being undone after first load
+  - backspacing and re searching taxon doesn't remove taxon photo. Should revert.
+  - locations list still too tall gets cutoff
 - Image styling improvements
   - Thumbnails that overflow the row should be scrollable somehow
+- Bugs
+  - on initial load, often the first result gets replaced, perhaps just with no location after a second. Might be searching twice?
+  - when loading more at the end it sometimes takes a long time, or stops working? Tested with no location.
 - Settings to choose filters
   - User
   - Has Photos

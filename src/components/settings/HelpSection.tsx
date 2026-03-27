@@ -5,7 +5,7 @@ export default function HelpSection() {
 		<>
 			<Title order={3}>Welcome to the mobile fast annotator!</Title>
 			<Text>
-				This was created to allow fast annotating of observations on{" "}
+				This site was created to allow fast annotating of observations on{" "}
 				<Anchor href="https://www.inaturalist.org">iNaturalist</Anchor> through
 				a mobile device. <br />
 				Before you can start annotating, you need to
@@ -15,8 +15,8 @@ export default function HelpSection() {
 					Set a filter on the <b>Filters</b> tab
 				</List.Item>
 				<List.Item>
-					Authorize this app to use your iNaturalist account on the{" "}
-					<b>Account</b> tab
+					Login via your iNaturalist account on the <b>Account</b> tab, and
+					choose to trust this site.
 				</List.Item>
 			</List>
 			<br />
@@ -38,6 +38,46 @@ export default function HelpSection() {
 				</Anchor>
 				.
 			</Text>
+			<br />
+			<Title order={4}>
+				Login: Trusting this site with your iNaturalist account
+			</Title>
+			<Text>
+				If you want to use this site to make any changes on iNaturalist, you'll
+				need to trust this site with using your account with iNaturalist when
+				you Login. If you're unsure about this, here's some things that might
+				make you more comfortable:
+			</Text>
+			<List type="ordered">
+				<List.Item>
+					Data is only ever sent directly to iNaturalist or the{" "}
+					<Anchor href="https://www.inaturalist.org/sites/network">
+						network site
+					</Anchor>{" "}
+					you choose. Additionally, this site does <b>not</b> track your
+					actions.
+					<br />
+					This is enforced by your browser and be confirmed by checking the{" "}
+					<Anchor href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Content-Security-Policy/connect-src">
+						connect-src
+					</Anchor>{" "}
+					of{" "}
+					<Anchor href="https://github.com/seanclifford/inaturalist-tools/blob/master/netlify.toml#L8">
+						the Content-Security-Policy set here
+					</Anchor>
+					.
+				</List.Item>
+				<List.Item>
+					When you <b>Login</b> on this site, your iNaturalist account details
+					are only stored locally on your device. You can clear this information
+					at any time by choosing <b>Logout</b> from the Account tab.
+				</List.Item>
+				<List.Item>
+					The code for this site is all open source - so it is readable and
+					auditable by anyone with the technical knowledge to do so. See the
+					About tab for a link to the source code.
+				</List.Item>
+			</List>
 			<br />
 			<Title order={4}>Choosing an annotation</Title>
 			<Text>

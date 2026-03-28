@@ -1,4 +1,4 @@
-import { Group, Image } from "@mantine/core";
+import { Group, Image, ScrollArea } from "@mantine/core";
 import getPhotoUrl from "../../inaturalist/photo-urls";
 import { photoBannerHeight } from "./dimensions";
 import classes from "./ObservationPhotos.module.css";
@@ -15,14 +15,15 @@ export default function ObservationPhotos({
 	setPhotoIndex,
 }: ObservationPhotosProps) {
 	return (
-		<>
+		<ScrollArea>
 			{photos.length > 1 ? (
 				<Group
-					justify="center"
+					justify="safe center"
 					h={photoBannerHeight}
 					pl="0.3em"
 					pr="0.3em"
 					gap="0.3em"
+					wrap="nowrap"
 				>
 					{photos.map((photo, index) => (
 						<Image
@@ -37,6 +38,6 @@ export default function ObservationPhotos({
 					))}
 				</Group>
 			) : null}
-		</>
+		</ScrollArea>
 	);
 }

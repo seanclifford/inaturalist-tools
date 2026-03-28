@@ -26,7 +26,6 @@ This tool is made to allow for fast annotations, targeting mobile devices mainly
 - Search control improvements
   - Prevent backspacing text being undone after first load
   - backspacing and re searching taxon doesn't remove taxon photo. Should revert.
-  - locations list still too tall gets cutoff
 - Image styling improvements
   - Thumbnails that overflow the row should be scrollable somehow
 - Bugs

@@ -40,8 +40,6 @@ This tool is made to allow for fast annotations, targeting mobile devices mainly
 - Allow marking observation as reviewed
 - Add QR Code for quick access for mobiles - put it in Help and the Main page
 - Consider putting it on it's own domain
-- Tweak styling to suit different displays
-- Double check scope can't be reduced for OAuth token (using default login+write)
 - Bulk annotate many observations at once somehow (later)
 - Annotation voting for others annotations (later)
 - Audio observation support (later)

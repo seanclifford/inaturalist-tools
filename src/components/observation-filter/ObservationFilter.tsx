@@ -1,5 +1,6 @@
 import { Button, Stack } from "@mantine/core";
 import { useCallback, useState } from "react";
+import { observationParams } from "../../inaturalist/constants";
 import QueryStringInput from "../../pages/annotator/QueryStringInput";
 import { PlaceCombobox } from "./PlaceCombobox";
 import { TaxonCombobox } from "./TaxonCombobox";
@@ -10,10 +11,6 @@ interface ObservationFilterProps {
 	runQuery: (_: string) => void;
 }
 
-const paramTaxonId = "taxon_id";
-const paramPlaceId = "place_id";
-const paramWithoutTermId = "without_term_id";
-
 export default function ObservationFilter({
 	pageQueryString,
 	runQuery,
@@ -21,35 +18,30 @@ export default function ObservationFilter({
 	const [queryString, setQueryString] = useState(pageQueryString);
 
 	const searchParams = new URLSearchParams(queryString);
-	const taxonId = Number(searchParams.get(paramTaxonId));
-	const placeId = Number(searchParams.get(paramPlaceId));
-	const withoutTermId = searchParams.get(paramWithoutTermId);
+	const taxonId = Number(searchParams.get(observationParams.taxon_id));
+	const placeId = Number(searchParams.get(observationParams.place_id));
+	const withoutTermId = searchParams.get(observationParams.without_term_id);
 
-	/* TODO: use remaining search params to populate a list of removable pills
-	searchParams.delete(paramTaxonId);
-	searchParams.delete(paramPlaceId);
-	searchParams.delete(paramWithoutTermId);
-	*/
-
-	const onTaxonChange = useCallback(
-		(taxon: Taxon | null) => {
-			setQueryString(
-				setQueryStringParam(queryString, paramTaxonId, taxon?.id.toString()),
-			);
+	const onParamChange = useCallback(
+		(paramName: string, value: string | null | undefined) => {
+			setQueryString(setQueryStringParam(queryString, paramName, value));
 		},
 		[queryString],
 	);
 
+	const onTaxonChange = useCallback(
+		(taxon: Taxon | null) => {
+			onParamChange(observationParams.taxon_id, taxon?.id.toString());
+		},
+		[onParamChange],
+	);
+
 	const onPlaceChange = (place: Place | null) => {
-		setQueryString(
-			setQueryStringParam(queryString, paramPlaceId, place?.id.toString()),
-		);
+		onParamChange(observationParams.place_id, place?.id.toString());
 	};
 
 	const onWithoutTermChange = (termId: string | null) => {
-		setQueryString(
-			setQueryStringParam(queryString, paramWithoutTermId, termId),
-		);
+		onParamChange(observationParams.without_term_id, termId);
 	};
 
 	return (
@@ -61,7 +53,7 @@ export default function ObservationFilter({
 				onSelect={onWithoutTermChange}
 				valueId={withoutTermId}
 			/>
-			<Button onClick={() => runQuery(queryString)}>Go</Button>
+			<Button onClick={() => runQuery(queryString)}>Load Observations</Button>
 		</Stack>
 	);
 }

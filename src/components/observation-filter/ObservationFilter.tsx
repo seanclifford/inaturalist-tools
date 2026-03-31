@@ -2,6 +2,7 @@ import { Button, Stack } from "@mantine/core";
 import { useCallback, useState } from "react";
 import { observationParams } from "../../inaturalist/constants";
 import QueryStringInput from "../../pages/annotator/QueryStringInput";
+import { OtherFilters } from "./OtherFilters";
 import { PlaceCombobox } from "./PlaceCombobox";
 import { TaxonCombobox } from "./TaxonCombobox";
 import { WithoutAnnotationSelect } from "./WithoutAnnotationSelect";
@@ -53,6 +54,7 @@ export default function ObservationFilter({
 				onSelect={onWithoutTermChange}
 				valueId={withoutTermId}
 			/>
+			<OtherFilters onParamChange={onParamChange} searchParams={searchParams} />
 			<Button onClick={() => runQuery(queryString)}>Load Observations</Button>
 		</Stack>
 	);

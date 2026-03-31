@@ -1,7 +1,6 @@
 import { Button, Stack } from "@mantine/core";
 import { useCallback, useState } from "react";
 import { observationParams } from "../../inaturalist/constants";
-import QueryStringInput from "../../pages/annotator/QueryStringInput";
 import { OtherFilters } from "./OtherFilters";
 import { PlaceCombobox } from "./PlaceCombobox";
 import { TaxonCombobox } from "./TaxonCombobox";
@@ -47,7 +46,6 @@ export default function ObservationFilter({
 
 	return (
 		<Stack gap="xs" maw="800px">
-			<QueryStringInput pageQueryString={queryString} runQuery={runQuery} />
 			<TaxonCombobox onSelect={onTaxonChange} valueId={taxonId} />
 			<PlaceCombobox onSelect={onPlaceChange} valueId={placeId} />
 			<WithoutAnnotationSelect

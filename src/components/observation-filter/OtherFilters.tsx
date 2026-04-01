@@ -36,13 +36,14 @@ export function OtherFilters({
 
 	return (
 		<Stack>
-			<Group align="end" gap="sm">
+			<Group align="end" gap="xs">
 				<TextInput
 					ref={newKeyRef}
 					label="Other Filters"
 					placeholder="Filter Key"
+					flex={1}
 				/>
-				<TextInput ref={newValRef} placeholder="Filter Value" />
+				<TextInput ref={newValRef} placeholder="Filter Value" flex={1} />
 				<Button onClick={onAdd} color={theme.colors.gray[6]}>
 					Add
 				</Button>

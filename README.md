@@ -25,8 +25,6 @@ This tool is made to allow for fast annotations, targeting mobile devices mainly
 #### Annotator
 - Search control improvements
   - Prevent backspacing text being undone after first load
-  - backspacing and re searching taxon doesn't remove taxon photo. Should revert.
-  - Handle displaying multiple values (comma separated) - currently doesn't load. Could just say 'Multiple' and include ability to remove or re-search?
 - Image styling improvements
   - Thumbnails that overflow the row should be scrollable somehow
 - Bugs
@@ -37,7 +35,6 @@ This tool is made to allow for fast annotations, targeting mobile devices mainly
   - Has Photos
   - Project
   - Unreviewed
-  - Allow unsupported filters to be displayed and added/removed (pills of remaining filters?)
 - Allow marking observation as reviewed
 - Add QR Code for quick access for mobiles - put it in Help and the Main page
 - Consider putting it on it's own domain

@@ -68,6 +68,27 @@ export function SearchCombobox<T>({
 		);
 	}
 
+	const comboLeftSection = loading ? null : leftSection &&
+		getValue(value) === search ? (
+		leftSection
+	) : (
+		<Search />
+	);
+
+	const comboRightSection =
+		autocompleteValues.state === "loading" ? (
+			<Loader size="sm" />
+		) : value !== null ? (
+			<CloseButton
+				size="sm"
+				onMouseDown={(event) => event.preventDefault()}
+				onClick={() => setValue(null)}
+				aria-label="Clear value"
+			/>
+		) : (
+			<Combobox.Chevron />
+		);
+
 	return (
 		<Combobox
 			store={combobox}
@@ -81,21 +102,8 @@ export function SearchCombobox<T>({
 				<InputBase
 					label={label}
 					disabled={loading}
-					leftSection={loading ? null : (leftSection ?? <Search />)}
-					rightSection={
-						autocompleteValues.state === "loading" ? (
-							<Loader size="sm" />
-						) : value !== null ? (
-							<CloseButton
-								size="sm"
-								onMouseDown={(event) => event.preventDefault()}
-								onClick={() => setValue(null)}
-								aria-label="Clear value"
-							/>
-						) : (
-							<Combobox.Chevron />
-						)
-					}
+					leftSection={comboLeftSection}
+					rightSection={comboRightSection}
 					value={search}
 					onChange={(event) => {
 						combobox.openDropdown();

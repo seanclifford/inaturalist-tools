@@ -102,10 +102,13 @@ export async function getObservation(id: number) {
 	return body.results[0];
 }
 
-export async function getTaxon(id: number | null, query: URLSearchParams) {
+export async function getTaxon(id: string | null, query: URLSearchParams) {
 	if (!id) return null;
+	if (id.includes(",")) return { id: -12345, name: "Multiple Taxons" } as Taxon;
+	const idNumber = Number(id);
+	if (!idNumber) return null;
 
-	const response = await get(`taxa/${id}?${query}`);
+	const response = await get(`taxa/${idNumber}?${query}`);
 	if (!response.ok) {
 		throw new Error("Could not load taxon");
 	}
@@ -145,7 +148,9 @@ export async function addAnnotation(
 	authentication: Authentication,
 ): Promise<NewAnnotation> {
 	if (!authentication.authToken) {
-		throw new AuthenticationError("Authentication is required to add an annotation");
+		throw new AuthenticationError(
+			"Authentication is required to add an annotation",
+		);
 	}
 
 	const response = await post(
@@ -164,7 +169,9 @@ export async function deleteAnnotation(
 	authentication: Authentication,
 ) {
 	if (!authentication.authToken || !authentication.isAuthenticated) {
-		throw new AuthenticationError("Authentication is required to add an annotation");
+		throw new AuthenticationError(
+			"Authentication is required to add an annotation",
+		);
 	}
 	const response = await remove(
 		`annotations/${uuid}`,

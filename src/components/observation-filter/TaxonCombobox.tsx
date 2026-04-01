@@ -7,7 +7,7 @@ import { useTaxon } from "../../hooks/useTaxon";
 import { SearchCombobox } from "./SearchCombobox";
 
 interface TaxonComboboxProps {
-	valueId: number | null;
+	taxonId: string | null;
 	onSelect: (taxon: Taxon | null) => void;
 }
 
@@ -16,11 +16,11 @@ interface TaxonNames {
 	secondaryName: string;
 }
 
-export function TaxonCombobox({ valueId, onSelect }: TaxonComboboxProps) {
+export function TaxonCombobox({ taxonId, onSelect }: TaxonComboboxProps) {
 	const [site] = useContext(SiteContext);
 	const [autocomplete, setAutocomplete] = useState("");
 	const taxa = useTaxaAutocomplete(autocomplete, site);
-	const { data: value, isLoading } = useTaxon(valueId);
+	const { data: value, isLoading } = useTaxon(taxonId);
 
 	const comboSetValue = useCallback(
 		(taxon: Taxon | null) => {

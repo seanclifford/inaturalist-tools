@@ -5,7 +5,7 @@ import { oneDay } from "../constants/values";
 import { getTaxon } from "../inaturalist/api";
 import { getSiteUrlParams } from "../inaturalist/params";
 
-export function useTaxon(id: number | null) {
+export function useTaxon(id: string | null) {
 	const [site] = useContext(SiteContext);
 
 	return useQuery({

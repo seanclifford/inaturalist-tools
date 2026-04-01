@@ -18,7 +18,7 @@ export default function ObservationFilter({
 	const [queryString, setQueryString] = useState(pageQueryString);
 
 	const searchParams = new URLSearchParams(queryString);
-	const taxonId = Number(searchParams.get(observationParams.taxon_id));
+	const taxonId = searchParams.get(observationParams.taxon_id);
 	const placeId = Number(searchParams.get(observationParams.place_id));
 	const withoutTermId = searchParams.get(observationParams.without_term_id);
 
@@ -46,7 +46,7 @@ export default function ObservationFilter({
 
 	return (
 		<Stack gap="xs" maw="800px">
-			<TaxonCombobox onSelect={onTaxonChange} valueId={taxonId} />
+			<TaxonCombobox onSelect={onTaxonChange} taxonId={taxonId} />
 			<PlaceCombobox onSelect={onPlaceChange} valueId={placeId} />
 			<WithoutAnnotationSelect
 				onSelect={onWithoutTermChange}

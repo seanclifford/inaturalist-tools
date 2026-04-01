@@ -5,7 +5,7 @@ import { oneDay } from "../constants/values";
 import { getPlace } from "../inaturalist/api";
 import { getSiteUrlParams } from "../inaturalist/params";
 
-export function usePlace(id: number | null) {
+export function usePlace(id: string | null) {
 	const [site] = useContext(SiteContext);
 
 	return useQuery({

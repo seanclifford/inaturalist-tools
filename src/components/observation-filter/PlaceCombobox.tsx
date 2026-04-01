@@ -6,14 +6,14 @@ import { usePlacesAutocomplete } from "../../hooks/usePlacesAutocomplete";
 import { SearchCombobox } from "./SearchCombobox";
 
 interface PlaceComboboxProps {
-	valueId: number | null;
+	placeId: string | null;
 	onSelect: (taxon: Place | null) => void;
 }
 
-export function PlaceCombobox({ valueId, onSelect }: PlaceComboboxProps) {
+export function PlaceCombobox({ placeId, onSelect }: PlaceComboboxProps) {
 	const [site] = useContext(SiteContext);
 	const [search, setSearch] = useState("");
-	const { data: value, isLoading } = usePlace(valueId);
+	const { data: value, isLoading } = usePlace(placeId);
 	const places = usePlacesAutocomplete(search, site);
 
 	const comboSetValue = useCallback(

@@ -193,10 +193,14 @@ export async function getProjects() {
     }
 }*/
 
-export async function getPlace(id: number | null, query: URLSearchParams) {
+export async function getPlace(id: string | null, query: URLSearchParams) {
 	if (!id) return null;
+	if (id.includes(","))
+		return { id: -123456, display_name: "Multiple Places" } as Place;
+	const idNumber = Number(id);
+	if (!idNumber) return null;
 
-	const response = await get(`places/${id}?${query.toString()}`);
+	const response = await get(`places/${idNumber}?${query.toString()}`);
 	if (!response.ok) {
 		throw new Error("Could not load place");
 	}

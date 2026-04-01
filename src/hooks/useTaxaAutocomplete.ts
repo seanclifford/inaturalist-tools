@@ -50,5 +50,5 @@ function onLoadTaxa(
 ) {
 	setResults({ results: taxa, state: "loaded" });
 	for (const taxon of taxa)
-		queryClient.setQueryData(["taxon", taxon.id], taxon);
+		queryClient.setQueryData(["taxon", taxon.id.toString()], taxon);
 }

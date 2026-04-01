@@ -47,5 +47,5 @@ function onLoadPlaces(
 ) {
 	setResults({ results: places, state: "loaded" });
 	for (const place of places)
-		queryClient.setQueryData(["place", place.id], place);
+		queryClient.setQueryData(["place", place.id.toString()], place);
 }

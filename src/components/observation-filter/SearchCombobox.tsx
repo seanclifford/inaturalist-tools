@@ -116,6 +116,8 @@ export function SearchCombobox<T>({
 						combobox.closeDropdown();
 						if (search.length === 0) {
 							setValue(null);
+						} else if (search !== getValue(value)) {
+							setSearch(getValue(value));
 						}
 					}}
 					placeholder={loading ? "Loading..." : placeholder}

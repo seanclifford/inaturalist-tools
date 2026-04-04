@@ -33,7 +33,8 @@ This tool is made to allow for fast annotations, targeting mobile devices mainly
 - Settings to choose filters
   - User
   - Project
-  - Unreviewed
+- Refactor ObservationFilter
+- Migrate to V2 of the iNaturalist API
 - Allow marking observation as reviewed
 - Add QR Code for quick access for mobiles - put it in Help and the Main page
 - Consider putting it on it's own domain

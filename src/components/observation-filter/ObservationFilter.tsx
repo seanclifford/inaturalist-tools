@@ -1,5 +1,6 @@
 import { Button, Checkbox, Stack } from "@mantine/core";
-import { useCallback, useState } from "react";
+import { useCallback, useContext, useState } from "react";
+import { CurrentUserContext } from "../../Contexts";
 import { observationParams } from "../../inaturalist/constants";
 import { OtherFilters } from "./OtherFilters";
 import { PlaceCombobox } from "./PlaceCombobox";
@@ -15,6 +16,7 @@ export default function ObservationFilter({
 	pageQueryString,
 	runQuery,
 }: ObservationFilterProps) {
+	const user = useContext(CurrentUserContext);
 	const [queryString, setQueryString] = useState(pageQueryString);
 
 	const searchParams = new URLSearchParams(queryString);
@@ -22,6 +24,10 @@ export default function ObservationFilter({
 	const placeId = searchParams.get(observationParams.place_id);
 	const withoutTermId = searchParams.get(observationParams.without_term_id);
 	const hasPhotos = searchParams.get(observationParams.photos) === "true";
+	let includeReviewed =
+		searchParams.get(observationParams.reviewed) !== "false";
+	const reviewedViewer = searchParams.get(observationParams.viewer_id);
+	if (!reviewedViewer) includeReviewed = true;
 
 	const onParamChange = useCallback(
 		(paramName: string, value: string | null | undefined) => {
@@ -49,6 +55,24 @@ export default function ObservationFilter({
 		onParamChange(observationParams.photos, hasPhotos ? "true" : null);
 	};
 
+	const onIncludeReviewedChange = (includeReviewed: boolean) => {
+		let internalQueryString = queryString;
+		if (user)
+			internalQueryString = setQueryStringParam(
+				internalQueryString,
+				observationParams.viewer_id,
+				user.id.toString(),
+			);
+
+		setQueryString(
+			setQueryStringParam(
+				internalQueryString,
+				observationParams.reviewed,
+				includeReviewed ? "true" : "false",
+			),
+		);
+	};
+
 	return (
 		<Stack gap="xs" maw="800px">
 			<TaxonCombobox onSelect={onTaxonChange} taxonId={taxonId} />
@@ -61,6 +85,11 @@ export default function ObservationFilter({
 				checked={hasPhotos}
 				label="Has Photos"
 				onChange={(e) => onHasPhotosChange(e.target.checked)}
+			/>
+			<Checkbox
+				checked={includeReviewed}
+				label="Reviewed?"
+				onChange={(e) => onIncludeReviewedChange(e.target.checked)}
 			/>
 			<OtherFilters onParamChange={onParamChange} searchParams={searchParams} />
 			<Button onClick={() => runQuery(queryString)}>Load Observations</Button>

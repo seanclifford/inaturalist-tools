@@ -3,6 +3,8 @@ export const observationParams = Object.freeze({
 	place_id: "place_id",
 	without_term_id: "without_term_id",
 	photos: "photos",
+	reviewed: "reviewed",
+	viewer_id: "viewer_id",
 });
 
 export const observationParamsWithFields = Object.values(

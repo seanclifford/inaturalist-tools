@@ -7,7 +7,7 @@ import {
 	useMantineTheme,
 } from "@mantine/core";
 import { useRef } from "react";
-import { observationParamsWithoutFields } from "../../inaturalist/constants";
+import { observationParamsWithFields } from "../../inaturalist/constants";
 
 interface OtherFiltersParams {
 	searchParams: URLSearchParams;
@@ -69,6 +69,6 @@ export function OtherFilters({
 
 function* getOtherParams(searchParams: URLSearchParams) {
 	for (const param of searchParams.entries()) {
-		if (!observationParamsWithoutFields.includes(param[0])) yield param;
+		if (!observationParamsWithFields.includes(param[0])) yield param;
 	}
 }

@@ -32,7 +32,6 @@ This tool is made to allow for fast annotations, targeting mobile devices mainly
   - when loading more at the end it sometimes takes a long time, or stops working? Tested with no location.
 - Settings to choose filters
   - User
-  - Has Photos
   - Project
   - Unreviewed
 - Allow marking observation as reviewed

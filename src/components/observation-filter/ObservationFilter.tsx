@@ -1,4 +1,4 @@
-import { Button, Stack } from "@mantine/core";
+import { Button, Checkbox, Stack } from "@mantine/core";
 import { useCallback, useState } from "react";
 import { observationParams } from "../../inaturalist/constants";
 import { OtherFilters } from "./OtherFilters";
@@ -21,6 +21,7 @@ export default function ObservationFilter({
 	const taxonId = searchParams.get(observationParams.taxon_id);
 	const placeId = searchParams.get(observationParams.place_id);
 	const withoutTermId = searchParams.get(observationParams.without_term_id);
+	const hasPhotos = searchParams.get(observationParams.photos) === "true";
 
 	const onParamChange = useCallback(
 		(paramName: string, value: string | null | undefined) => {
@@ -44,6 +45,10 @@ export default function ObservationFilter({
 		onParamChange(observationParams.without_term_id, termId);
 	};
 
+	const onHasPhotosChange = (hasPhotos: boolean) => {
+		onParamChange(observationParams.photos, hasPhotos ? "true" : null);
+	};
+
 	return (
 		<Stack gap="xs" maw="800px">
 			<TaxonCombobox onSelect={onTaxonChange} taxonId={taxonId} />
@@ -51,6 +56,11 @@ export default function ObservationFilter({
 			<WithoutAnnotationSelect
 				onSelect={onWithoutTermChange}
 				valueId={withoutTermId}
+			/>
+			<Checkbox
+				checked={hasPhotos}
+				label="Has Photos"
+				onChange={(e) => onHasPhotosChange(e.target.checked)}
 			/>
 			<OtherFilters onParamChange={onParamChange} searchParams={searchParams} />
 			<Button onClick={() => runQuery(queryString)}>Load Observations</Button>

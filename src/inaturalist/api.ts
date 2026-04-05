@@ -16,6 +16,15 @@ function get(path: string, useCache = true): Promise<Response> {
 	});
 }
 
+function getV2(path: string, useCache = true): Promise<Response> {
+	return limit(async () => {
+		return await fetch(
+			import.meta.env.VITE_INATURALIST_API_V2_URL + path,
+			getFetchOptions(useCache),
+		);
+	});
+}
+
 function getAuth(
 	path: string,
 	authToken: string,
@@ -108,7 +117,11 @@ export async function getTaxon(id: string | null, query: URLSearchParams) {
 	const idNumber = Number(id);
 	if (!idNumber) return null;
 
-	const response = await get(`taxa/${idNumber}?${query}`);
+	const fields =
+		"(id:!t,name:!t,preferred_common_name:!t,ancestor_ids:!t,rank:!t,rank_level:!t,default_photo:(id:!t,square_url:!t))";
+	query.append("fields", fields);
+
+	const response = await getV2(`taxa/${idNumber}?${query}`);
 	if (!response.ok) {
 		throw new Error("Could not load taxon");
 	}

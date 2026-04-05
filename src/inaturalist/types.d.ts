@@ -32,12 +32,9 @@ interface User {
 interface Observation {
 	id: number;
 	taxon: Taxon;
-	description: string;
-	observed_on: Date;
 	user: User;
 	photos: Photo[];
 	sounds: Sound[];
-	indent_ancestor_ids: number[];
 	annotations: Annotation[];
 }
 
@@ -54,7 +51,6 @@ interface Taxon {
 interface TaxonPhoto {
 	id: number;
 	square_url: string;
-	medium_url: string;
 }
 
 interface Photo {
@@ -80,8 +76,6 @@ interface ObservationFieldValue {
 interface ObservationField {
 	id: number;
 	name: string;
-	datatype: string;
-	description: string;
 }
 
 interface Project {

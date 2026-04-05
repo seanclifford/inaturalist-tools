@@ -28,13 +28,12 @@ This tool is made to allow for fast annotations, targeting mobile devices mainly
 - Image styling improvements
   - Thumbnails that overflow the row should be scrollable somehow
 - Bugs
-  - on initial load, often the first result gets replaced, perhaps just with no location after a second. Might be searching twice?
+  - on initial load, observations endpoint is loaded 3 times. Make it load only once
   - when loading more at the end it sometimes takes a long time, or stops working? Tested with no location.
 - Settings to choose filters
   - User
   - Project
 - Refactor ObservationFilter
-- Migrate to V2 of the iNaturalist API
 - Allow marking observation as reviewed
 - Add QR Code for quick access for mobiles - put it in Help and the Main page
 - Consider putting it on it's own domain

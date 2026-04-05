@@ -19,7 +19,7 @@ import {
 function get(path: string, useCache = true): Promise<Response> {
 	return limit(async () => {
 		return await fetch(
-			import.meta.env.VITE_INATURALIST_API_V2_URL + path,
+			import.meta.env.VITE_INATURALIST_API_URL + path,
 			getFetchOptions(useCache),
 		);
 	});
@@ -32,7 +32,7 @@ function getAuth(
 ): Promise<Response> {
 	return limit(async () => {
 		return await fetch(
-			import.meta.env.VITE_INATURALIST_API_V2_URL + path,
+			import.meta.env.VITE_INATURALIST_API_URL + path,
 			getAuthFetchOptions(authToken, useCache),
 		);
 	});
@@ -45,7 +45,7 @@ function post<T>(
 ): Promise<Response> {
 	return limit(async () => {
 		return await fetch(
-			import.meta.env.VITE_INATURALIST_API_V2_URL + path,
+			import.meta.env.VITE_INATURALIST_API_URL + path,
 			postAuthFetchOptions(bodyObj, authToken),
 		);
 	});
@@ -54,7 +54,7 @@ function post<T>(
 function remove(path: string, authToken: string): Promise<Response> {
 	return limit(async () => {
 		return await fetch(
-			import.meta.env.VITE_INATURALIST_API_V2_URL + path,
+			import.meta.env.VITE_INATURALIST_API_URL + path,
 			deleteAuthFetchOptions(authToken),
 		);
 	});

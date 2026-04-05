@@ -55,7 +55,6 @@ interface TaxonPhoto {
 interface Photo {
 	id: number;
 	url: string;
-	attribution: string;
 }
 
 type PhotoSize = "square" | "thumb" | "small" | "medium" | "large" | "original";
@@ -63,7 +62,6 @@ type PhotoSize = "square" | "thumb" | "small" | "medium" | "large" | "original";
 interface Sound {
 	id: number;
 	file_url: string;
-	attribution: string;
 }
 
 interface ObservationFieldValue {
@@ -130,7 +128,6 @@ interface ControlledTermValue extends ControlledTermBase {
 
 interface Place {
 	id: number;
-	uuid: string;
 	name: string;
 	display_name: string;
 }

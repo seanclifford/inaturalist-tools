@@ -2,9 +2,11 @@ import { AuthenticationError } from "../errors/AuthenticationError.ts";
 import { limit } from "./api-limiter.ts";
 import {
 	controlledTermsApiFields,
+	observationApiFields,
 	placeApiFields,
 	siteApiFields,
 	taxonApiFields,
+	userApiFields,
 } from "./constants.ts";
 import {
 	deleteAuthFetchOptions,
@@ -14,15 +16,6 @@ import {
 } from "./fetch-options.ts";
 
 function get(path: string, useCache = true): Promise<Response> {
-	return limit(async () => {
-		return await fetch(
-			import.meta.env.VITE_INATURALIST_API_URL + path,
-			getFetchOptions(useCache),
-		);
-	});
-}
-
-function getV2(path: string, useCache = true): Promise<Response> {
 	return limit(async () => {
 		return await fetch(
 			import.meta.env.VITE_INATURALIST_API_V2_URL + path,
@@ -38,7 +31,7 @@ function getAuth(
 ): Promise<Response> {
 	return limit(async () => {
 		return await fetch(
-			import.meta.env.VITE_INATURALIST_API_URL + path,
+			import.meta.env.VITE_INATURALIST_API_V2_URL + path,
 			getAuthFetchOptions(authToken, useCache),
 		);
 	});
@@ -70,8 +63,8 @@ export async function getCurrentUser(authentication: Authentication) {
 	if (!authentication.authToken) {
 		throw new Error("Authentication is required to get current user");
 	}
-
-	const response = await getAuth("users/me", authentication.authToken);
+	const query = new URLSearchParams([["fields", userApiFields]]);
+	const response = await getAuth(`users/me?${query}`, authentication.authToken);
 	if (!response.ok) {
 		throw new Error("Could not load current user");
 	}
@@ -81,7 +74,7 @@ export async function getCurrentUser(authentication: Authentication) {
 
 export async function getSites() {
 	const query = new URLSearchParams([["fields", siteApiFields]]);
-	const response = await getV2(`sites?${query}`);
+	const response = await get(`sites?${query}`);
 	if (!response.ok) {
 		throw new Error("Could not load sites");
 	}
@@ -95,6 +88,7 @@ export async function getObservations(
 ) {
 	const pageSize = 30;
 	query.set("per_page", pageSize.toString());
+	query.append("fields", observationApiFields);
 	const path = `observations?${query.toString()}`;
 	const response = authentication.authToken
 		? await getAuth(path, authentication.authToken, false)
@@ -117,7 +111,7 @@ export async function getTaxon(id: string | null, query: URLSearchParams) {
 
 	query.append("fields", taxonApiFields);
 
-	const response = await getV2(`taxa/${idNumber}?${query}`);
+	const response = await get(`taxa/${idNumber}?${query}`);
 	if (!response.ok) {
 		throw new Error("Could not load taxon");
 	}
@@ -128,7 +122,7 @@ export async function getTaxon(id: string | null, query: URLSearchParams) {
 export async function getTaxaAutocomplete(query: URLSearchParams) {
 	query.append("fields", taxonApiFields);
 
-	const response = await getV2(`taxa/autocomplete?${query.toString()}`);
+	const response = await get(`taxa/autocomplete?${query.toString()}`);
 	if (!response.ok) {
 		throw new Error("Could not load taxa");
 	}
@@ -138,7 +132,7 @@ export async function getTaxaAutocomplete(query: URLSearchParams) {
 
 export async function getControlledTerms() {
 	const query = new URLSearchParams([["fields", controlledTermsApiFields]]);
-	const response = await getV2(`controlled_terms?${query}`);
+	const response = await get(`controlled_terms?${query}`);
 	if (!response.ok) {
 		throw new Error("Could not load controlled terms");
 	}
@@ -194,7 +188,7 @@ export async function getPlace(id: string | null, query: URLSearchParams) {
 
 	query.append("fields", placeApiFields);
 
-	const response = await getV2(`places/${idNumber}?${query.toString()}`);
+	const response = await get(`places/${idNumber}?${query.toString()}`);
 	if (!response.ok) {
 		throw new Error("Could not load place");
 	}
@@ -204,7 +198,7 @@ export async function getPlace(id: string | null, query: URLSearchParams) {
 
 export async function getPlacesAutocomplete(query: URLSearchParams) {
 	query.append("fields", placeApiFields);
-	const response = await getV2(`places?${query.toString()}`);
+	const response = await get(`places?${query.toString()}`);
 	if (!response.ok) {
 		throw new Error("Could not load places");
 	}

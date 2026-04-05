@@ -18,3 +18,5 @@ export const siteApiFields = "id,name,url,icon_url,place_id,locale";
 
 export const controlledTermsApiFields =
 	"(id:!t,label:!t,taxon_ids:!t,excepted_taxon_ids:!t,multivalued:!t,values:(id:!t,label:!t,taxon_ids:!t,excepted_taxon_ids:!t,blocking:!t))";
+
+export const placeApiFields = "id,display_name";

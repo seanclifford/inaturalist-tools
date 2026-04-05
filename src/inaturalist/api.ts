@@ -2,6 +2,7 @@ import { AuthenticationError } from "../errors/AuthenticationError.ts";
 import { limit } from "./api-limiter.ts";
 import {
 	controlledTermsApiFields,
+	placeApiFields,
 	siteApiFields,
 	taxonApiFields,
 } from "./constants.ts";
@@ -191,7 +192,9 @@ export async function getPlace(id: string | null, query: URLSearchParams) {
 	const idNumber = Number(id);
 	if (!idNumber) return null;
 
-	const response = await get(`places/${idNumber}?${query.toString()}`);
+	query.append("fields", placeApiFields);
+
+	const response = await getV2(`places/${idNumber}?${query.toString()}`);
 	if (!response.ok) {
 		throw new Error("Could not load place");
 	}
@@ -200,7 +203,8 @@ export async function getPlace(id: string | null, query: URLSearchParams) {
 }
 
 export async function getPlacesAutocomplete(query: URLSearchParams) {
-	const response = await get(`places/autocomplete?${query.toString()}`);
+	query.append("fields", placeApiFields);
+	const response = await getV2(`places?${query.toString()}`);
 	if (!response.ok) {
 		throw new Error("Could not load places");
 	}

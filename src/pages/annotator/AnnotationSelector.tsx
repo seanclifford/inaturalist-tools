@@ -23,10 +23,10 @@ export function AnnotationSelector({
 					(a) => a.controlled_attribute_id === controlledTerm.id,
 				);
 				const othersAnnotations = annotations.filter(
-					(a) => a.user_id !== currentUser?.id,
+					(a) => a.user.id !== currentUser?.id,
 				);
 				const yourAnnotations = annotations.filter(
-					(a) => a.user_id === currentUser?.id,
+					(a) => a.user.id === currentUser?.id,
 				);
 				return (
 					<Stack gap="0.3em" key={controlledTerm.id}>

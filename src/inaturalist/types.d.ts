@@ -106,7 +106,6 @@ interface Annotation extends AnnotationBase {
 	id: number;
 	uuid: string;
 	vote_score: number;
-	user_id: number;
 	user: User;
 }
 

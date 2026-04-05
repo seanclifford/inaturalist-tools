@@ -1,11 +1,12 @@
-import { AuthenticationError } from "../errors/AuthenticationError.js";
-import { limit } from "./api-limiter.js";
+import { AuthenticationError } from "../errors/AuthenticationError.ts";
+import { limit } from "./api-limiter.ts";
+import { taxonApiFields } from "./constants.ts";
 import {
 	deleteAuthFetchOptions,
 	getAuthFetchOptions,
 	getFetchOptions,
 	postAuthFetchOptions,
-} from "./fetch-options.js";
+} from "./fetch-options.ts";
 
 function get(path: string, useCache = true): Promise<Response> {
 	return limit(async () => {
@@ -117,9 +118,7 @@ export async function getTaxon(id: string | null, query: URLSearchParams) {
 	const idNumber = Number(id);
 	if (!idNumber) return null;
 
-	const fields =
-		"(id:!t,name:!t,preferred_common_name:!t,ancestor_ids:!t,rank:!t,rank_level:!t,default_photo:(id:!t,square_url:!t))";
-	query.append("fields", fields);
+	query.append("fields", taxonApiFields);
 
 	const response = await getV2(`taxa/${idNumber}?${query}`);
 	if (!response.ok) {
@@ -130,7 +129,9 @@ export async function getTaxon(id: string | null, query: URLSearchParams) {
 }
 
 export async function getTaxaAutocomplete(query: URLSearchParams) {
-	const response = await get(`taxa/autocomplete?${query.toString()}`);
+	query.append("fields", taxonApiFields);
+
+	const response = await getV2(`taxa/autocomplete?${query.toString()}`);
 	if (!response.ok) {
 		throw new Error("Could not load taxa");
 	}

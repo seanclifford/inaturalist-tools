@@ -10,3 +10,6 @@ export const observationParams = Object.freeze({
 export const observationParamsWithFields = Object.values(
 	observationParams,
 ) as string[];
+
+export const taxonApiFields =
+	"(id:!t,name:!t,preferred_common_name:!t,ancestor_ids:!t,rank:!t,rank_level:!t,default_photo:(id:!t,square_url:!t))";

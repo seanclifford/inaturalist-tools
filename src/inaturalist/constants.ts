@@ -25,6 +25,6 @@ export const userApiFields = "(id:!t,login:!t,name:!t,icon:!t)";
 
 const photosApiFields = "(id:!t,url:!t)";
 const soundApiFields = "(id:!t,file_url:!t)";
-const annotationApiFields = `(id:!t,uuid:!t,vote_score:!t,user_id:!t,user:${userApiFields})`;
+const annotationApiFields = `(id:!t,uuid:!t,vote_score:!t,controlleruser_id:!t,controlled_attribute_id:!t,controlled_value_id:!t,user:${userApiFields})`;
 
 export const observationApiFields = `(id:!t,taxon:${taxonApiFields},user:${userApiFields},photos:${photosApiFields},sounds:${soundApiFields},annotations:${annotationApiFields})`;

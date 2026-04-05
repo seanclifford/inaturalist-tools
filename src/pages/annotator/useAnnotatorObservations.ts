@@ -41,7 +41,7 @@ export function useAnnotatorObservations(
 				{
 					controlled_attribute_id: params.controlledTermId,
 					controlled_value_id: params.controlledValueId,
-					resource_id: params.observation.id,
+					resource_id: params.observation.uuid,
 					resource_type: "Observation",
 				},
 				authentication,

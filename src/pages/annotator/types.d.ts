@@ -20,7 +20,7 @@ interface DeleteAnnotationParams {
 }
 
 interface AddAnnotationParams extends AnnotationBase {
-	resource_id: number;
+	resource_id: string;
 	resource_type: string;
 }
 

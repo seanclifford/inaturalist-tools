@@ -1,6 +1,7 @@
 import { AuthenticationError } from "../errors/AuthenticationError.ts";
 import { limit } from "./api-limiter.ts";
 import {
+	annotationApiFields,
 	controlledTermsApiFields,
 	observationApiFields,
 	placeApiFields,
@@ -44,7 +45,7 @@ function post<T>(
 ): Promise<Response> {
 	return limit(async () => {
 		return await fetch(
-			import.meta.env.VITE_INATURALIST_API_URL + path,
+			import.meta.env.VITE_INATURALIST_API_V2_URL + path,
 			postAuthFetchOptions(bodyObj, authToken),
 		);
 	});
@@ -53,7 +54,7 @@ function post<T>(
 function remove(path: string, authToken: string): Promise<Response> {
 	return limit(async () => {
 		return await fetch(
-			import.meta.env.VITE_INATURALIST_API_URL + path,
+			import.meta.env.VITE_INATURALIST_API_V2_URL + path,
 			deleteAuthFetchOptions(authToken),
 		);
 	});
@@ -149,16 +150,18 @@ export async function addAnnotation(
 			"Authentication is required to add an annotation",
 		);
 	}
+	const query = new URLSearchParams([["fields", annotationApiFields]]);
 
 	const response = await post(
-		"annotations/",
+		`annotations?${query}`,
 		annotation,
 		authentication.authToken,
 	);
 	if (!response.ok) {
 		throw new Error("Could not save annotation");
 	}
-	return (await response.json()) as NewAnnotation;
+	const body = (await response.json()) as ApiResult<NewAnnotation>;
+	return body.results[0];
 }
 
 export async function deleteAnnotation(

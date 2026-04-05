@@ -30,6 +30,7 @@ interface User {
 
 interface Observation {
 	id: number;
+	uuid: string;
 	taxon: Taxon;
 	user: User;
 	photos: Photo[];

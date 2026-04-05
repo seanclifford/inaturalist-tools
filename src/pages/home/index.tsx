@@ -37,7 +37,7 @@ function Home() {
 				</li>
 				{currentUser ? (
 					<li>
-						<Link href={`/annotator?user_id=${currentUser?.id}&reviewed=any`}>
+						<Link href={`/annotator?user_id=${currentUser?.id}`}>
 							Your observations
 						</Link>
 					</li>

@@ -1,6 +1,10 @@
 import { AuthenticationError } from "../errors/AuthenticationError.ts";
 import { limit } from "./api-limiter.ts";
-import { taxonApiFields } from "./constants.ts";
+import {
+	controlledTermsApiFields,
+	siteApiFields,
+	taxonApiFields,
+} from "./constants.ts";
 import {
 	deleteAuthFetchOptions,
 	getAuthFetchOptions,
@@ -75,7 +79,8 @@ export async function getCurrentUser(authentication: Authentication) {
 }
 
 export async function getSites() {
-	const response = await get("sites/");
+	const query = new URLSearchParams([["fields", siteApiFields]]);
+	const response = await getV2(`sites?${query}`);
 	if (!response.ok) {
 		throw new Error("Could not load sites");
 	}
@@ -101,15 +106,6 @@ export async function getObservations(
 		results: body.results,
 		pages: Math.ceil(body.total_results / pageSize),
 	};
-}
-
-export async function getObservation(id: number) {
-	const response = await get(`observations/${id}`);
-	if (!response.ok) {
-		throw new Error("Could not load observation");
-	}
-	const body = (await response.json()) as ApiResult<Observation>;
-	return body.results[0];
 }
 
 export async function getTaxon(id: string | null, query: URLSearchParams) {
@@ -139,17 +135,9 @@ export async function getTaxaAutocomplete(query: URLSearchParams) {
 	return body.results;
 }
 
-export async function getUsers() {
-	const response = await get("users/");
-	if (!response.ok) {
-		throw new Error("Could not load users");
-	}
-	const body = (await response.json()) as ApiResult<User>;
-	return body.results;
-}
-
 export async function getControlledTerms() {
-	const response = await get("controlled_terms/");
+	const query = new URLSearchParams([["fields", controlledTermsApiFields]]);
+	const response = await getV2(`controlled_terms?${query}`);
 	if (!response.ok) {
 		throw new Error("Could not load controlled terms");
 	}
@@ -195,17 +183,6 @@ export async function deleteAnnotation(
 		throw new Error("Could not delete annotation");
 	}
 }
-
-/*
-export async function getProjects() {
-    const response = await get('projects/');
-    if (!response.ok) {
-        throw new Error('Could not load projects');
-    } else {
-        const body = await response.json() as ApiResult<Project>;
-        return body.results;
-    }
-}*/
 
 export async function getPlace(id: string | null, query: URLSearchParams) {
 	if (!id) return null;

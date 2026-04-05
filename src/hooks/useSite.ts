@@ -26,7 +26,6 @@ export function defaultSite(): Site {
 	return {
 		id: 1,
 		name: "iNaturalist",
-		site_name_short: "iNat",
 		url: "https://www.inaturalist.org",
 		icon_url: "https://static.inaturalist.org/sites/1-logo_square.png",
 	};

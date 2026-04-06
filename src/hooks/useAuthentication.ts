@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
 	authenticate,
 	getApiToken,
@@ -36,11 +36,13 @@ export default function useAuthentication(currentSite: Site): Authentication {
 		};
 	}, [authentication, currentSite]);
 
-	function logout() {
-		saveAuthentication(unauthenticated());
-	}
+	const logout = useCallback(() => saveAuthentication(unauthenticated), []);
 
-	return { ...authentication, logout };
+	const result = useMemo(() => {
+		return { ...authentication, logout };
+	}, [authentication, logout]);
+
+	return result;
 }
 
 function refreshAuthToken(
@@ -60,7 +62,7 @@ function refreshAuthToken(
 
 function loadAuthenticationFromStore(): Authentication {
 	if (!isAuthenticated()) {
-		return { ...unauthenticated() };
+		return { ...unauthenticated };
 	}
 
 	const authToken = import.meta.env.VITE_AUTH_TOKEN ?? getApiToken();
@@ -72,9 +74,7 @@ function loadAuthenticationFromStore(): Authentication {
 	};
 }
 
-export function unauthenticated(): Authentication {
-	return {
-		isAuthenticated: false,
-		login: authenticate,
-	};
-}
+export const unauthenticated = {
+	isAuthenticated: false,
+	login: authenticate,
+};

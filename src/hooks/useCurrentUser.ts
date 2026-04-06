@@ -7,6 +7,7 @@ export function useCurrentUser(authentication: Authentication): User | null {
 	const [currentUser, setCurrentUser] = useLocalStorage<User | null>({
 		key: "current-user",
 		defaultValue: null,
+		getInitialValueInEffect: false,
 	});
 
 	useEffect(() => {

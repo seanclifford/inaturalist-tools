@@ -11,7 +11,7 @@ export default function useAuthentication(currentSite: Site): Authentication {
 	const [authentication, saveAuthentication] = useState(() =>
 		loadAuthenticationFromStore(),
 	);
-	const refreshAuthTimeoutId = useRef(undefined as number | undefined);
+	const refreshAuthTimeoutId = useRef(undefined as NodeJS.Timeout | undefined);
 
 	useEffect(() => {
 		if (authentication.isAuthenticated) {

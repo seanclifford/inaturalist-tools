@@ -22,7 +22,7 @@ interface SiteComboboxProps {
 function SelectOption({ name, url, icon_url }: Site) {
 	return (
 		<Group w="18em">
-			<Image src={icon_url} h="2em" w="2em" />
+			<Image src={icon_url} h="2em" w="2em" loading="lazy" />
 			<div>
 				<Text fz="sm" fw={500}>
 					{name}
@@ -51,7 +51,16 @@ export default function SiteCombobox({ label }: SiteComboboxProps) {
 		? sites?.find((site) => site.id === currentSite.id)
 		: null;
 
-	const options = sites?.map((site) => (
+	const fixedSites = sites?.map((site) => {
+		return {
+			...site,
+			icon_url: site.icon_url.endsWith("bird.png")
+				? (sites.find((s) => s.id === 1)?.icon_url ?? "")
+				: site.icon_url,
+		};
+	});
+
+	const options = fixedSites?.map((site) => (
 		<Combobox.Option value={site.id.toString()} key={site.id}>
 			<SelectOption {...site} />
 		</Combobox.Option>

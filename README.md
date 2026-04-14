@@ -23,6 +23,9 @@ This tool is made to allow for fast annotations, targeting mobile devices mainly
 ## TODO List
 
 #### Annotator
+- Bugs
+  - Zoom Back button should close overlay
+  - Long names like eleven spotted cover zoom button preventing opening
 - Search control improvements
   - Prevent backspacing text being undone after first load
 - Image styling improvements

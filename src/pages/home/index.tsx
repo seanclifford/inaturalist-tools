@@ -1,8 +1,6 @@
-import { Group } from "@mantine/core";
 import { useContext } from "react";
 import { Link } from "wouter";
 import { CurrentUserContext } from "../../Contexts";
-import SiteCombobox from "../../components/site-combobox/SiteCombobox";
 
 function Home() {
 	const currentUser = useContext(CurrentUserContext);
@@ -13,9 +11,6 @@ function Home() {
 				Small tools to enhance the functionality of iNaturalist. <br />
 				The first (and so far only) tool is a mobile friendly annotator
 			</p>
-			<Group>
-				<SiteCombobox label="Choose your site (optional)" />
-			</Group>
 			<h3>
 				<Link href="/annotator">Annotator</Link>
 			</h3>

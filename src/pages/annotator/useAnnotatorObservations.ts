@@ -94,7 +94,10 @@ export function useAnnotatorObservations(
 				? observations
 						.map((observation) => {
 							return {
-								observation: observation,
+								observation: {
+									...observation,
+									annotations: observation.annotations ?? [],
+								},
 								controlledTerms: getTaxonControlledTerms(
 									observation.taxon,
 									controlledTerms,

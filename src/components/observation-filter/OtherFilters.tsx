@@ -8,10 +8,11 @@ import {
 } from "@mantine/core";
 import { useRef } from "react";
 import { observationParamsWithFields } from "../../inaturalist/constants";
+import type { paramChange } from "./ObservationFilter";
 
 interface OtherFiltersParams {
 	searchParams: URLSearchParams;
-	onParamChange: (paramName: string, value: string | null | undefined) => void;
+	onParamChange: (changes: paramChange) => void;
 }
 
 export function OtherFilters({
@@ -29,10 +30,10 @@ export function OtherFilters({
 		const key = newKeyRef.current.value;
 		const val = newValRef.current.value;
 		newKeyRef.current.value = newValRef.current.value = "";
-		onParamChange(key, val);
+		onParamChange([[key, val]]);
 	};
 
-	const onRemove = (key: string) => onParamChange(key, null);
+	const onRemove = (key: string) => onParamChange([[key, null]]);
 
 	return (
 		<Stack>

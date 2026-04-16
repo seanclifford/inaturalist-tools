@@ -1,10 +1,11 @@
-import { Button, Checkbox, Stack } from "@mantine/core";
-import { useCallback, useContext, useState } from "react";
-import { CurrentUserContext } from "../../Contexts";
+import { Button, Stack } from "@mantine/core";
+import { useCallback, useState } from "react";
 import { observationParams } from "../../inaturalist/constants";
+import { PlaceCombobox } from "../search-combobox/PlaceCombobox";
+import { TaxonCombobox } from "../search-combobox/TaxonCombobox";
+import HasPhotosFilter from "./HasPhotosFilter";
 import { OtherFilters } from "./OtherFilters";
-import { PlaceCombobox } from "./PlaceCombobox";
-import { TaxonCombobox } from "./TaxonCombobox";
+import ReviewedFilter from "./ReviewedFilter";
 import { WithoutAnnotationSelect } from "./WithoutAnnotationSelect";
 
 interface ObservationFilterProps {
@@ -12,65 +13,48 @@ interface ObservationFilterProps {
 	runQuery: (_: string) => void;
 }
 
+export type paramChange = [[string, string | null | undefined]];
+
 export default function ObservationFilter({
 	pageQueryString,
 	runQuery,
 }: ObservationFilterProps) {
-	const user = useContext(CurrentUserContext);
 	const [queryString, setQueryString] = useState(pageQueryString);
 
 	const searchParams = new URLSearchParams(queryString);
 	const taxonId = searchParams.get(observationParams.taxon_id);
 	const placeId = searchParams.get(observationParams.place_id);
 	const withoutTermId = searchParams.get(observationParams.without_term_id);
-	const hasPhotos = searchParams.get(observationParams.photos) === "true";
-	let includeReviewed =
-		searchParams.get(observationParams.reviewed) !== "false";
-	const reviewedViewer = searchParams.get(observationParams.viewer_id);
-	if (!reviewedViewer) includeReviewed = true;
 
 	const onParamChange = useCallback(
-		(paramName: string, value: string | null | undefined) => {
-			setQueryString(setQueryStringParam(queryString, paramName, value));
+		(paramChanges: paramChange) => {
+			let updatedQueryString = queryString;
+			paramChanges.forEach(([paramName, paramValue]) => {
+				updatedQueryString = setQueryStringParam(
+					updatedQueryString,
+					paramName,
+					paramValue,
+				);
+			});
+
+			setQueryString(updatedQueryString);
 		},
 		[queryString],
 	);
 
 	const onTaxonChange = useCallback(
 		(taxon: Taxon | null) => {
-			onParamChange(observationParams.taxon_id, taxon?.id.toString());
+			onParamChange([[observationParams.taxon_id, taxon?.id.toString()]]);
 		},
 		[onParamChange],
 	);
 
 	const onPlaceChange = (place: Place | null) => {
-		onParamChange(observationParams.place_id, place?.id.toString());
+		onParamChange([[observationParams.place_id, place?.id.toString()]]);
 	};
 
 	const onWithoutTermChange = (termId: string | null) => {
-		onParamChange(observationParams.without_term_id, termId);
-	};
-
-	const onHasPhotosChange = (hasPhotos: boolean) => {
-		onParamChange(observationParams.photos, hasPhotos ? "true" : null);
-	};
-
-	const onIncludeReviewedChange = (includeReviewed: boolean) => {
-		let internalQueryString = queryString;
-		if (user)
-			internalQueryString = setQueryStringParam(
-				internalQueryString,
-				observationParams.viewer_id,
-				user.id.toString(),
-			);
-
-		setQueryString(
-			setQueryStringParam(
-				internalQueryString,
-				observationParams.reviewed,
-				includeReviewed ? "true" : "false",
-			),
-		);
+		onParamChange([[observationParams.without_term_id, termId]]);
 	};
 
 	return (
@@ -81,17 +65,15 @@ export default function ObservationFilter({
 				onSelect={onWithoutTermChange}
 				valueId={withoutTermId}
 			/>
-			<Checkbox
-				checked={hasPhotos}
-				label="Has Photos"
-				onChange={(e) => onHasPhotosChange(e.target.checked)}
+			<HasPhotosFilter
+				searchParams={searchParams}
+				onParamChange={onParamChange}
 			/>
-			<Checkbox
-				checked={includeReviewed}
-				label="Reviewed?"
-				onChange={(e) => onIncludeReviewedChange(e.target.checked)}
+			<ReviewedFilter
+				searchParams={searchParams}
+				onParamChange={onParamChange}
 			/>
-			<OtherFilters onParamChange={onParamChange} searchParams={searchParams} />
+			<OtherFilters searchParams={searchParams} onParamChange={onParamChange} />
 			<Button onClick={() => runQuery(queryString)}>Load Observations</Button>
 		</Stack>
 	);

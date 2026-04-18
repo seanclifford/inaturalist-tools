@@ -1,11 +1,11 @@
 import { type QueryClient, useQueryClient } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
-import { getUsersAutocomplete } from "../inaturalist/api";
+import { getProjectsAutocomplete } from "../inaturalist/api";
 
-export function useUsersAutocomplete(
+export function useProjectAutocomplete(
 	search: string,
-): AutocompleteResults<User> {
-	const [results, setResults] = useState<AutocompleteResults<User>>({
+): AutocompleteResults<Project> {
+	const [results, setResults] = useState<AutocompleteResults<Project>>({
 		results: [],
 		state: "not-searched",
 	});
@@ -22,8 +22,8 @@ export function useUsersAutocomplete(
 				results: [],
 				state: "loading",
 			});
-			getUsersAutocomplete(generateQueryString(search))
-				.then((users) => onLoadUser(users, setResults, queryClient))
+			getProjectsAutocomplete(generateQueryString(search))
+				.then((projects) => onLoadProject(projects, setResults, queryClient))
 				.catch(console.error);
 		}
 	}, [search, queryClient]);
@@ -38,12 +38,12 @@ function generateQueryString(search: string): URLSearchParams {
 	return searchParams;
 }
 
-function onLoadUser(
-	users: User[],
-	setResults: (autocompleteResults: AutocompleteResults<User>) => void,
+function onLoadProject(
+	projects: Project[],
+	setResults: (autocompleteResults: AutocompleteResults<Project>) => void,
 	queryClient: QueryClient,
 ) {
-	setResults({ results: users, state: "loaded" });
-	for (const user of users)
-		queryClient.setQueryData(["user", user.id.toString()], user);
+	setResults({ results: projects, state: "loaded" });
+	for (const project of projects)
+		queryClient.setQueryData(["project", project.id.toString()], project);
 }

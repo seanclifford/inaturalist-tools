@@ -28,8 +28,6 @@ This tool is made to allow for fast annotations, targeting mobile devices mainly
   - Long names like eleven spotted cover zoom button preventing opening
   - In search controls, prevent backspacing text being undone after first load
   - Photo thumbnails that overflow the row should be scrollable somehow
-- Settings to choose filters
-  - Project
 - Allow marking observation as reviewed
 - Add QR Code for quick access for mobiles - put it in Help and the Main page
 - Consider putting it on it's own domain

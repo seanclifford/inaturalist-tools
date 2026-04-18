@@ -2,6 +2,7 @@ export const observationParams = Object.freeze({
 	taxon_id: "taxon_id",
 	place_id: "place_id",
 	user_id: "user_id",
+	project_id: "project_id",
 	without_term_id: "without_term_id",
 	photos: "photos",
 	reviewed: "reviewed",
@@ -23,6 +24,8 @@ export const controlledTermsApiFields =
 export const placeApiFields = "id,display_name";
 
 export const userApiFields = "(id:!t,login:!t,name:!t,icon:!t)";
+
+export const projectApiFields = "id,title,icon";
 
 const photosApiFields = "(id:!t,url:!t)";
 const soundApiFields = "(id:!t,file_url:!t)";

@@ -5,6 +5,7 @@ import {
 	controlledTermsApiFields,
 	observationApiFields,
 	placeApiFields,
+	projectApiFields,
 	siteApiFields,
 	taxonApiFields,
 	userApiFields,
@@ -233,5 +234,32 @@ export async function getPlacesAutocomplete(query: URLSearchParams) {
 		throw new Error("Could not load places");
 	}
 	const body = (await response.json()) as ApiResult<Place>;
+	return body.results;
+}
+
+export async function getProject(id: string | null) {
+	if (!id) return null;
+	if (id.includes(","))
+		return { id: -123456, title: "Multiple Projects" } as Project;
+	const idNumber = Number(id);
+	if (!idNumber) return null;
+
+	const query = new URLSearchParams([["fields", projectApiFields]]);
+
+	const response = await get(`projects/${idNumber}?${query.toString()}`);
+	if (!response.ok) {
+		throw new Error("Could not load project");
+	}
+	const body = (await response.json()) as ApiResult<Project>;
+	return body.results[0];
+}
+
+export async function getProjectsAutocomplete(query: URLSearchParams) {
+	query.append("fields", projectApiFields);
+	const response = await get(`projects?${query.toString()}`);
+	if (!response.ok) {
+		throw new Error("Could not load projects");
+	}
+	const body = (await response.json()) as ApiResult<Project>;
 	return body.results;
 }

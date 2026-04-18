@@ -79,11 +79,7 @@ interface ObservationField {
 interface Project {
 	id: number;
 	title: string;
-	description: string;
 	icon: string;
-	project_type: string;
-	created_at: Date;
-	updated_at: Date;
 }
 
 interface Comment {

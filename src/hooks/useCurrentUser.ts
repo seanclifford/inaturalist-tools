@@ -1,4 +1,5 @@
 import { useLocalStorage } from "@mantine/hooks";
+import { useQueryClient } from "@tanstack/react-query";
 import { useEffect } from "react";
 import { getCurrentUser } from "../inaturalist/api";
 import { getUserIdFromToken } from "../inaturalist/auth";
@@ -10,6 +11,7 @@ export function useCurrentUser(authentication: Authentication): User | null {
 		getInitialValueInEffect: false,
 	});
 
+	const queryClient = useQueryClient();
 	useEffect(() => {
 		if (!authentication || !authentication.authToken) {
 			if (currentUser) setCurrentUser(null);
@@ -21,6 +23,9 @@ export function useCurrentUser(authentication: Authentication): User | null {
 			});
 		}
 	}, [authentication, setCurrentUser, currentUser]);
+
+	if (currentUser)
+		queryClient.setQueryData(["user", currentUser.id.toString()], currentUser);
 
 	return currentUser;
 }

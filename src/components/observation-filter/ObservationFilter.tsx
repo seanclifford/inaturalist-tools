@@ -3,6 +3,7 @@ import { useCallback, useState } from "react";
 import { observationParams } from "../../inaturalist/constants";
 import { PlaceCombobox } from "../search-combobox/PlaceCombobox";
 import { TaxonCombobox } from "../search-combobox/TaxonCombobox";
+import { UserCombobox } from "../search-combobox/UserCombobox";
 import HasPhotosFilter from "./HasPhotosFilter";
 import { OtherFilters } from "./OtherFilters";
 import ReviewedFilter from "./ReviewedFilter";
@@ -24,6 +25,7 @@ export default function ObservationFilter({
 	const searchParams = new URLSearchParams(queryString);
 	const taxonId = searchParams.get(observationParams.taxon_id);
 	const placeId = searchParams.get(observationParams.place_id);
+	const userId = searchParams.get(observationParams.user_id);
 	const withoutTermId = searchParams.get(observationParams.without_term_id);
 
 	const onParamChange = useCallback(
@@ -53,6 +55,10 @@ export default function ObservationFilter({
 		onParamChange([[observationParams.place_id, place?.id.toString()]]);
 	};
 
+	const onUserChange = (user: User | null) => {
+		onParamChange([[observationParams.user_id, user?.id.toString()]]);
+	};
+
 	const onWithoutTermChange = (termId: string | null) => {
 		onParamChange([[observationParams.without_term_id, termId]]);
 	};
@@ -61,6 +67,7 @@ export default function ObservationFilter({
 		<Stack gap="xs" maw="800px">
 			<TaxonCombobox onSelect={onTaxonChange} taxonId={taxonId} />
 			<PlaceCombobox onSelect={onPlaceChange} placeId={placeId} />
+			<UserCombobox onSelect={onUserChange} userId={userId} />
 			<WithoutAnnotationSelect
 				onSelect={onWithoutTermChange}
 				valueId={withoutTermId}

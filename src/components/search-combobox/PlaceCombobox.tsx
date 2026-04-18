@@ -7,7 +7,7 @@ import { SearchCombobox } from "./SearchCombobox";
 
 interface PlaceComboboxProps {
 	placeId: string | null;
-	onSelect: (taxon: Place | null) => void;
+	onSelect: (place: Place | null) => void;
 }
 
 export function PlaceCombobox({ placeId, onSelect }: PlaceComboboxProps) {

@@ -26,14 +26,10 @@ This tool is made to allow for fast annotations, targeting mobile devices mainly
 - Bugs
   - Zoom Back button should close overlay
   - Long names like eleven spotted cover zoom button preventing opening
-- Search control improvements
-  - Prevent backspacing text being undone after first load
-- Image styling improvements
-  - Thumbnails that overflow the row should be scrollable somehow
+  - In search controls, prevent backspacing text being undone after first load
+  - Photo thumbnails that overflow the row should be scrollable somehow
 - Settings to choose filters
-  - User
   - Project
-- Refactor ObservationFilter
 - Allow marking observation as reviewed
 - Add QR Code for quick access for mobiles - put it in Help and the Main page
 - Consider putting it on it's own domain

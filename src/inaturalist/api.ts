@@ -73,6 +73,33 @@ export async function getCurrentUser(authentication: Authentication) {
 	return body.results[0];
 }
 
+export async function getUser(id: string | null) {
+	if (!id) return null;
+	if (id.includes(",")) return { id: -12345, name: "Multiple Users" } as User;
+	const idNumber = Number(id);
+	if (!idNumber) return null;
+
+	const query = new URLSearchParams([["fields", userApiFields]]);
+
+	const response = await get(`users/${idNumber}?${query}`);
+	if (!response.ok) {
+		throw new Error("Could not load user");
+	}
+	const body = (await response.json()) as ApiResult<User>;
+	return body.results[0];
+}
+
+export async function getUsersAutocomplete(query: URLSearchParams) {
+	query.append("fields", userApiFields);
+
+	const response = await get(`users/autocomplete?${query.toString()}`);
+	if (!response.ok) {
+		throw new Error("Could not load users");
+	}
+	const body = (await response.json()) as ApiResult<User>;
+	return body.results;
+}
+
 export async function getSites() {
 	const query = new URLSearchParams([["fields", siteApiFields]]);
 	const response = await get(`sites?${query}`);

@@ -1,6 +1,7 @@
 export const observationParams = Object.freeze({
 	taxon_id: "taxon_id",
 	place_id: "place_id",
+	user_id: "user_id",
 	without_term_id: "without_term_id",
 	photos: "photos",
 	reviewed: "reviewed",

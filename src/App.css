@@ -3,7 +3,7 @@
 	width: 100%;
 }
 
-main {
+main, header, footer {
 	padding: 0 2rem;
 }
 

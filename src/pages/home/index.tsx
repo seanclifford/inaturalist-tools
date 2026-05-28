@@ -1,3 +1,4 @@
+import { useLocation } from "wouter";
 import "./index.css";
 import {
 	Anchor,
@@ -14,6 +15,7 @@ import {
 } from "@mantine/core";
 
 function Home() {
+	const [_, setLocation] = useLocation();
 	return (
 		<>
 			<header>
@@ -38,9 +40,7 @@ function Home() {
 									A mobile friendly annotator that allows you to annotate
 									iNaturalist observations on the go.
 								</Text>
-								<Button onClick={() => navigation.navigate("/annotator")}>
-									Open
-								</Button>
+								<Button onClick={() => setLocation("/annotator")}>Open</Button>
 							</Stack>
 						</Card>
 					</GridCol>

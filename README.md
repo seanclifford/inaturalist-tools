@@ -24,8 +24,6 @@ This tool is made to allow for fast annotations, targeting mobile devices mainly
 
 #### Annotator
 - Bugs
-  - Zoom Back button should close overlay
-  - Long names like eleven spotted cover zoom button preventing opening
   - In search controls, prevent backspacing text being undone after first load
   - Photo thumbnails that overflow the row should be scrollable somehow
 - Allow marking observation as reviewed

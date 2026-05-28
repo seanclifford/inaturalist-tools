@@ -7,6 +7,7 @@ import {
 	Text,
 	useMantineTheme,
 } from "@mantine/core";
+import { useHash } from "@mantine/hooks";
 import { SquareArrowOutUpRight, ZoomInIcon } from "lucide-react";
 import type React from "react";
 import { useContext, useState } from "react";
@@ -27,7 +28,7 @@ interface ObservationHeroProps {
 const ObservationHero: React.FC<ObservationHeroProps> = ({ observation }) => {
 	const [site] = useContext(SiteContext);
 	const [photoIndex, setPhotoIndex] = useState(0);
-	const [lightboxOpen, setLightBoxOpen] = useState(false);
+	const [hash, setHash] = useHash();
 	const theme = useMantineTheme();
 
 	if (!observation) {
@@ -35,11 +36,18 @@ const ObservationHero: React.FC<ObservationHeroProps> = ({ observation }) => {
 	}
 	const { id, photos, user, taxon } = observation;
 
+	const zoomHash = `#zoom${id}`;
+	const lightboxOpen = hash === zoomHash;
+
 	const url = new URL(site.url);
 	url.pathname = `/observations/${id}`;
 
 	const photo = photos[photoIndex];
 	const imageHeight = getMainImageHeight(photos.length);
+
+	const setLightBoxOpen = (open: boolean) => {
+		setHash(open ? zoomHash : "");
+	};
 
 	return (
 		<Paper w={outerWidth} radius="md" shadow="sm" withBorder>
@@ -88,7 +96,10 @@ const ObservationHero: React.FC<ObservationHeroProps> = ({ observation }) => {
 				open={lightboxOpen}
 				close={() => setLightBoxOpen(false)}
 				index={photoIndex}
-				on={{ view: (i) => setPhotoIndex(i.index) }}
+				on={{
+					view: (i) => setPhotoIndex(i.index),
+					exiting: () => window.history.back(),
+				}}
 				slides={photos.map((p) => {
 					return { src: getPhotoUrl(p, "large") };
 				})}

@@ -27,14 +27,19 @@ function Home() {
 			</header>
 			<main>
 				<Grid>
-					<GridCol span={{ base: 12, sm: 4 }} offset={{ base: 0, sm: 4 }}>
-						<Card shadow="sm" padding="lg" withBorder>
+					<GridCol
+						span={{ base: 12, sm: 5, lg: 4 }}
+						offset={{ base: 0, sm: 1, lg: 2 }}
+					>
+						<Card shadow="sm" padding="lg" withBorder mih={295}>
 							<Card.Section>
 								<Center>
 									<Text fz="3em">🕊️📑</Text>
 								</Center>
 							</Card.Section>
-							<h3>Annotator</h3>
+							<Center>
+								<h3>Annotator</h3>
+							</Center>
 							<Stack gap="lg">
 								<Text>
 									A mobile friendly annotator that allows you to annotate
@@ -42,6 +47,26 @@ function Home() {
 								</Text>
 								<Button onClick={() => setLocation("/annotator")}>Open</Button>
 							</Stack>
+						</Card>
+					</GridCol>
+					<GridCol span={{ base: 12, sm: 5, lg: 4 }}>
+						<Card
+							shadow="sm"
+							padding="lg"
+							withBorder
+							visibleFrom="sm"
+							mih={295}
+						>
+							<Center>
+								<Stack gap={0}>
+									<Center>
+										<Text size="xl" fw="bold">
+											Open in Mobile
+										</Text>
+									</Center>
+									<Image src="/qr-code.png" w={220}></Image>
+								</Stack>
+							</Center>
 						</Card>
 					</GridCol>
 				</Grid>

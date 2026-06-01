@@ -1,6 +1,4 @@
 # iNaturalist Tools by agoranomos
-**PLEASE NOTE**: This is still a work in progress, and while parts are functional, it's not in a state to be shared widely yet...
-
 This is a site of small tools to enhance the functionality of iNaturalist.
 The first (and only) tool is a mobile friendly annotator.
 
@@ -22,12 +20,11 @@ This tool is made to allow for fast annotations, targeting mobile devices mainly
 
 ## TODO List
 
-#### Annotator
 - Bugs
   - In search controls, prevent backspacing text being undone after first load
   - Photo thumbnails that overflow the row should be scrollable somehow
 - Allow marking observation as reviewed
-- Add QR Code for quick access for mobiles - put it in Help and the Main page
+- Add QR Code for quick access for mobiles - put it in Help
 - Consider putting it on it's own domain
 - Bulk annotate many observations at once somehow (later)
 - Annotation voting for others annotations (later)

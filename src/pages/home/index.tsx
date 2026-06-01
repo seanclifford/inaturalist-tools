@@ -76,7 +76,7 @@ function Home() {
 					<Stack>
 						<Text size="sm">© Sean Clifford</Text>
 						<Anchor href="https://github.com/seanclifford/inaturalist-tools">
-							<Group gap="xs">
+							<Group gap="0" wrap="nowrap">
 								<Image src="/GitHub_Invertocat_Black.svg" w="2em" c={"white"} />
 								<Code c={"white"} bg={"transparent"}>
 									https://github.com/seanclifford/inaturalist-tools

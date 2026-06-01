@@ -14,7 +14,7 @@ export default function AboutSection() {
 			<Title order={3}>Source code</Title>
 			<Text>The code is open source and available here:</Text>
 			<Anchor href="https://github.com/seanclifford/inaturalist-tools">
-				<Group gap="xs">
+				<Group gap="xs" wrap="nowrap">
 					<Image src="/GitHub_Invertocat_Black.svg" w="2em" />
 					<Code>https://github.com/seanclifford/inaturalist-tools</Code>
 				</Group>

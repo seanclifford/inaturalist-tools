@@ -49,21 +49,23 @@ export function OtherFilters({
 					Add
 				</Button>
 			</Group>
-			<Group pb="sm">
-				{otherParams.map((param) => {
-					const pillValue = `${param[0]}=${param[1]}`;
-					return (
-						<Pill
-							size="md"
-							key={pillValue}
-							withRemoveButton
-							onRemove={() => onRemove(param[0])}
-						>
-							{pillValue}
-						</Pill>
-					);
-				})}
-			</Group>
+			{otherParams.length > 0 ? (
+				<Group pb="sm">
+					{otherParams.map((param) => {
+						const pillValue = `${param[0]}=${param[1]}`;
+						return (
+							<Pill
+								size="md"
+								key={pillValue}
+								withRemoveButton
+								onRemove={() => onRemove(param[0])}
+							>
+								{pillValue}
+							</Pill>
+						);
+					})}
+				</Group>
+			) : null}
 		</Stack>
 	);
 }

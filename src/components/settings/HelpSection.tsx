@@ -29,7 +29,7 @@ export default function HelpSection() {
 				each observation.
 				<br />
 				You can set filters how you choose however, including adding any custom
-				filters into the URL that are{" "}
+				filters that are{" "}
 				<Anchor
 					href="https://forum.inaturalist.org/t/how-to-use-inaturalists-search-urls-wiki-part-1-of-2"
 					target="_blank"

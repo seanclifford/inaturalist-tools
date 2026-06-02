@@ -1,4 +1,4 @@
-import { Button, Stack } from "@mantine/core";
+import { Button, ScrollAreaAutosize, Stack } from "@mantine/core";
 import { useCallback, useState } from "react";
 import { observationParams } from "../../inaturalist/constants";
 import { PlaceCombobox } from "../search-combobox/PlaceCombobox";
@@ -70,25 +70,34 @@ export default function ObservationFilter({
 	};
 
 	return (
-		<Stack gap="xs" maw="800px">
-			<TaxonCombobox onSelect={onTaxonChange} taxonId={taxonId} />
-			<PlaceCombobox onSelect={onPlaceChange} placeId={placeId} />
-			<UserCombobox onSelect={onUserChange} userId={userId} />
-			<ProjectCombobox onSelect={onProjectChange} projectId={projectId} />
-			<WithoutAnnotationSelect
-				onSelect={onWithoutTermChange}
-				valueId={withoutTermId}
-			/>
-			<HasPhotosFilter
-				searchParams={searchParams}
-				onParamChange={onParamChange}
-			/>
-			<ReviewedFilter
-				searchParams={searchParams}
-				onParamChange={onParamChange}
-			/>
-			<OtherFilters searchParams={searchParams} onParamChange={onParamChange} />
-			<Button onClick={() => runQuery(queryString)}>Load Observations</Button>
+		<Stack mah="calc(100vh - 7em)">
+			<ScrollAreaAutosize type="auto">
+				<Stack gap="xs" maw="800px" pr="sm">
+					<TaxonCombobox onSelect={onTaxonChange} taxonId={taxonId} />
+					<PlaceCombobox onSelect={onPlaceChange} placeId={placeId} />
+					<UserCombobox onSelect={onUserChange} userId={userId} />
+					<ProjectCombobox onSelect={onProjectChange} projectId={projectId} />
+					<WithoutAnnotationSelect
+						onSelect={onWithoutTermChange}
+						valueId={withoutTermId}
+					/>
+					<HasPhotosFilter
+						searchParams={searchParams}
+						onParamChange={onParamChange}
+					/>
+					<ReviewedFilter
+						searchParams={searchParams}
+						onParamChange={onParamChange}
+					/>
+					<OtherFilters
+						searchParams={searchParams}
+						onParamChange={onParamChange}
+					/>
+				</Stack>
+			</ScrollAreaAutosize>
+			<Stack h="40px" pr="xs">
+				<Button onClick={() => runQuery(queryString)}>Load Observations</Button>
+			</Stack>
 		</Stack>
 	);
 }

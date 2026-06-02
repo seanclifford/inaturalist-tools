@@ -16,7 +16,7 @@ function Annotator() {
 				/>
 			) : (
 				<Center>
-					<Stack p="sm" w="min(100%, 800px)">
+					<Stack p="xs" pr="0" w="min(100%, 800px)">
 						<Title size="xl">Enter filters to load observations</Title>
 						<Settings
 							pageQueryString={pageQueryString}

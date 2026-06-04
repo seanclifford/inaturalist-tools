@@ -24,7 +24,6 @@ This tool is made to allow for fast annotations, targeting mobile devices mainly
   - In search controls, prevent backspacing text being undone after first load
   - Photo thumbnails that overflow the row should be scrollable somehow
 - Allow marking observation as reviewed
-- Add QR Code for quick access for mobiles - put it in Help
 - Consider putting it on it's own domain
 - Bulk annotate many observations at once somehow (later)
 - Annotation voting for others annotations (later)

@@ -1,4 +1,4 @@
-import { Anchor, List, Text, Title } from "@mantine/core";
+import { Anchor, Image, List, Stack, Text, Title } from "@mantine/core";
 
 export default function HelpSection() {
 	return (
@@ -105,6 +105,10 @@ export default function HelpSection() {
 				</Anchor>{" "}
 				if you're new to annotating using the Identify page.
 			</Text>
+			<Stack visibleFrom="md">
+				<Text>Scan here to open this site on a mobile device:</Text>
+				<Image src="/qr-code.png" w={220}></Image>
+			</Stack>
 		</>
 	);
 }

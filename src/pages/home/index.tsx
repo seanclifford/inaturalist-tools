@@ -28,8 +28,8 @@ function Home() {
 			<main>
 				<Grid>
 					<GridCol
-						span={{ base: 12, sm: 5, lg: 4 }}
-						offset={{ base: 0, sm: 1, lg: 2 }}
+						span={{ base: 12, md: 5, lg: 4 }}
+						offset={{ base: 0, md: 1, lg: 2 }}
 					>
 						<Card shadow="sm" padding="lg" withBorder mih={295}>
 							<Card.Section>
@@ -49,12 +49,12 @@ function Home() {
 							</Stack>
 						</Card>
 					</GridCol>
-					<GridCol span={{ base: 12, sm: 5, lg: 4 }}>
+					<GridCol span={{ base: 12, md: 5, lg: 4 }}>
 						<Card
 							shadow="sm"
 							padding="lg"
 							withBorder
-							visibleFrom="sm"
+							visibleFrom="md"
 							mih={295}
 						>
 							<Center>

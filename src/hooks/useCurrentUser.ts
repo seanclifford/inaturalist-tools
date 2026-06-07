@@ -5,17 +5,20 @@ import { getCurrentUser } from "../inaturalist/api";
 import { getUserIdFromToken } from "../inaturalist/auth";
 
 export function useCurrentUser(authentication: Authentication): User | null {
-	const [currentUser, setCurrentUser] = useLocalStorage<User | null>({
-		key: "current-user",
-		defaultValue: null,
-	});
+	const [currentUser, setCurrentUser, removeCurrentUser] =
+		useLocalStorage<User | null>({
+			key: "current-user",
+			defaultValue: null,
+			getInitialValueInEffect: false,
+		});
 
 	const queryClient = useQueryClient();
 	useEffect(() => {
+		console.log(`DEBUG: auth:${authentication} user:${currentUser}`);
 		if (!authentication || !authentication.authToken) {
 			if (currentUser) {
 				console.log("Clearing current user from storage");
-				setCurrentUser(null);
+				removeCurrentUser();
 			}
 		} else {
 			const authUserId = getUserIdFromToken(authentication.authToken);
@@ -28,7 +31,7 @@ export function useCurrentUser(authentication: Authentication): User | null {
 				});
 			}
 		}
-	}, [authentication, setCurrentUser, currentUser]);
+	}, [authentication, setCurrentUser, removeCurrentUser, currentUser]);
 
 	if (currentUser)
 		queryClient.setQueryData(["user", currentUser.id.toString()], currentUser);

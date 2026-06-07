@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
 	authenticate,
+	clearAllAuthenticationState,
 	getApiToken,
 	getApiTokenExpiry,
 	isAuthenticated,
@@ -36,7 +37,10 @@ export default function useAuthentication(currentSite: Site): Authentication {
 		};
 	}, [authentication, currentSite]);
 
-	const logout = useCallback(() => saveAuthentication(unauthenticated), []);
+	const logout = useCallback(() => {
+		clearAllAuthenticationState();
+		saveAuthentication(unauthenticated);
+	}, []);
 
 	const result = useMemo(() => {
 		return { ...authentication, logout };

@@ -15,12 +15,16 @@ export function useCurrentUser(authentication: Authentication): User | null {
 	useEffect(() => {
 		if (!authentication || !authentication.authToken) {
 			if (currentUser) setCurrentUser(null);
-		} else if (
-			currentUser?.id !== getUserIdFromToken(authentication.authToken)
-		) {
-			getCurrentUser(authentication).then((user) => {
-				setCurrentUser(user);
-			});
+		} else {
+			const authUserId = getUserIdFromToken(authentication.authToken);
+			if (currentUser?.id !== authUserId) {
+				console.trace(
+					`Reloading user due to id change from:${currentUser?.id} to:${authUserId}`,
+				);
+				getCurrentUser(authentication).then((user) => {
+					setCurrentUser(user);
+				});
+			}
 		}
 	}, [authentication, setCurrentUser, currentUser]);
 

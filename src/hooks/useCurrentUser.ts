@@ -8,17 +8,19 @@ export function useCurrentUser(authentication: Authentication): User | null {
 	const [currentUser, setCurrentUser] = useLocalStorage<User | null>({
 		key: "current-user",
 		defaultValue: null,
-		getInitialValueInEffect: false,
 	});
 
 	const queryClient = useQueryClient();
 	useEffect(() => {
 		if (!authentication || !authentication.authToken) {
-			if (currentUser) setCurrentUser(null);
+			if (currentUser) {
+				console.log("Clearing current user from storage");
+				setCurrentUser(null);
+			}
 		} else {
 			const authUserId = getUserIdFromToken(authentication.authToken);
 			if (currentUser?.id !== authUserId) {
-				console.trace(
+				console.log(
 					`Reloading user due to id change from:${currentUser?.id} to:${authUserId}`,
 				);
 				getCurrentUser(authentication).then((user) => {

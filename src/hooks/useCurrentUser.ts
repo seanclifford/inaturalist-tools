@@ -14,7 +14,9 @@ export function useCurrentUser(authentication: Authentication): User | null {
 
 	const queryClient = useQueryClient();
 	useEffect(() => {
-		console.log(`DEBUG: auth:${authentication} user:${currentUser}`);
+		console.log(
+			`DEBUG: auth:${JSON.stringify(authentication)} user:${JSON.stringify(currentUser)}`,
+		);
 		if (!authentication || !authentication.authToken) {
 			if (currentUser) {
 				console.log("Clearing current user from storage");

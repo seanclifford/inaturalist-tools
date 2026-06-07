@@ -19,11 +19,12 @@ function Home() {
 	return (
 		<>
 			<header>
-				<h1>📱 iNaturalist Tools by agoranomos</h1>
-				<p>
+				<h1>📱 MobiNat 🕊️</h1>
+				<Text>
 					Small, mobile friendly tools to enhance the functionality of
 					iNaturalist. <br />
-				</p>
+				</Text>
+				<Text size="xs">(Only tool one so far...)</Text>
 			</header>
 			<main>
 				<Grid>
@@ -64,7 +65,7 @@ function Home() {
 											Open in Mobile
 										</Text>
 									</Center>
-									<Image src="/qr-code.png" w={220}></Image>
+									<Image src="/qr-code.gif" w={220}></Image>
 								</Stack>
 							</Center>
 						</Card>
@@ -74,7 +75,6 @@ function Home() {
 			<footer>
 				<Center>
 					<Stack>
-						<Text size="sm">© Sean Clifford</Text>
 						<Anchor href="https://github.com/seanclifford/inaturalist-tools">
 							<Group gap="0" wrap="nowrap">
 								<Image src="/GitHub_Invertocat_Black.svg" w="2em" c={"white"} />

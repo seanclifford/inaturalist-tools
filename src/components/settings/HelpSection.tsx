@@ -107,7 +107,7 @@ export default function HelpSection() {
 			</Text>
 			<Stack visibleFrom="md">
 				<Text>Scan here to open this site on a mobile device:</Text>
-				<Image src="/qr-code.png" w={220}></Image>
+				<Image src="/qr-code.gif" w={220}></Image>
 			</Stack>
 		</>
 	);

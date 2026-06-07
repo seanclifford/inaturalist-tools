@@ -1,4 +1,4 @@
-# iNaturalist Tools by agoranomos
+# MobiNat
 This is a site of small tools to enhance the functionality of iNaturalist.
 The first (and only) tool is a mobile friendly annotator.
 

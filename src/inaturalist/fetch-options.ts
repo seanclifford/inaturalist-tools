@@ -1,6 +1,6 @@
 /* eslint-disable  @typescript-eslint/no-explicit-any */
 
-const USER_AGENT = "iNaturalist Tools (by agoranomos)";
+const USER_AGENT = "MobiNat";
 
 export const getFetchOptions = (useCache = true): RequestInit => {
 	return {

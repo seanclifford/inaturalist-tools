@@ -24,7 +24,7 @@ function Home() {
 					Small, mobile friendly tools to enhance the functionality of
 					iNaturalist. <br />
 				</Text>
-				<Text size="xs">(Only tool one so far...)</Text>
+				<Text size="xs">(Only one tool so far...)</Text>
 			</header>
 			<main>
 				<Grid>

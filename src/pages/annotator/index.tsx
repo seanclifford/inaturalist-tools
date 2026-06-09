@@ -9,6 +9,7 @@ function Annotator() {
 
 	return (
 		<main className="annotator">
+			<title>Annotator - MobiNat</title>
 			{pageQueryString ? (
 				<AnnotatorDisplay
 					pageQueryString={pageQueryString}

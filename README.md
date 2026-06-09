@@ -1,6 +1,6 @@
 # MobiNat
-This is a site of small tools to enhance the functionality of iNaturalist.
-The first (and only) tool is a mobile friendly annotator.
+This is a site of small mobile friendly tools to enhance the functionality of iNaturalist.
+The first (and only) tool is the Annotator.
 
 # Setup
 - Install npm (recommend using nvm for this)
@@ -16,7 +16,9 @@ If you have an iNaturalist instance running locally for testing you can create a
 - Run `npm run dev` to start a local tools web server
 
 # Annotator
-This tool is made to allow for fast annotations, targeting mobile devices mainly, but with full keyboard support for laptops and desktops
+[https://mobinat.org/annotator](https://mobinat.org/annotator)
+
+This tool is made to allow for fast annotations, targeting mobile devices mainly, but can be used with laptops and desktops
 
 ## TODO List
 

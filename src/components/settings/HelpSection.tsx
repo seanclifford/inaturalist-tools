@@ -3,7 +3,7 @@ import { Anchor, Image, List, Stack, Text, Title } from "@mantine/core";
 export default function HelpSection() {
 	return (
 		<>
-			<Title order={3}>Welcome to the mobile fast annotator!</Title>
+			<Title order={3}>Welcome to the MobiNat Annotator!</Title>
 			<Text>
 				This site was created to allow fast annotating of observations on{" "}
 				<Anchor href="https://www.inaturalist.org">iNaturalist</Anchor> through
@@ -16,7 +16,7 @@ export default function HelpSection() {
 				</List.Item>
 				<List.Item>
 					Login via your iNaturalist account on the <b>Account</b> tab, and
-					choose to trust this site.
+					choose to trust MobiNat.
 				</List.Item>
 			</List>
 			<br />
@@ -40,11 +40,11 @@ export default function HelpSection() {
 			</Text>
 			<br />
 			<Title order={4}>
-				Login: Trusting this site with your iNaturalist account
+				Login: Trusting MobiNat with your iNaturalist account
 			</Title>
 			<Text>
-				If you want to use this site to make any changes on iNaturalist, you'll
-				need to trust this site with using your account with iNaturalist when
+				If you want to use MobiNat to make any changes on iNaturalist, you'll
+				need to trust MobiNat to connect to your account with iNaturalist when
 				you Login. If you're unsure about this, here's some things that might
 				make you more comfortable:
 			</Text>
@@ -54,8 +54,7 @@ export default function HelpSection() {
 					<Anchor href="https://www.inaturalist.org/sites/network">
 						network site
 					</Anchor>{" "}
-					you choose. Additionally, this site does <b>not</b> track your
-					actions.
+					you choose. Additionally, MobiNat does <b>not</b> track your actions.
 					<br />
 					This is enforced by your browser and be confirmed by checking the{" "}
 					<Anchor href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Content-Security-Policy/connect-src">
@@ -68,12 +67,12 @@ export default function HelpSection() {
 					.
 				</List.Item>
 				<List.Item>
-					When you <b>Login</b> on this site, your iNaturalist account details
-					are only stored locally on your device. You can clear this information
-					at any time by choosing <b>Logout</b> from the Account tab.
+					When you <b>Login</b> on MobiNat, your iNaturalist account details are
+					only stored locally on your device. You can clear this information at
+					any time by choosing <b>Logout</b> from the Account tab.
 				</List.Item>
 				<List.Item>
-					The code for this site is all open source - so it is readable and
+					The code for MobiNat is all open source - so it is readable and
 					auditable by anyone with the technical knowledge to do so. See the
 					About tab for a link to the source code.
 				</List.Item>
@@ -94,9 +93,9 @@ export default function HelpSection() {
 			<br />
 			<Title order={4}>Annotating on a laptop or desktop computer</Title>
 			<Text>
-				This site has been made for mobile and tablets in mind. While it will
-				work on laptops and desktop computers, you may find using the Identify
-				page to be a better experience. Read{" "}
+				MobiNat has been made for mobile and tablets in mind. While it will work
+				on laptops and desktop computers, you may find using the Identify page
+				to be a better experience. Read{" "}
 				<Anchor
 					href="https://www.inaturalist.org/pages/annotations"
 					target="_blank"
@@ -106,7 +105,7 @@ export default function HelpSection() {
 				if you're new to annotating using the Identify page.
 			</Text>
 			<Stack visibleFrom="md">
-				<Text>Scan here to open this site on a mobile device:</Text>
+				<Text>Scan here to open MobiNat on a mobile device:</Text>
 				<Image src="/qr-code.gif" w={220}></Image>
 			</Stack>
 		</>

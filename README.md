@@ -2,32 +2,21 @@
 This is a site of small mobile friendly tools to enhance the functionality of iNaturalist.
 The first (and only) tool is the Annotator.
 
-# Setup
+## Setup
 - Install npm (recommend using nvm for this)
 - Run `npm install`
 
-# Visual Studio Code Setup
+### Visual Studio Code Setup
 - Install Biome extension and set is as the default typescript formatter
 
-## Pointing to a local iNaturalist server
+### Pointing to a local iNaturalist server
 If you have an iNaturalist instance running locally for testing you can create an [.env.local file](https://vite.dev/guide/env-and-mode#env-files) to overwrite settings in the .env file in order to point to it.
 
-# Dev run
+### Dev run
 - Run `npm run dev` to start a local tools web server
 
-# Annotator
+## Annotator
 [https://mobinat.org/annotator](https://mobinat.org/annotator)
 
 This tool is made to allow for fast annotations, targeting mobile devices mainly, but can be used with laptops and desktops
 
-## TODO List
-
-- Bugs
-  - In search controls, prevent backspacing text being undone after first load
-  - Photo thumbnails that overflow the row should be scrollable somehow
-- Allow marking observation as reviewed
-- Consider putting it on it's own domain
-- Bulk annotate many observations at once somehow (later)
-- Annotation voting for others annotations (later)
-- Audio observation support (later)
-- Add keyboard shortcuts (later)

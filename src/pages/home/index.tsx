@@ -75,11 +75,11 @@ function Home() {
 			<footer>
 				<Center>
 					<Stack>
-						<Anchor href="https://github.com/seanclifford/inaturalist-tools">
+						<Anchor href="https://github.com/seanclifford/mobinat">
 							<Group gap="0" wrap="nowrap">
 								<Image src="/GitHub_Invertocat_Black.svg" w="2em" c={"white"} />
 								<Code c={"white"} bg={"transparent"}>
-									https://github.com/seanclifford/inaturalist-tools
+									https://github.com/seanclifford/mobinat
 								</Code>
 							</Group>
 						</Anchor>

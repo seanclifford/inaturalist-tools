@@ -61,7 +61,7 @@ export default function HelpSection() {
 						connect-src
 					</Anchor>{" "}
 					of{" "}
-					<Anchor href="https://github.com/seanclifford/inaturalist-tools/blob/master/netlify.toml#L8">
+					<Anchor href="https://github.com/seanclifford/mobinat/blob/master/netlify.toml#L8">
 						the Content-Security-Policy set here
 					</Anchor>
 					.

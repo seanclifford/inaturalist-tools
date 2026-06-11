@@ -1,14 +1,11 @@
 import { useLocation } from "wouter";
 import "./index.css";
 import {
-	Anchor,
 	Button,
 	Card,
 	Center,
-	Code,
 	Grid,
 	GridCol,
-	Group,
 	Image,
 	Stack,
 	Text,
@@ -72,20 +69,6 @@ function Home() {
 					</GridCol>
 				</Grid>
 			</main>
-			<footer>
-				<Center>
-					<Stack>
-						<Anchor href="https://github.com/seanclifford/mobinat">
-							<Group gap="0" wrap="nowrap">
-								<Image src="/GitHub_Invertocat_Black.svg" w="2em" c={"white"} />
-								<Code c={"white"} bg={"transparent"}>
-									https://github.com/seanclifford/mobinat
-								</Code>
-							</Group>
-						</Anchor>
-					</Stack>
-				</Center>
-			</footer>
 		</>
 	);
 }

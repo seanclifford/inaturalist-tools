@@ -1,8 +1,8 @@
 // iNaturalist requests that apps rate limit to around 1 request a second.
 // I've read the actual hard limit is 100 requests a minute.
-// This limiter will restrict requests to just over 60 a minute at absolute maximum.
+// This limiter will eventually restrict requests to just under 60 a minute with constant requests.
 // It allows shorter limiting when few requests are made within a minute window,
-// getting progressively longer until hitting around a 2 second limit at around 60 requests.
+// getting progressively longer until hitting around a 1 second limit at around 60 requests.
 // This allows for faster response times when the app is used with natural user interaction
 // delays in comparison to a flat 1 second delay for every request.
 const delay = (ms: number) => new Promise((res) => setTimeout(res, ms));
@@ -38,9 +38,12 @@ function calculateNextTime(now: number): number {
 	}
 
 	// Delay more as more requests are inside the minute window.
-	// This should have the effect of around a 1 sec delay after 30 requests,
-	// and 2 seconds for 60 requests, resulting in no more than around 60 requests a minute.
-	const delay = recentRequestTimes.length * 33;
+	// This should have the effect of around a 1 sec delay after 59 requests,
+	// which should keep to under 60 a minute with constant requests.
+	// in the worst case it'll result in an absolute maximum of 84 requests within a minute.
+	// This will only occur when requests are made constantly within the first
+	// minute, and will taper off to 60 after a short time.
+	const delay = recentRequestTimes.length * 17;
 
 	return now + delay;
 }
